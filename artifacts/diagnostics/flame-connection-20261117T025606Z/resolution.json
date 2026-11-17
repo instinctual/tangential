@@ -1,0 +1,66 @@
+{
+  "cause": "Tangent Hub retained an abandoned Autodesk Flare connection held open by Autodesk background processes and routed the knob to it instead of the new Flame session.",
+  "firmware_revision": 10,
+  "old_port": 58486,
+  "current_flame_port": 37596,
+  "current_flame_pid": 1670870,
+  "before_native_transport_events_to_old_port": 58,
+  "before_native_events_to_current_flame": 0,
+  "repair": "Closed only the obsolete loopback Tangent TCP connection from port 58486 to 64246 using ss -K, after confirming no live Flame/Flare process owned it.",
+  "hub_restarted": false,
+  "firmware_changed": false,
+  "profile_changed": false,
+  "operator_result": "All three work now: Jog, tap-to-Play, hold-to-Stop",
+  "after_flows": [
+    {
+      "ports": [
+        37596,
+        64246
+      ],
+      "command_counts": {
+        "0xa3": 5852
+      },
+      "events": 0,
+      "warning": null
+    },
+    {
+      "ports": [
+        64246,
+        37596
+      ],
+      "command_counts": {
+        "0x0a": 41,
+        "0x08": 2,
+        "0x0b": 2
+      },
+      "events": 45,
+      "warning": null
+    }
+  ],
+  "after_jog_histogram": {
+    "-1": 23,
+    "1": 16,
+    "2": 1,
+    "-2": 1
+  },
+  "after_shuttle_values": [
+    0
+  ],
+  "after_actions": {
+    "ActionOn:0x20000089": 1,
+    "ActionOff:0x20000089": 1,
+    "ActionOn:0x20000000": 1,
+    "ActionOff:0x20000000": 1
+  },
+  "runtime": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xfeff",
+    "uptime_ms": 523361,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 10
+  },
+  "recurrence": "A future application exit/logout may leave inherited sockets again; identify obsolete sockets by current process ownership before closing them. Do not hardcode recorded ports/PIDs."
+}

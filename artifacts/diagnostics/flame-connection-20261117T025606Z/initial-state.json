@@ -1,0 +1,19 @@
+{
+  "firmware": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xfeff",
+    "uptime_ms": 287488,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 10
+  },
+  "old_client_port": 58486,
+  "current_flame_client_port": 52248,
+  "hub_pid": 3342579,
+  "current_flame_pid": 1642117,
+  "observed_usb_bus": 5,
+  "observed_usb_device": 37,
+  "observation": "Old Flare socket retained by Autodesk background processes; current Flame has a separate connection. Routing not yet confirmed."
+}

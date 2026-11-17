@@ -1,10 +1,10 @@
 # Tangential
 
-Private repository: [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`.
+Public repository: [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`.
 
 Experimental onboard Tangent panel emulation for a Binepad KnobX1 on Linux. Rotate for native jog, tap and release the large knob for Play, and hold it for 300 ms for Stop. Shuttle is excluded.
 
-The device uses Flame's shipped Tangent profile, with no custom map, keyboard shortcut layer, or workstation bridge. It presents an Element Mf and sends its jog-ring, Play-button, and Stop-button reports. All 37 Mf modes in the installed 2027.2 default map use these controls consistently. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in Flare 2027.2; captures independently show native Tangent Transport and Play/Stop actions. Revision 10 is installed with the requested 300 ms hold and steady dim-white underglow. The timing passes offline boundary tests, and USB startup was verified after installation. Compatibility on other workstation/application versions remains untested.
+The device uses Flame's shipped Tangent profile, with no custom map, keyboard shortcut layer, or workstation bridge. It presents an Element Mf and sends its jog-ring, Play-button, and Stop-button reports. All 37 Mf modes in the installed 2027.2 default map use these controls consistently. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in Flare 2027.2 and Flame 2027.2; captures independently show native Tangent Transport and Play/Stop actions. Revision 10 is installed with the requested 300 ms hold and steady dim-white underglow. The timing passes offline boundary tests, and USB startup was verified after installation. Compatibility on other workstation/application versions remains untested.
 
 Play is sent only after a short release. A hold sends Stop without first sending Play. These explicit gestures require no playback-state tracking. Both bottom RGB LEDs are set to `(2, 2, 2)` out of 255 per channel, under 1% PWM level. Levels 12 and 3 were too bright; revision 10 restores the previous dimmer level 2. Their color is written once at startup and remains steady.
 
@@ -47,6 +47,10 @@ The bootloader identifies as `1eaf:0003`; alternate setting 2 addresses `0x08002
 The firmware has guarded vendor USB diagnostics and a bootloader request, accessed through `python3 scripts/emulator_control.py status` or `bootloader`. The helper checks the emulator manufacturer and serial before issuing a request and never flashes. Bootloader entry through this helper has worked repeatedly. Disconnecting USB at the knob for five seconds and reconnecting while holding the small button also worked; runtime small-button hold remains unverified. The first indicator LED shows USB configuration; panel display commands are accepted and discarded.
 
 Tangent Hub can claim the emulator without a service restart. In this session, restarting Hub left Flare's old TCP connection in CLOSE-WAIT; the operator had to restart Flare. Plan any further Hub restart accordingly.
+
+## Tangent connection troubleshooting
+
+If the knob responds to `emulator_control.py status` but Flame ignores it, inspect `sudo ss -tnp '( sport = :64246 or dport = :64246 )'`. Autodesk background processes can retain an abandoned application's Tangent socket after exit or logout, leaving Hub routing controls to the old session. In the [recorded incident](artifacts/diagnostics/flame-connection-20261117T025606Z/resolution.json), closing the confirmed abandoned connection restored all three controls in Flame without restarting Hub or changing firmware. Identify current process owners before closing a connection; recorded ports are historical. See `HANDOFF.md` for the evidence and recovery details.
 
 ## Layout
 

@@ -1,10 +1,20 @@
 # KnobX1 Tangent Emulation Handoff
 
-Updated 2026-11-16 during firmware development. Element Mf v0.10 is installed on the KnobX1. The operator confirmed native Jog, tap-to-Play, and hold-to-Stop on v0.5. At the user's request, v0.6 shortened the hold from 600 to 300 ms. v0.7 added steady white bottom lighting at RGB 12, which the user found too bright; v0.8 lowered it to 2, and the user requested a small increase. v0.9 set RGB 3, also reported too bright. v0.10 restores level 2. The timing passes offline boundary tests and runtime revision 10 is verified. No custom map was created or installed. All application control uses emulated Tangent USB reports through the standard Hub and Flame's native Tangent integration; the user explicitly rejects other Flame APIs or shortcuts as substitutes.
+Updated 2026-11-16 after troubleshooting the Flame session. Element Mf v0.10 is installed on the KnobX1. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in both Flare 2027.2 (v0.5) and Flame 2027.2 (v0.10). The current Stop hold is 300 ms. Bottom lighting is steady white at RGB `(2,2,2)`; levels 12 and 3 were too bright. A stale Flare TCP connection caused the latest apparent failure; closing that connection restored all controls in Flame without changing firmware or profiles. All application control uses emulated Tangent USB reports through the standard Hub and Flame's shipped profile.
+
+## Resolved Flame connection failure
+
+After the application/session change, the knob still responded with revision 10 and Tangent Hub held its USB interface. Hub had an old Flare connection on client port `58486` retained by Autodesk background processes, plus a new Flame connection on port `37596`. A passive capture showed 58 native Jog messages sent to the abandoned Flare connection and none to current Flame. Logout/login did not remove the inherited old socket.
+
+Confirmed that no live Flame/Flare process owned the old client socket, then closed only that loopback TCP connection with `ss -K`. Hub remained running and the current Flame connection stayed established. The next capture showed 41 native Jog messages (shuttle zero), one Play down/up pair, and one Stop down/up pair reaching Flame. The operator answered "All three work now."
+
+Evidence: [resolution](artifacts/diagnostics/flame-connection-20261117T025606Z/resolution.json), before/after TIPC captures, and USB capture in the same directory. All diagnostic captures were stopped with zero kernel drops. No firmware or profile was changed. Last observed knob address was bus 5 device 37; identity remains `04d8:fa1a`, serial `99000101`.
+
+If this recurs, inspect `sudo ss -tnp '( sport = :64246 or dport = :64246 )'` and current process ownership before taking action. Ports and PIDs above are historical, not reusable targets. Background Autodesk helpers can retain a socket after its parent application exits. Do not kill those services or restart Hub as the first response; the specific abandoned Tangent socket can be removed once distinguished from the live application's connection. Automatic prevention of inherited sockets has not been implemented.
 
 ## Repository checkpoint
 
-- Private GitHub repository: [instinctual/tangential](https://github.com/instinctual/tangential).
+- Public GitHub repository: [instinctual/tangential](https://github.com/instinctual/tangential). The owner changed its visibility to public after initial publication; this was confirmed through the GitHub API.
 - Local branch `main` tracks `origin/main`; remote URL is `https://github.com/instinctual/tangential.git`.
 - Initial project commit: [`3a1e51e24894b2107e38fdc1486b7835e096ddc8`](https://github.com/instinctual/tangential/commit/3a1e51e24894b2107e38fdc1486b7835e096ddc8), `Add KnobX1 Tangent transport firmware`. It was pushed and its remote SHA verified.
 - Source, contributor instructions, build lock, tests, firmware snapshots, hardware captures, and both original application readbacks are committed. `.cache/`, `.venv/`, and `build/` remain ignored. `.gitattributes` preserves artifact bytes; all 141 archived evidence files and both original firmware checksums were checked before the initial commit.
@@ -24,7 +34,7 @@ Updated 2026-11-16 during firmware development. Element Mf v0.10 is installed on
 - Read-only Hub analysis confirms the Mf encoder offset. It normalizes the ring at 1180 counts/revolution and 16 jog steps/revolution with default sensitivity 1. Revision 4 sends 74 raw counts per detent (approximately one jog step), versus 1 previously. It also allocates 16 bytes for the 15-byte IN report to avoid overlapping the OUT packet-memory buffer. Evidence: `artifacts/research/firmware/mf-jog-normalization.json`.
 - `make setup`, `make test`, and `make firmware` are available. Latest checks: 20 Python tests and two native C test programs passed. ARM builds and DFU suffixes pass. Dependencies are pinned in `build-lock.json` and cached locally.
 - Real Element Kb was connected for protocol capture, then unplugged for the emulator test. The user has Kb/Bt/Tk panels and offered to bring an Mf later; no real Mf capture has been recorded yet. Captures and decoded summaries are in `artifacts/element-kb-20261116/`.
-- Running application is Autodesk Flare 2027.2. A captured ApplicationDefinition names `Autodesk Flare`, system maps `/opt/Autodesk/presets/2027.2/tangentPanel`, and an empty user-map directory. Hub's default panel-list expects one of each panel type and has not been edited.
+- Current application is Autodesk Flame 2027.2. Earlier verification used Flare 2027.2; its captured ApplicationDefinition named `Autodesk Flare`, system maps `/opt/Autodesk/presets/2027.2/tangentPanel`, and an empty user-map directory. Hub's default panel-list expects one of each panel type and has not been edited.
 - Tangent Hub was restarted once; Flare did not reconnect automatically (old socket CLOSE-WAIT). User saved/restarted Flare and reconnection was captured. Avoid further Hub restarts unless planned with the operator. Mapper was opened but no mapping was changed; its window was gone when cleanup was attempted.
 - User requested only steady white bottom lighting at low intensity. The pinned QMK `keyboards/binepad/knobx1/keyboard.json` specifies two WS2812 LEDs on PC13. `underglow.c` writes `(2,2,2)` once at startup (under 1% PWM level), with no animation. A 72 MHz DWT counter schedules 800 kHz data pulses before USB initialization; unsupported cycle counting exits safely. The compiled pulse loop was inspected. The user found level 12 too bright, requested a small increase from 2, then reported level 3 too bright. v0.10 restores level 2. No further confirmation request is pending. This lighting does not represent playback state.
 
@@ -93,7 +103,7 @@ The [Vial QMK KnobX1 directory](https://github.com/vial-kb/vial-qmk/tree/vial/ke
 
 ## Tangent and Flame protocol findings
 
-Onboard emulation reproduces a physical Tangent panel's USB behavior so Tangent Hub recognizes it. Kb USB descriptors and inputs were captured from the real panel; Mf identity and encoder layout were checked against the installed Hub. USB recognition, native Jog, Play, and Stop were verified through captures and operator testing on v0.5. Later builds shorten the Stop hold and add the requested lighting; the 300 ms boundary is tested offline and v0.10 runtime installation is verified.
+Onboard emulation reproduces a physical Tangent panel's USB behavior so Tangent Hub recognizes it. Kb USB descriptors and inputs were captured from the real panel; Mf identity and encoder layout were checked against the installed Hub. Native Jog, Play, and Stop were verified through captures and operator testing on v0.5 in Flare and v0.10 in Flame. The 300 ms boundary is also tested offline.
 
 The saved TUBE 3.12 / TIPC revision 9 documentation describes the separate Hub-to-application protocol. The Hub listens on TCP port `64246`, and the application connects to it. Relevant messages include Transport (`0x0A`, signed jog/shuttle values), ActionOn (`0x08`), and ActionOff (`0x0B`). ActionOff represents release/cancellation of an action; it is not a universal playback Stop command.
 
@@ -113,8 +123,8 @@ The earlier workstation-bridge discussion is historical. No workstation bridge i
 
 ## Follow-up verification
 
-1. If the user wants further adjustment, use the installed 300 ms hold and RGB `(2,2,2)` as the baseline. No input request or capture monitor is pending/running. Timing unit tests and runtime revision checks passed; the restored brightness has not received a new operator confirmation.
-2. Portability beyond this Flare 2027.2 setup, coexistence with a real Mf, and restoring the original firmware remain untested. Compare with the real Mf when available; do not claim universal compatibility.
+1. If the user wants further adjustment, use the installed 300 ms hold and RGB `(2,2,2)` as the baseline. All controls now have operator confirmation in Flame on v0.10. No input request or capture monitor is pending/running; the restored brightness has not received a separate new confirmation.
+2. Portability beyond this workstation's Flame/Flare 2027.2 setup, coexistence with a real Mf, and restoring the original firmware remain untested. Compare with the real Mf when available; do not claim universal compatibility.
 3. Keep underglow steady dim white; do not add animations or playback-state indication unless requested.
 
-The original baseline above is historical evidence. The active firmware/build/test state is recorded at the top of this handoff and in the candidate and hardware-test artifact directories. USB/Hub recognition, native Jog, tap-to-Play and hold-to-Stop are verified with the shipped default Mf profile in this Flare setup.
+The original baseline above is historical evidence. The active firmware/build/test state is recorded at the top of this handoff and in the artifact directories. USB/Hub recognition, native Jog, tap-to-Play and hold-to-Stop are verified with the shipped default Mf profile in this workstation's Flame and Flare setup.

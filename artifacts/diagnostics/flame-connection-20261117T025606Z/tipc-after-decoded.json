@@ -1,0 +1,415 @@
+{
+  "capture": "artifacts/diagnostics/flame-connection-20261117T025606Z/tipc-after.pcap",
+  "flows": [
+    {
+      "ports": [
+        37596,
+        64246
+      ],
+      "command_counts": {
+        "0xa3": 5852
+      },
+      "events": [],
+      "control_feedback": {
+        "0xa3:0x00012000": {
+          "0": 154
+        },
+        "0xa3:0x00012001": {
+          "0": 154
+        },
+        "0xa3:0x00012002": {
+          "0": 154
+        },
+        "0xa3:0x00012003": {
+          "0": 154
+        },
+        "0xa3:0x00012004": {
+          "0": 154
+        },
+        "0xa3:0x00012005": {
+          "1": 154
+        },
+        "0xa3:0x00012006": {
+          "0": 154
+        },
+        "0xa3:0x00012007": {
+          "0": 154
+        },
+        "0xa3:0x00012008": {
+          "0": 154
+        },
+        "0xa3:0x00012010": {
+          "0": 154
+        },
+        "0xa3:0x00012011": {
+          "0": 154
+        },
+        "0xa3:0x00012012": {
+          "0": 154
+        },
+        "0xa3:0x00012013": {
+          "0": 154
+        },
+        "0xa3:0x00012014": {
+          "0": 154
+        },
+        "0xa3:0x00012015": {
+          "0": 154
+        },
+        "0xa3:0x00012016": {
+          "0": 154
+        },
+        "0xa3:0x00012017": {
+          "0": 154
+        },
+        "0xa3:0x00012018": {
+          "0": 154
+        },
+        "0xa3:0x00012019": {
+          "0": 154
+        },
+        "0xa3:0x00012020": {
+          "0": 154
+        },
+        "0xa3:0x00012021": {
+          "0": 154
+        },
+        "0xa3:0x00012022": {
+          "0": 154
+        },
+        "0xa3:0x00012023": {
+          "0": 154
+        },
+        "0xa3:0x00012024": {
+          "0": 154
+        },
+        "0xa3:0x00012025": {
+          "0": 154
+        },
+        "0xa3:0x00012026": {
+          "0": 154
+        },
+        "0xa3:0x00012027": {
+          "0": 154
+        },
+        "0xa3:0x00012028": {
+          "0": 154
+        },
+        "0xa3:0x00012029": {
+          "0": 154
+        },
+        "0xa3:0x00012030": {
+          "0": 154
+        },
+        "0xa3:0x00012031": {
+          "0": 154
+        },
+        "0xa3:0x00012032": {
+          "0": 154
+        },
+        "0xa3:0x00012033": {
+          "0": 154
+        },
+        "0xa3:0x00012034": {
+          "0": 154
+        },
+        "0xa3:0x00012035": {
+          "0": 154
+        },
+        "0xa3:0x00012036": {
+          "0": 154
+        },
+        "0xa3:0x00012037": {
+          "0": 154
+        },
+        "0xa3:0x00012038": {
+          "0": 154
+        }
+      },
+      "trailing_bytes": 0,
+      "warning": null
+    },
+    {
+      "ports": [
+        64246,
+        37596
+      ],
+      "command_counts": {
+        "0x0a": 41,
+        "0x08": 2,
+        "0x0b": 2
+      },
+      "events": [
+        {
+          "timestamp_us": 1794884344761664,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344793636,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344822549,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344825640,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344865983,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344873632,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344889634,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884344953646,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345033642,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345289678,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345321627,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345337646,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345377985,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345377985,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345401643,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345422484,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345433622,
+          "command": "Transport",
+          "jog": 2,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345473975,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345473975,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345481642,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345515290,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345515290,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345545626,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345565577,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345593633,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884345625619,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346025627,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346041643,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346066169,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346073639,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346113978,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346113978,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346121631,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346160466,
+          "command": "Transport",
+          "jog": -2,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346160466,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346169635,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346203909,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346203909,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346217627,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346265640,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346313653,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1794884346777658,
+          "command": "ActionOn",
+          "control_id": "0x20000089"
+        },
+        {
+          "timestamp_us": 1794884346817978,
+          "command": "ActionOff",
+          "control_id": "0x20000089"
+        },
+        {
+          "timestamp_us": 1794884348569702,
+          "command": "ActionOn",
+          "control_id": "0x20000000"
+        },
+        {
+          "timestamp_us": 1794884348969660,
+          "command": "ActionOff",
+          "control_id": "0x20000000"
+        }
+      ],
+      "control_feedback": {},
+      "trailing_bytes": 0,
+      "warning": null
+    }
+  ]
+}

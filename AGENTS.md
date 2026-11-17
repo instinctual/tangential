@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This project develops onboard Tangent emulation for the Binepad KnobX1. The private repository is [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`. Read `HANDOFF.md` for firmware state, evidence, recovery, and outstanding verification.
+This project develops onboard Tangent emulation for the Binepad KnobX1. The public repository is [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`. Read `HANDOFF.md` for firmware state, evidence, recovery, and outstanding verification.
 
 Use Element Mf USB emulation through Tangent Hub and Flame's shipped profile. Do not substitute custom maps, other Flame APIs, keyboard shortcuts, or workstation bridges. Preserve these controls: rotate to Jog, tap/release to Play, hold 300 ms to Stop, and steady white bottom LEDs at RGB `(2, 2, 2)`. Levels 3 and 12 were too bright.
 
