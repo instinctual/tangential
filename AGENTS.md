@@ -2,44 +2,41 @@
 
 ## Project Structure & Module Organization
 
-This repository develops experimental onboard Tangent panel emulation for the Binepad KnobX1, with Linux inspection tools and preserved hardware evidence.
+This project develops onboard Tangent emulation for the Binepad KnobX1. The private repository is [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`. Read `HANDOFF.md` for firmware state, evidence, recovery, and outstanding verification.
 
-The device must work with Flame's shipped default Tangent profile. Do not introduce custom maps, a keyboard-shortcut layer, or a workstation bridge to satisfy the transport controls. Target the Element Mf's native jog ring and transport buttons.
+Use Element Mf USB emulation through Tangent Hub and Flame's shipped profile. Do not substitute custom maps, other Flame APIs, keyboard shortcuts, or workstation bridges. Preserve these controls: rotate to Jog, tap/release to Play, hold 300 ms to Stop, and steady white bottom LEDs at RGB `(2, 2, 2)`. Levels 3 and 12 were too bright.
 
-- `scripts/inspect_knobx1.py`: standard-library Python CLI for USB/HID discovery, VIA/Vial configuration reads, and passive input monitoring.
-- `artifacts/`: dated JSON configuration snapshots, JSONL input captures, and inspection results.
-- `src/firmware/`: STM32 firmware and the bootloader-preserving linker script.
-- `src/tangential/`: report and USB-capture parsing.
+- `src/firmware/`: STM32 application, gestures, lighting, and linker script.
+- `src/tangential/`: report and capture parsers.
+- `scripts/`: inspection, build, capture, and separate bootloader tools.
 - `tests/`: offline Python and native C tests.
-- `.cache/`, `.venv/`, and `build/`: ignored local dependencies and generated output.
+- `artifacts/`: captures, firmware snapshots, and original readbacks.
+- `.cache/`, `.venv/`, `build/`: ignored dependencies and generated output.
 
 ## Build, Test, and Development Commands
 
-Run commands from the repository root. Inspection uses standard-library Python; firmware setup requires Python 3.12+, Linux x86_64, a native C compiler, Make, pkg-config, and libusb development headers. See `README.md`.
+Run from the repository root. Firmware setup requires Linux x86_64, Python 3.12+, a C compiler, Make, pkg-config, and libusb headers; see `README.md`.
 
-- `make setup`: fetch checksum-pinned dependencies and build local tools.
-- `make test`: run offline Python and C protocol tests.
-- `make firmware`: compile and validate the experimental DFU image without flashing.
+- `make setup`: fetch pinned dependencies and build tools.
+- `make test`: run offline Python and C tests.
+- `make firmware`: compile and validate without flashing.
+- `python3 scripts/inspect_knobx1.py --help`: show the original VIA/Vial inspection CLI.
+- `python3 scripts/emulator_control.py status`: read emulator diagnostics.
 
-- `python3 scripts/inspect_knobx1.py --help`: show CLI options without accessing hardware.
-- `python3 scripts/inspect_knobx1.py inspect --output artifacts/baseline-YYYYMMDD.json`: read device descriptors, definitions, and mappings.
-- `python3 scripts/inspect_knobx1.py monitor --seconds 60 --output artifacts/inputs-YYYYMMDD.jsonl`: capture input reports while an operator rotates and presses the knob.
-- `python3 -c "import ast,pathlib; ast.parse(pathlib.Path('scripts/inspect_knobx1.py').read_text())"`: check Python syntax without connecting to hardware.
-
-Hardware commands require Linux, one connected KnobX1, and access to its `/dev/hidraw*` nodes. Choose fresh output filenames; existing files are rejected.
+Use fresh artifact filenames. Hardware tests are opt-in and require device access and identity checks.
 
 ## Coding Style & Naming Conventions
 
-Use four-space indentation, `snake_case` functions and filenames, `PascalCase` classes, and `UPPER_SNAKE_CASE` constants. Prefer standard-library modules and small, focused functions. No formatter or linter is configured. Preserve explicit protocol byte order, bounded reads, and device identity checks.
+Use four spaces, `snake_case` functions/files, `PascalCase` classes, and `UPPER_SNAKE_CASE` constants. Prefer standard-library Python and focused functions. No formatter or linter is configured. Preserve byte order, bounded reads, and device checks.
 
 ## Testing Guidelines
 
-Use standard-library `unittest` under `tests/test_*.py` and native C tests for firmware protocol behavior. Run `make test`; no numeric coverage threshold is set. Cover malformed replies, timeouts, decoding, and command restrictions. Keep hardware tests opt-in; record device identity and distinguish observed input from configured mappings.
+Use `unittest` in `tests/test_*.py` and native C tests. Cover malformed replies, timeouts, command restrictions, decoding, and gesture boundaries. Run `make test`; no coverage threshold is set.
 
 ## Commit & Pull Request Guidelines
 
-No commit convention could be established from available Git history. Use short imperative subjects, such as `Add HID response validation`. Keep changes focused. PRs should explain behavior, list validation commands, link relevant issues, and identify any hardware requirements or persistent device changes.
+Use imperative subjects, following `Add KnobX1 Tangent transport firmware`. Keep changes focused. PRs should explain behavior, validation, linked issues, hardware requirements, and persistent device changes.
 
 ## Hardware & Evidence Handling
 
-Keep inspection restricted to documented getters and passive reads. Bootloader entry, flashing, and remapping are separate operations. Preserve baselines and original firmware readbacks; configuration snapshots alone are not firmware backups. Never include the resident bootloader region in an application image. Verify Tangent Hub and Flame behavior before claiming compatibility. Exclude credentials and unrelated workstation data from committed artifacts.
+Keep inspection to getters and passive reads; bootloader entry and flashing are separate operations. Preserve evidence byte for byte (`.gitattributes`); configuration snapshots are not firmware backups. Never overwrite the resident bootloader. Build manifests describe build-time state; `artifacts/hardware-test-*/` records installation results. Verify Hub/Flame behavior before claiming compatibility. Exclude credentials and unrelated workstation data.

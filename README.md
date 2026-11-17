@@ -1,5 +1,7 @@
 # Tangential
 
+Private repository: [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`.
+
 Experimental onboard Tangent panel emulation for a Binepad KnobX1 on Linux. Rotate for native jog, tap and release the large knob for Play, and hold it for 300 ms for Stop. Shuttle is excluded.
 
 The device uses Flame's shipped Tangent profile, with no custom map, keyboard shortcut layer, or workstation bridge. It presents an Element Mf and sends its jog-ring, Play-button, and Stop-button reports. All 37 Mf modes in the installed 2027.2 default map use these controls consistently. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in Flare 2027.2; captures independently show native Tangent Transport and Play/Stop actions. Revision 10 is installed with the requested 300 ms hold and steady dim-white underglow. The timing passes offline boundary tests, and USB startup was verified after installation. Compatibility on other workstation/application versions remains untested.
@@ -7,6 +9,8 @@ The device uses Flame's shipped Tangent profile, with no custom map, keyboard sh
 Play is sent only after a short release. A hold sends Stop without first sending Play. These explicit gestures require no playback-state tracking. Both bottom RGB LEDs are set to `(2, 2, 2)` out of 255 per channel, under 1% PWM level. Levels 12 and 3 were too bright; revision 10 restores the previous dimmer level 2. Their color is written once at startup and remains steady.
 
 An earlier Element Kb prototype established USB/Hub recognition and working rotation and large-button input. It is superseded because the default Kb profile maps those controls to grading parameters. The original KnobX1 application has been read back twice and preserved. See [HANDOFF.md](HANDOFF.md) for the installed firmware and test state.
+
+The installed v0.10 [firmware snapshot](artifacts/firmware-candidates/element-mf-v0.10/) and [installation record](artifacts/hardware-test-element-mf-v0.10/device.json) are committed with the project. The [v0.5 transport verification](artifacts/hardware-test-element-mf-v0.5/verification.json) records the operator-confirmed controls and native Tangent traffic. Build manifests retain their original pre-flash status; installation records document subsequent hardware results.
 
 ## Build and test
 
