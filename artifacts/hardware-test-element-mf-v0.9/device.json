@@ -1,0 +1,32 @@
+{
+  "idVendor": "04d8",
+  "idProduct": "fa1a",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Mf transport",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "29",
+  "diagnostics": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 11556,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 9
+  },
+  "stop_hold_ms": 300,
+  "underglow": {
+    "rgb": [
+      3,
+      3,
+      3
+    ],
+    "steady": true,
+    "count": 2,
+    "reason": "Operator requested a slight increase from level 2; level 12 was too bright"
+  },
+  "flash_exit": 74,
+  "validation": "20 Python tests and two native C programs pass; ARM image and runtime revision verified"
+}

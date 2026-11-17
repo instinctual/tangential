@@ -1,0 +1,35 @@
+{
+  "idVendor": "04d8",
+  "idProduct": "fa1a",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Mf transport",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "25",
+  "diagnostics": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 41484,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 7
+  },
+  "recovery_entry": "Guarded vendor USB boot request on v0.6; verified Maple DFU before flashing v0.7",
+  "flash_result": "7944 bytes downloaded, status 0; exit 74 following reset; runtime revision 7 verified",
+  "stop_hold_ms": 300,
+  "underglow": {
+    "driver": "WS2812",
+    "count": 2,
+    "pin": "PC13",
+    "rgb": [
+      12,
+      12,
+      12
+    ],
+    "steady": true,
+    "visual_confirmation": "Pending"
+  },
+  "validation": "20 Python tests and two native C programs passed; ARM build and DFU suffix validated; LED pulse-loop disassembly inspected. USB configured and Flare/Hub TCP connection remains established."
+}

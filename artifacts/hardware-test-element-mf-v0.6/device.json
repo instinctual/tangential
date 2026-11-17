@@ -1,0 +1,23 @@
+{
+  "idVendor": "04d8",
+  "idProduct": "fa1a",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Mf transport",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "23",
+  "diagnostics": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 15826,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 6
+  },
+  "recovery_entry": "Guarded vendor USB boot request on v0.5; verified Maple DFU before flashing v0.6",
+  "flash_result": "7764 bytes downloaded, status 0; exit 74 following reset; runtime revision 6 verified",
+  "stop_hold_ms": 300,
+  "validation": "20 Python tests and two native C programs passed; 299/300 ms gesture boundary checked. Operator confirmed all controls on v0.5 at 600 ms; new timing not yet operator-tested."
+}

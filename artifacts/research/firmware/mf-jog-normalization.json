@@ -1,0 +1,35 @@
+{
+  "hub_sha256": "17a07f78c6bf1f1c6d883bd952b9a816a276e018e7ab4a716341a9aa34282c2f",
+  "source": "Read-only analysis of installed Tangent Hub; no executable changes",
+  "mf_model": 13,
+  "mf_encoder_ids": [
+    "0xd000300",
+    "0xd000301",
+    "0xd000302"
+  ],
+  "wire": {
+    "encoder_offset": 3,
+    "encoder_count": 3,
+    "jog_encoder": 2,
+    "jog_offset": 5,
+    "button_count": 21
+  },
+  "jog_normalization": {
+    "counts_per_revolution": 1180.0,
+    "std_sensitivity_1_steps_per_revolution": 16.0,
+    "counts_per_step": 73.75
+  },
+  "evidence_addresses": {
+    "mf_encoder_count": "0x42db66",
+    "signed_encoder_read": "0x42db70",
+    "encoder_id_lookup": "0x43178c",
+    "mf_ring_resolution": "0x420b44..0x420b60",
+    "jog_gain": "0x4282f2..0x428327"
+  },
+  "pma_overlap": {
+    "library": "libopencm3 a3977e14519e4cff8d1feb96445655465797908b",
+    "source": "lib/stm32/common/st_usbfs_core.c",
+    "cause": "IN size 15 advances pm_top by an odd number; OUT RX address aliases the final 16-bit IN word",
+    "fix": "Allocate 16 bytes for IN hardware buffer; USB descriptor and report stay 15 bytes"
+  }
+}

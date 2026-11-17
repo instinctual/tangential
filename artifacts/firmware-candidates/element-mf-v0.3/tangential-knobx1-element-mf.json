@@ -1,0 +1,25 @@
+{
+  "status": "Experimental; not yet flashed or verified with Tangent Hub/Flame",
+  "usb_identity": "04d8:fa1a",
+  "usb_serial": "99000101",
+  "emulated_panel": "Element Mf",
+  "input": "encoder 2 (Jog) and button 15 (Play)",
+  "required_mapping": "Flame's shipped default profile; no custom map",
+  "play_stop_toggle": "Must be validated against the native Play action",
+  "bootloader": "Existing STM32duino; application origin 0x08002000",
+  "recovery": "Guarded vendor USB boot request; small-button hold and cold-start DFU window also available",
+  "development_protocol_revision": 3,
+  "image_payload_bytes": 7572,
+  "image_file_bytes": 7588,
+  "sha256": "48a86dcd3ea7294c70b3ac1772b4afc330afd6dd744dc0c16255f07708dae646",
+  "initial_stack_pointer": "0x20005000",
+  "reset_vector": "0x800356d",
+  "compiler": "arm-none-eabi-gcc (xPack GNU Arm Embedded GCC x86_64) 14.2.1 20241119",
+  "libopencm3_commit": "a3977e14519e4cff8d1feb96445655465797908b",
+  "source_sha256": {
+    "src/firmware/element_report.h": "eb05eccc724200b21e66b97b47526d9dabcd2bea72041edf63550120cb1d79d5",
+    "src/firmware/knobx1.ld": "bbb4e27200a0fd9034b7469c145a1117157bf039409516133985ef72df7fc770",
+    "src/firmware/main.c": "56069adcaa39e76c300b805a2c5fc5dc147418b59d5d488a39343120b248e232"
+  },
+  "recovery_validation": "USB request and physical boot gesture still require hardware validation."
+}

@@ -1,0 +1,2937 @@
+tangent
+                                 TUBE
+                         Tangent Unified
+                          Bridge Engine
+                                 Version 3.12
+
+                                 27th July 2023
+
+
+
+                           incorporating
+
+                                   TIPC
+                        TUBE Inter Process
+                      Communication protocol.
+
+                                  Revision 9
+
+
+
+
+       Tangent Wave Ltd.
+   Crowbush Farm, Luton Road,
+    Toddington, LU5 6HU, UK.
+
+ www.tangentwave.co.uk/support
+                                                                             TUBE Version 3.12 - TIPC Rev 9
+
+                                                        Contents
+
+
+1. Revision History .................................................................................................. 5
+2. About this document .......................................................................................... 7
+3. Introduction ......................................................................................................... 7
+4. Overview .............................................................................................................. 9
+    4.1. Abstraction of controls ..................................................................................10
+5. Unmanaged Mode ..............................................................................................11
+6. Panel Emulation Options ...................................................................................11
+7. TIPC .....................................................................................................................12
+    7.1. Software-control data types ..........................................................................12
+    7.2. Commands and messages ...........................................................................12
+    7.3. Command overview ......................................................................................13
+       7.3.1. Commands from the Hub to the application ...........................................13
+       7.3.2. Commands from the application to the Hub ...........................................16
+       7.3.3. Examples of how the commands interact ..............................................20
+       7.3.4. A note on Menu Commands ..................................................................23
+8. Modes..................................................................................................................24
+9. Banks ..................................................................................................................25
+10. The ALT key ......................................................................................................26
+11. Controls XML ....................................................................................................26
+    11.1. File Structure ..............................................................................................27
+       11.1.1. Capabilities (node) ..............................................................................27
+       11.1.2. DefaultGlobalSettings (node)...............................................................27
+       11.1.3. Modes (node) ......................................................................................28
+       11.1.4. Controls (node)....................................................................................29
+       11.1.5. Group (node) .......................................................................................29
+       11.1.6. Action (node) .......................................................................................29
+       11.1.7. Parameter (node) ................................................................................30
+       11.1.8. Menu (node) ........................................................................................30
+       11.1.9. Binding (node) .....................................................................................30
+    11.2. Name and location of the Controls XML file ................................................31
+    11.3. A note on reserved controls ........................................................................31
+12. Map XML ...........................................................................................................31
+    12.1. Default Map XML ........................................................................................31
+       12.1.1. Location of the Default Map XML files .................................................32
+    12.2. Custom Map XML .......................................................................................32
+       12.2.1. Location of the Custom Map XML files ................................................32
+    12.3. Multiple panels of the same type .................................................................32
+    12.4. File Structure ..............................................................................................33
+       12.4.1. Panels (node) ......................................................................................33
+       12.4.2. Panel (node)........................................................................................33
+       12.4.3. Mode (node) ........................................................................................33
+       12.4.4. ControlBank (node) .............................................................................33
+       12.4.5. Bank (node).........................................................................................34
+       12.4.6. Control (node) .....................................................................................34
+       12.4.7. Mapping (node) ...................................................................................34
+13. Mapper utility ....................................................................................................35
+14. Inter Process Communication Sockets ..........................................................37
+15. TIPC protocol format ........................................................................................38
+
+
+                                                                                                                             2
+                                                                        TUBE Version 3.12 - TIPC Rev 9
+
+   15.1. Data Types .................................................................................................38
+   15.2. Commands from the Hub to the application ................................................39
+      15.2.1. InitiateComms (0x01) ..........................................................................39
+      15.2.2. ParameterChange (0x02) ....................................................................39
+      15.2.3. ParameterReset (0x03) .......................................................................39
+      15.2.4. ParameterValueRequest (0x04) ..........................................................40
+      15.2.5. MenuChange (0x05) ............................................................................40
+      15.2.6. MenuReset (0x06) ...............................................................................40
+      15.2.7. MenuStringRequest (0x07) ..................................................................40
+      15.2.8. ActionOn (0x08) ..................................................................................41
+      15.2.9. ModeChange (0x09) ............................................................................41
+      15.2.10. Transport (0x0A) ..............................................................................41
+      15.2.11. ActionOff (0x0B) ................................................................................41
+      15.2.12. UnmanagedPanelCapabilities (0x30) ................................................41
+      15.2.13. UnmanagedButtonDown (0x31) ........................................................42
+      15.2.14. UnmanagedButtonUp (0x32) .............................................................42
+      15.2.15. UnmanagedEncoderChange (0x33) ..................................................43
+      15.2.16. UnmanagedDisplayRefresh (0x34) ....................................................43
+      15.2.17. PanelConnectionState (0x35) ............................................................43
+      15.2.18. CustomParameterChange (0x36) ......................................................43
+      15.2.19. CustomParameterReset (0x37) .........................................................44
+      15.2.20. CustomParameterValueRequest (0x38) ............................................44
+      15.2.21. CustomMenuChange (0x39)..............................................................44
+      15.2.22. CustomMenuReset (0x3A) ................................................................45
+      15.2.23. CustomMenuStringRequest (0x3B) ...................................................45
+      15.2.24. CustomAction On (0x3C) ...................................................................45
+      15.2.25. CustomActionOff (0x3D) ....................................................................46
+      15.2.26. TrainControl (0x3E) ...........................................................................46
+   15.3. Commands from the application to the Hub ................................................47
+      15.3.1. ApplicationDefinition (0x81) .................................................................47
+      15.3.2. ParameterValue (0x82) .......................................................................48
+      15.3.3. MenuString (0x83) ...............................................................................48
+      15.3.4. AllChange (0x84).................................................................................49
+      15.3.5. ModeValue (0x85) ...............................................................................49
+      15.3.6. DisplayText (0x86) ..............................................................................49
+      15.3.7. ArcDisplayText (0x87) .........................................................................50
+      15.3.8. UnmanagedPanelCapabilitiesRequest (0xA0) .....................................50
+      15.3.9. UnmanagedDisplayWrite(0xA1) ..........................................................51
+      15.3.10. RenameControl (0xA2) ......................................................................51
+      15.3.11. HighlightControl (0xA3) .....................................................................52
+      15.3.12. IndicateControl (0xA4) .......................................................................52
+      15.3.13. PanelConnectionStatesRequest (0xA5).............................................52
+      15.3.14. CustomParameterValue (0xA6) .........................................................53
+      15.3.15. CustomMenuString (0xA7) ................................................................53
+      15.3.16. RenameCustomControl (0xA8) ..........................................................54
+      15.3.17. HighlightCustomControl (0xA9) .........................................................54
+      15.3.18. IndicateCustomControl (0xAA) ..........................................................54
+      15.3.19. PluginRequestFocus (0xAB)..............................................................55
+      15.3.20. PluginReleaseFocus (0xAC)..............................................................55
+      15.3.21. TrainResponse (0xB0).......................................................................55
+16. Character Table ................................................................................................57
+
+
+                                                                                                                      3
+                                                                          TUBE Version 3.12 - TIPC Rev 9
+
+17. Panel Types ......................................................................................................58
+18. Panel Data for Unmanaged Mode ....................................................................59
+19. Reserved Controls ...........................................................................................60
+   19.1. Actions ........................................................................................................60
+   19.2. Parameters .................................................................................................60
+   19.3. Menus .........................................................................................................60
+20. Panel Control Layouts .....................................................................................61
+   20.1. Wave / Wave2 ............................................................................................61
+   20.2. Element-Tk (Trackerball).............................................................................62
+   20.3. Element-Mf (Multifunction) ..........................................................................62
+   20.4. Element-Kb (Knob) .....................................................................................63
+   20.5. Element-Bt (Button) ....................................................................................63
+   20.6. Ripple .........................................................................................................64
+   20.7. Arc Grading.................................................................................................65
+   20.8. Arc Navigation ............................................................................................66
+   20.9. Arc Function................................................................................................67
+   20.10. CP200-BK .................................................................................................68
+   20.11. CP200-TS .................................................................................................69
+   20.12. CP200-K ...................................................................................................70
+   20.13. CP200-S ...................................................................................................71
+
+
+
+
+                                                                                                                          4
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+1. Revision History
+
+   Doc     TIPC
+                  Changes
+   No      Rev
+   1.0       1    First draft iteration
+   1.1       1    Second draft iteration expanding on all sections
+                  Change of document name from TIP-C
+    1.2     1     First release
+                  Mode id length changed to 32 bit (Section 11.1.3)
+                  More Reserved Actions added (Section 19.1)
+                  MenuChange command increment changed to be Signed Int
+                  Transport command jogValue & shuttleValue changed to be Signed Int
+                  Mouse functions removed from Reserved Controls list
+                  The number of lines available for ApplicationStatus reduced to 3
+                  Group nodes in the controls XML file explained (Section 11.1.4)
+                  Map XML file format defined (Section 11.1)
+    1.3     1     Command ApplicationStatus renamed as DisplayText (Section 15.3.6)
+                  More detail added to the DisplayText command (Section 15.3.6)
+                  Trackerball Banks added (Sections 0, 12.4.4 & 19.1)
+                  Ripple panels renamed as Element and panel models defined
+                  (Sections 17 & 20)
+    1.4     1     Action command renamed as Action On.
+                  Action Off command introduced.
+    1.5     2     Update to MenuString command (Section 15.3.3)
+                  Length of directory strings increased (Section 15.3.1)
+                  Added protocolRev to InitiateComms command (Section 15.2.1)
+                  Introduction of Unmanaged Mode (Sections 5, 15.2 & 0)
+                  Change banks on this panel only functionality added (Section 11.1.2)
+   1.5.1    2     Addition of CustomName node for Mappings (Section 12.4.7)
+    1.6     3     TIPC Rev increased to 3
+                  Addition of RenameControl, HighlightControl and IndicateControl
+                  commands (Sections 15.3.10, 15.3.11 & 15.3.12)
+    1.7     3     Documentation changes only.
+                  References made to panel-list.xml file and the TUBE Development
+                  Support document.
+    1.8     3     Added CP200 Control Layouts (Sections 20.6 to 20.13)
+    2.1     3     Added some notes on the Tangent Mapper (Section 13)
+    2.2     3     Updated Tangent Mapper details (Section 13)
+    2.3     3     Updated for new release.
+    2.4     3     Updated for new release and improved developer pack format.
+    2.5     3     Added details for the new Ripple panel. Updated some XML section
+                  descriptions.
+    2.6     3     Added details of the Ripple to element-Tk emulation option.
+    2.7     3     Updated for new release.
+    2.8     3     Added support for virtual Head-Up-Display (not available on all
+                  platforms).
+    2.9     3     Updated for new release with improved HUD and panel display
+                  labelling.
+    3.0     3     Updated for new release.
+
+
+
+
+                                                                                         5
+                                                 TUBE Version 3.12 - TIPC Rev 9
+
+3.1    3   Updated for new release.
+3.2    4   TIPC Rev increased to 4
+           Added PanelConnectionStatesRequest command (Section 15.3.13)
+           Added PanelConnectionState command (Section 15.2.17)
+3.4    5   TIPC Rev increase to 5
+           Added of ArcDisplayText command (Section 15.3.7)
+3.5    5   All references to Tsunami replaced with Arc
+3.6    5   Addition of Unmanaged commands for Arc
+3.7    6   TIPC Rev increase to 6
+           Addition of Custom Controls support and associated commands.
+3.8    6   Updated for new release of Tangent Hub 1.5.2
+3.9    7   TIPC Rev increase to 7
+           Extended ApplicationDefinition command (Section 15.3.1)
+           Added PluginRequestFocus command (Section 15.3.19)
+           Added PluginReleaseFocus command (Section 15.3.20)
+3.10   8   TIPC Rev increase to 8
+           DefaultDisplay node added to controls.xml (Section 11.1.7)
+3.11   8   Training node added to capabilities (Section 11.1.1)
+           New TrainControl command (Section 15.2.26)
+           New TrainResponse command (Section 15.3.21)
+3.12   9   TIPC Rev increase to 9
+           No impact
+
+
+
+
+                                                                             6
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+2. About this document
+This document is the current release of the control unification system from Tangent that enables a
+standard protocol to communicate with all panels manufactured by Tangent regardless of physical
+connection type (USB, Ethernet etc.)
+
+This document is designed to form a base specification for the various elements that make up the
+system. This should enable all parties to start work on their components. It is however certainly not
+the final iteration and may be extended and enhanced as required.
+
+Some terms used throughout this document:
+  • partner – you, the Software Manufacturer.
+  • application – your software application.
+  • software-control – a control / value inside the application.
+  • physical-control – an actual control on a panel (knob, button, trackerball).
+   • encoder – knobs and trackerballs are both treated as encoders by the software.
+            When the word encoder is used it refers to either type of physical controls.
+   • Mapper – the tool supplied to allow users to customise their panel layouts
+   • Hub – the background process which provides the bridge between your application and the
+      tangent panels.
+
+Throughout the document references are made to the Element panels. These are the next
+generation of panels from Tangent.
+
+
+3. Introduction
+The Tangent Unified Bridge Engine (TUBE) is made up of two software elements, the Mapper and
+the Hub. The Hub communicates with your application via the TUBE Inter Process
+Communications (TIPC) protocol. While it is important to understand the role that each element
+plays in the overall system this document will concentrate on the TIPC protocol.
+
+TIPC is a standardised protocol to allow any application that supports it to communicate with any
+current and future panels produced by Tangent via the TUBE Hub.
+
+The aims of TUBE are:
+   • Partners need only write code just once to support any Tangent panel. This reduces the
+       work required by partners to support current, historic and future panels.
+   • Users can customise how the panels operate with their applications through the TUBE
+       Mapper’s graphical interface. This customisation tool is available to download free of
+       charge so there is no need for our partners to write their own customisation tools.
+   • Users can choose which panel or combination of panels they want to use with their
+       application, even combining panels from different ranges.
+   • There’s no need for partners to understand or deal with different communication protocols
+       or hardware interfaces and drivers (USB, Ethernet etc.) – this is all handled by TUBE.
+   • Applications no longer need to drive panel displays, this is all handled by the Hub.
+   • TIPC uses simple inter-process communication via sockets.
+   • Multi-platform support: Windows, Linux, Mac OS X.
+   • Partners gain instant access to any new Tangent panel types and features (a good
+       example of this is touch surfaces like our iPad app).
+   • As partners add features to their application they can quickly map these to panels for in-
+       house testing and subsequent release without waiting for Tangent to do anything.
+
+                                                                                             7
+                                                         TUBE Version 3.12 - TIPC Rev 9
+
+
+See also the TUBE Development Support document for further installation details.
+
+
+
+
+                                                                                     8
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+4. Overview
+The following diagram is an overview of the TUBE system:
+
+
+
+
+The components of the system as follows:
+   • Application: your application.
+   • Hub: this is a background process that acts as the bridge between your application and the
+      panels using the various communication protocols (USB, Ethernet etc.). It is the
+      responsibility of the Hub to handle the mapping of the software-controls to the physical-
+      controls (using the XML files) and any commands and responses to / from the panels.
+   • Mapper: this is a utility which we supply that allows the user to customise the way the
+      panel(s) work with the application.
+   • Controls XML: this is an XML file that describes all the controls that the application has
+      which a panel can control. Tangent can help by writing this for you, but we would need a list
+      of all the controls etc.
+   • Default Map XML: this is the default (or factory supplied) layout of how the panels work
+      with the application. The user will use this as the starting point for their own custom Map
+      files. While Tangent can help by generating the Default Map for you it would make more
+      sense for you to supply this yourself; you understand far better than us how users work with
+      the application. You can use the Mapper to create this.
+
+
+                                                                                           9
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+   •   User’s Custom Map XML: the user can save various custom mappings, choosing the way
+       the panels work with your software to suit their requirements / workflow.
+       There will always be a Map XML file selected, either the system provided Default Map or
+       one of the User’s Custom Map files.
+   •   TIPC: this is the inter-process protocol that allows communication between the application
+       and any of the Tangent panels, via the Hub. This is the only interface that you need to write
+       code to support. Everything else is handled by the Hub.
+
+There are only three major components of the system that our partners need to understand: the
+TIPC protocol and the Controls XML and Map XML files.
+
+
+4.1. Abstraction of controls
+The Hub abstracts the application from the panels. The application need not know what type of
+panel is sending the information and how it’s sent. The application also does not need to know
+what physical-control on the panel is mapped to which software-control in the application at any
+time as this is handled by the Hub. The application just gets told that changes to make to software-
+controls. This means the Hub has to know what software-controls are available and how to identify
+these to the application. This is described in the Controls XML file.
+
+The Map XML files define which particular physical-control is mapped to which software-control at
+any one time depending on the current Mode & Bank selections (more on Modes and Banks in
+Sections 8 and 9). This enables the Hub to convert physical-control movements into software-
+control changes and software-control changes into panel display updates.
+
+So, as an example, let’s say we move encoder 3 on the panel. The Hub looks at the selected Map
+XML file and sees that encoder 3 is mapped to parameter C. The Hub then reports to the
+application that parameter C has changed by a given amount.
+
+To continue the example, if the application changes parameter C, then the application reports to
+the Hub that the parameter C has a new value. The Hub looks at the selected Map XML file to find
+out which, if any, encoder is currently assigned to that control. The Hub then updates the display
+next to encoder 1 on the panel.
+
+The above example is very simplistic but it shows that the application doesn’t need to know
+anything about panels that may be connected.
+
+Some applications may not want to use the abstraction layer provided by the Hub. For such
+applications there are a number of commands which enable (almost) direct communication with the
+panels. This is known as Unmanaged Mode– see Section 5.
+
+
+
+
+                                                                                           10
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+5. Unmanaged Mode
+This feature enables applications to communicate with panels at a low level, bypassing all the
+abstraction features provided by the Hub. Use of this mode is not recommended as all the user
+mapping advantages provided by the Hub will no longer apply. However, if an application has very
+specific needs which are not met by the regular, managed, mode then this is a solution which still
+provides the application switching benefits of the Hub.
+
+To enable Unmanaged Mode the application indicates this in its ApplicationDefinition command
+which is the first command it sends to the Hub. As no XML files are required when running in this
+mode the switch is indicated by passing a zero length value for the system directory string.
+
+Once this mode is enabled the Hub will send ‘unmanaged’ commands to the application which
+indicate control movements. The application can also send text to be shown on the panels’
+displays using the ‘unmanaged’ command.
+
+
+6. Panel Emulation Options
+The Tangent software includes an option for the new Ripple panels to emulate element-Tk panels
+if required. This allows Ripples to be used out-of-the-box with any software that currently only
+supports element panels. If emulation is not required the Ripple panel can be used as a normal
+individual panel. Panel emulation is available for both managed and unmanaged applications.
+
+The option is selected via the Tangent Mapper (section 13) control map settings menu and is set
+per application. If emulation is active, the Ripple panel will appear to the application as if it was a
+standard element-Tk and use any control mappings set on the element-Tk. If not active, the panel
+appears as a standard Ripple panel with its own set of control mappings.
+
+There is a default setting for the Ripple to element-Tk emulation for each application that is derived
+from the current mapping set-up for that particular application. The user can override the default
+setting at any time and choose to either have the Ripple appear as an element-Tk, or as a
+standard Ripple panel.
+
+For managed applications, the default is decided by the presence (or not) of a default map file for
+the Ripple panel type as discussed in section 12.1. If an application supplies a default map file for
+Ripple panels, it is assumed that the Ripple panel is fully supported by the application and no
+emulation is required. If a managed application doesn’t supply default mapping data for Ripple
+panels, the emulation is switched on by default to allow Ripple panels to be used out-of-the-box
+with any software that currently only supports element panels.
+
+As a developer, you may want to fully support the Ripple panel in your managed application by
+supplying a default control map for this panel type. If you don’t, you can fall back to using panel
+emulation to allow Ripple panels to share the default mappings for element-Tk panels. The user
+can always change the emulation setting later and create their own Ripple panel map (for
+managed applications only).
+
+All unmanaged applications are currently assumed to want Ripple to element-Tk panel emulation
+to be active unless a Tangent update or a user setting decides otherwise. If your unmanaged
+application will have full support for the new Ripple panel, please contact Tangent and we can
+update the default emulation setting for your particular application.
+
+
+
+                                                                                             11
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+7. TIPC
+TIPC communication is bi-directional:
+      software-control change requests and actions travel from the Hub to the application.
+      software-control and Mode changes travel from the application to the Hub.
+
+The Hub is a background process running on the host platform. The application communicates with
+the Hub via streaming TCP/IP sockets. See Section 14 Inter Process Communication Sockets
+for the procedure to initiate communications.
+
+
+7.1. Software-control data types
+When the Hub communicates with your application there are three ‘classes’ that the software-
+controls can be grouped into. These are types of control relating to the application rather than
+physical-controls (like knobs or buttons) which are the data types that the panels use to
+communicate with the Hub.
+
+These are:
+   • Parameters: Software-controls which have a wide range of values that would normally be
+      controlled by a slider on the GUI or a knob / trackerball on a panel.
+
+   •   Menus: Software-controls with a limited number of possible states that would normally be
+       presented to the user as a menu on a GUI. Even something which has only two states like
+       ON or OFF is treated as a menu. A menu can be controlled by a button – pressing it to step
+       to the previous / next item, or a knob – turning it to select the previous / next item. The hub
+       does not know all the possible “values” of a menu, it only holds the text label for the current
+       menu item that is selected.
+
+   •   Actions: This is specific command that has no value and would normally be associated
+       with a button on the GUI or panel. Examples of typical actions are ADD_MARK,
+       NEXT_CLIP, ENABLE_BYPASS and transport type commands such as PLAY_FWD,
+       INCH_REV, STOP etc.
+
+Standard parameters, menus and actions are predefined by a controls XML file and they are
+referred to by a unique and preset numerical identifier. The latest version of TIPC extends this to
+support custom controls for each type which are referred to by string identifiers that can be passed
+from application plug-ins that may wish to add extra controls. Every command that handles a
+standard control has a corresponding custom control version. The format of the commands and
+their use are the same for both implementations with the only difference being the standard version
+passing a numerical id and the custom version containing a string id instead. Both types of control
+id commands may be used together by an application so the standard set of predefined controls
+can be extended by the use of custom controls. Custom control support must be enabled in the
+controls file with the addition of the CustomControls capability node.
+
+Now that we understand about data types we can look at the commands that TIPC provides to
+communicate information about these between the application and the Hub.
+
+
+7.2. Commands and messages
+Commands are the basic instructions passed between Hub and Application. Any number of
+commands can be grouped together into a single message which starts with the number of bytes
+
+
+                                                                                            12
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+to follow. This allows the receiver to determine when a message is complete and should start
+processing the encapsulated commands.
+
+For details of the message format please see Section 15 TIPC protocol format.
+
+
+7.3. Command overview
+Commands can be split into two groups based on the direction of flow: (1) Commands from the
+Hub to the application and (2) Commands from the application to the Hub.
+
+The format for each command listed here is given in Section 15 TIPC protocol format.
+
+7.3.1. Commands from the Hub to the application
+
+•   InitiateComms: Once a socket connection has been established, this initiates the
+    communication between the Hub and the application. The number and type of panels
+    connected are detailed so that the application may make use of this information if applicable.
+
+    The application should then reply with an ApplicationDefinition command and a ModeValue
+    command.
+
+•   ParameterChange: This is used to ask the application to change a parameter and is sent in
+    response to a user moving a knob or trackerball which is currently mapped to control that
+    parameter. Note that a relative increment / decrement is sent and not an absolute value. On
+    receipt, the application will need to apply this offset to its internal value and respond to the Hub
+    with            the              corresponding                ParameterValue              command.
+
+    If the parameter has already hit its maximum or minimum value and this change request has no
+    effect    then   there    is   no     need   to   return  a    ParameterValue     command.
+
+•   ParameterReset: This is used to tell the application that the user has pressed the reset button
+    for a given parameter. Knobs and both axes of a trackerball have a reset button associated
+    with them. Note there is no value or data associated with this. The application needs to decide
+    what value to set the parameter to when this command is received.
+
+•   ParameterValueRequest: This is used to ask the application for the particular value of a given
+    parameter. This is typically used after an AllChange has been sent by the application and the
+    Hub needs to know the values of all the parameters a panel is controlling so it can display
+    them.
+
+•   MenuChange: This is used to ask the application to change a menu to the previous or next
+    item. This is sent in response to a user moving knob or pressing a button that is controlling a
+    menu. The only data / value associated with this is +1 for next or -1 for previous. On receipt,
+    the application should respond to the Hub with the new menu value using the MenuString
+    command. If the menu has no further values in the direction that is requested and this change
+    request has no effect then there is no need to return a MenuString command.
+
+•   MenuReset: This is used to tell the application that the user has pressed the reset button for a
+    given menu. The application should apply the reset value and respond to the Hub with the new
+    menu value using the MenuString command.
+
+
+                                                                                              13
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+
+•   MenuStringRequest: This is used to ask the application for the text label of the current menu
+    item that is selected This is typically used after an AllChange has been sent by the application
+    and the Hub needs to know the “values” for all the menus a panel is controlling so they can be
+    displayed.
+
+•   ActionOn: This is used to tell the application that a given action needs to be acted on.
+    Typically this is in response to a user pressing a button, for example PLAY. There are no
+    values associated with this command.
+
+•   ActionOff: This is used to tell the application that a given action needs to be acted released.
+    Typically this is in response to a user releasing a button, for example STOP. There are no
+    values associated with this command. Together with the Action On command this can be used
+    to enable the Application to perform different (but hopefully closely related!) actions when a
+    combination of buttons are held down together.
+
+•   ModeChange: This is used to tell the application that the mode has changed. This is normally
+    in response to the user having pressed a button. Modes are explained later.
+
+•   Transport: In addition to transport functions that can be conveyed as actions there are specific
+    Jog / Shuttle functions may be sent by this command. The hub manages the Jog / Shuttle
+    status and the sensitivity control of the Transport Ring parameter and will report movements of
+    the control accordingly.
+
+•   UnmanagedPanelCapabilities: This is sent in response to a UnmanagedPanel-
+    CapabilitiesRequest command. It is used to inform the application of the number of controls
+    and displays which a panel has. This is only relevant for applications which are driving the
+    panels in Unmanaged mode.
+
+•   UnmanagedButtonDown: When a panel is in Unmanaged mode this is sent whenever a
+    button is pressed.
+
+•   UnmanagedButtonUp: When a panel is in Unmanaged mode this is sent whenever a button is
+    released.
+
+•   UnmanagedEncoderChange: When a panel is in Unmanaged mode this is sent whenever an
+    encoder is moved. Encoders include both Knobs and the individual axes of trackerballs.
+
+•   UnmanagedDisplayRefresh: When a panel is in Unmanaged mode this is issued whenever
+    the application must write out the contents of each display on the panel. Typically this will be
+    sent when a panel is reconnected or when the application becomes the focus of the Hub,
+    having previously had another application in control.
+
+•   PanelConnectionState: This is sent in response to a PanelConnectionStatesRequest
+    command. It is used to inform the application of the current connected/disconnected status of
+    each configured panel. A single request may result in multiple state responses.
+
+•   CustomParameterChange: This is used to ask the application to change a custom parameter
+    and is sent in response to a user moving a knob or trackerball which is currently mapped to
+    control that custom parameter. Note that a relative increment / decrement is sent and not an
+    absolute value. On receipt, the application will need to apply this offset to its internal value and
+
+                                                                                              14
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+    respond to the Hub with the corresponding CustomParameterValue command. The parameter
+    is defined by the supplied control string data.
+
+    If the parameter has already hit its maximum or minimum value and this change request has no
+    effect then there is no need to return a CustomParameterValue command.
+
+•   CustomParameterReset: This is used to tell the application that the user has pressed the
+    reset button for a given custom parameter. Knobs and both axes of a trackerball have a reset
+    button associated with them. The parameter is defined by the supplied control string data. The
+    application needs to decide what value to set the parameter to when this command is received.
+
+•   CustomParameterValueRequest: This is used to ask the application for the particular value of
+    a given custom parameter. This is typically used after an AllChange has been sent by the
+    application and the Hub needs to know the values of all the parameters a panel is controlling
+    so it can display them. The parameter is defined by the supplied control string data.
+
+•   CustomMenuChange: This is used to ask the application to change a custom menu to the
+    previous or next item. This is sent in response to a user moving knob or pressing a button that
+    is controlling a custom menu. The parameter is defined by the supplied control string data. The
+    menu is defined by the supplied control string data. The data / value associated with this is +1
+    for next or -1 for previous. On receipt, the application should respond to the Hub with the new
+    menu value using the CustomMenuString command. If the menu has no further values in the
+    direction that is requested and this change request has no effect then there is no need to return
+    a CustomMenuString command.
+
+•   CustomMenuReset: This is used to tell the application that the user has pressed the reset
+    button for a given custom menu. The menu is defined by the supplied control string data. The
+    application should apply the reset value and respond to the Hub with the new menu value
+    using the CustomMenuString command.
+
+•   CustomMenuStringRequest: This is used to ask the application for the text label of the
+    current custom menu item that is selected This is typically used after an AllChange has been
+    sent by the application and the Hub needs to know the “values” for all the menus a panel is
+    controlling so they can be displayed. The menu is defined by the supplied control string data.
+
+•   CustomActionOn: This is used to tell the application that a given custom action needs to be
+    acted on. Typically this is in response to a user pressing a button, for example PLAY. The
+    action is defined by the supplied control string data.
+
+•   CustomActionOff: This is used to tell the application that a given custom action needs to be
+    acted released. Typically this is in response to a user releasing a button, for example STOP.
+    The action is defined by the supplied control string data. Together with the CustomActionOn
+    command this can be used to enable the Application to perform different (but hopefully closely
+    related!) actions when a combination of buttons are held down together.
+
+•   TrainControl: This is sent by the Hub when a training session for a panel control mapping has
+    been initiated. In the current implementation this is triggered by the user via the Tangent
+    Mapper. The application should then monitor all items in the UI for any change and then
+    respond with a TrainResponse command to complete the training, associating the changed
+    item with the panel control in the current panel mapping. Note that this command requires both
+    the Training and CustomControl capabilities to be enabled.
+
+                                                                                            15
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+7.3.2. Commands from the application to the Hub
+
+•   ApplicationDefinition: This tells the Hub which application has connected and where the
+    Controls and Default Map XML files are located. If you do not intend to distribute the Controls
+    and Default Map XML files with your application then please discuss this with us first as it will
+    mean that Tangent must provide these files for your application within our distribution.
+
+    It is also used to tell the hub where to locate the current user’s Custom Map XML files if your
+    application handles multiple Users internally. Normally this is handles by the TUBE Mapper
+    Utility and not your application. If the application handles multiple users internally then this
+    command must also be sent to the Hub whenever the user changes.
+
+    This command should initially be sent to the Hub in response to a InitiateComms command. If
+    your application manages multiple user settings internally then this command should also be
+    sent each time the user changes. This will notify the Hub to reload the preference files for the
+    new user.
+
+    As of TIPC Rev 7 this command can also be resent at any time if the processStr changes
+
+
+•   ParameterValue: This is to tell the Hub the value of a given parameter. In addition to the value
+    there is a flag which indicates if the value is at its reset (default) state. This command should
+    be sent in response to the following situations:
+        - The user changes a parameter on the application’s GUI (not done using a panel).
+        - As a response to a RequestParameterValue command from the Hub.
+        - The application changes a parameter (without input from the user) that doesn’t require
+            an AllChange.
+
+    As the application doesn’t know whether the Hub is currently interested in a particular
+    parameter this command should be sent whenever individual parameters change. The Hub will
+    then decide whether to use or ignore the new value.
+
+    NOTE Also see AllChange below.
+
+•   MenuString: This is used to tell the Hub the text string of the current menu item that is
+    selected. In addition to the string there is a flag which indicates if the menu is at its reset or
+    default state. This can be sent in response to the following situations:
+        - The user changes a menu on the application’s GUI (not done using a panel)..
+        - As a response to a RequestMenuString command from the Hub.
+        - The application changes a menu (without input from the user) that doesn’t require an
+            AllChange.
+
+    As the application doesn’t know whether the Hub is currently interested in a particular menu
+    this command should be sent whenever individual menus change. The Hub will then decide
+    whether to use or ignore the new value.
+
+    NOTE Also see AllChange below.
+
+•   AllChange: This is used to tell the Hub that a large number of software-controls have changed.
+    It has no data or values associated with it.
+
+
+                                                                                             16
+                                                               TUBE Version 3.12 - TIPC Rev 9
+
+    An AllChange would be sent when a complete new set of values are loaded into all the
+    software-controls e.g. by moving into a new clip, grade boundary or recall of a predefined
+    grade. It is then for the Hub to ask the application for the values for all the software-controls it is
+    interested in i.e. the software-controls that are currently being displayed by a panel.
+
+    The intention of this is to save the application sending out every one of its software-controls
+    when many of them change together.
+
+•   ModeValue This is used to tell the Hub that the current mode has changed. Modes are
+    explained later.
+
+    This is normally sent in response to the user changing mode on the GUI but should also be
+    sent once after receipt of InitiateComms command to ensure that the Hub is in sync with the
+    application.
+
+•   DisplayText: This updates the Hub with a number of character strings that will be displayed on
+    connected panels if there is space. Initially, the only panel which will make use of this
+    functionality is the Element-Mf (Multifunction) Panel.
+
+    There are 3 lines of 32 characters available for displaying status text which may also be
+    allocated as 1 line of double height and 1 line of single height characters.
+
+    If the application does send this command then the maximum number of lines which will be
+    written to must be defined in the Controls XML file. Any lines that are not reserved by the
+    application may be used by the Hub for other status information. See Section 11 Controls
+    XML for more info.
+
+•   UnmanagedPanelCapabilitiesRequest: This should be sent when an application wants to
+    discover the capabilities (number of buttons, encoders & displays) that a particular panel has.
+    The hub will respond with an UnmanagedPanelCapabilities (0x30) command.
+
+•   UnmanagedDisplayWrite: In Unmanaged mode the Hub will not attempt to drive the displays
+    of a panel at all so this command is used to write text to these displays.
+
+•   RenameControl: Sometimes it may be useful to change the text which is displayed next to a
+    control. For example, a set of Actions may be used to store or recall some stored ‘memory’
+    setting in the application. Rather than leaving such controls labelled as Mem1, Mem2 etc. it
+    may be possible within the application to rename the memory locations. This command will
+    allow these same user-defined labels to be dynamically updated on the panels.
+
+•   HighlightControl: Sometimes it may be useful to highlight a particular control. For example, a
+    set of Actions may switch focus between several ‘channels’ of controls. If the application wants
+    to indicate to the user which channel is currently being controlled then this command allows the
+    ‘live’ Action button to be highlighted.
+
+    Note that this functionality may not be available on some panel models.
+
+•   IndicateControl: On some panel models, Parameters and Menus have an indicator which is
+    used to signal whether the control is ‘At Default’ or not. This command allows the application to
+    control this indicator for Actions and Modes. For example, a set of Actions may enable and
+
+
+                                                                                                 17
+                                                              TUBE Version 3.12 - TIPC Rev 9
+
+    disable several ‘channels’ of controls. If the application wants to indicate to the user which
+    channels are currently enabled then this command allows these to be indicated.
+
+•   PanelConnectionStatesRequest: This should be sent when an application wants to discover
+    which of the configured panels are actually connected to the system. The hub will respond with
+    a sequence of PanelConnectionState (0x35) commands, one for each configured panel.
+
+•   CustomParameterValue: This is to tell the Hub the value of a given custom parameter. The
+    parameter is defined by the supplied control string data. In addition to the control string and
+    value there is a flag which indicates if the value is at its reset (default) state. This command
+    should be sent in response to the following situations:
+        - The user changes a parameter on the application’s GUI (not done using a panel).
+        - As a response to a CustomParameterValueRequest command from the Hub.
+        - The application changes a parameter (without input from the user) that doesn’t require
+           an AllChange.
+
+    As the application doesn’t know whether the Hub is currently interested in a particular
+    parameter this command should be sent whenever individual parameters change. The Hub will
+    then decide whether to use or ignore the new value.
+
+    NOTE Also see AllChange above.
+
+•   CustomMenuString: This is used to tell the Hub the text string of the current custom menu
+    item that is selected. The menu is defined by the supplied control string data. In addition to the
+    control string and value there is a flag which indicates if the menu is at its reset or default state.
+    This can be sent in response to the following situations:
+        - The user changes a menu on the application’s GUI (not done using a panel)..
+        - As a response to a CustomMenuStringRequest command from the Hub.
+        - The application changes a menu (without input from the user) that doesn’t require an
+            AllChange.
+
+    As the application doesn’t know whether the Hub is currently interested in a particular menu
+    this command should be sent whenever individual menus change. The Hub will then decide
+    whether to use or ignore the new value.
+
+    NOTE Also see AllChange above.
+
+•   RenameCustomControl: Sometimes it may be useful to change the text which is displayed
+    next to a control. For example, a set of Actions may be used to store or recall some stored
+    ‘memory’ setting in the application. Rather than leaving such controls labelled as Mem1, Mem2
+    etc. it may be possible within the application to rename the memory locations. This command
+    will allow these same user-defined labels to be dynamically updated on the panels. The control
+    is defined by the supplied control string data.
+
+•   HighlightCustomControl: Sometimes it may be useful to highlight a particular control.             For
+    example, a set of Actions may switch focus between several ‘channels’ of controls. If              the
+    application wants to indicate to the user which channel is currently being controlled then        this
+    command allows the ‘live’ Action button to be highlighted. The control is defined by               the
+    supplied control string data.
+
+    Note that this functionality may not be available on some panel models.
+
+                                                                                                18
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+
+•   IndicateCustomControl: On some panel models, Parameters and Menus have an indicator
+    which is used to signal whether the control is ‘At Default’ or not. This command allows the
+    application to control this indicator for Actions. For example, a set of Actions may enable and
+    disable several ‘channels’ of controls. If the application wants to indicate to the user which
+    channels are currently enabled then this command allows these to be indicated. The control is
+    defined by the supplied control string data.
+
+•   PluginRequestFocus: Some applications use plugins to extend their functionality and provide
+    more controls on panels in addition to those of the host application. When a plugin has user
+    focus in the application, it may issue this command to request that the panel focus swaps over
+    to these extended control maps while the plugin is being used.
+
+•   PluginReleaseFocus: This is the command that a plugin sends when it has taken panel focus
+    with a PluginRequestFocus and wishes to pass focus back to the host application.
+•
+•   TrainResponse: If an application supports control training, this is sent back to the hub to
+    define a new CustomControl mapping using the supplied data. It is expected as the response
+    to a TrainControl command. Note that this command requires both the Training and
+    CustomControl capabilities to be enabled.
+
+
+
+
+                                                                                          19
+                                                                     TUBE Version 3.12 - TIPC Rev 9
+
+7.3.3. Examples of how the commands interact
+Let’s look at some simplified examples of the commands in action. Note that we are not going to
+show details of the data passed, we are just going to show what happens in response to some
+typical scenarios.
+
+Note in each of the following that the dotted lines represent commands between the Hub and the
+panel and are not part of TIPC. You do not need to worry about these as they are all handled by
+the Hub. They are only shown for completeness.
+
+The number next to each command gives the sequence of commands. The direction of the arrow
+indicates the direction of data flow..
+
+The user adjusts a parameter with knob on the panel:
+
+
+
+
+The user adjusts a parameter on the application GUI:
+
+
+
+
+Note this assumes that the parameter on the GUI also appears on the panel.
+
+
+
+
+                                                                                                20
+                                                                         TUBE Version 3.12 - TIPC Rev 9
+
+The user changes a menu selection on the panel:
+
+
+
+
+The user presses an action button on the panel:
+
+
+
+
+Note there is no response back from the application as an action doesn’t have a value to be displayed. If it did it would be
+a menu and not an action.
+
+
+
+The user presses a reset button for a knob on the panel:
+
+
+
+
+                                                                                                                 21
+                                                         TUBE Version 3.12 - TIPC Rev 9
+
+Some event in the application triggers the change of lots of parameters – for example,
+playing over a grade boundary:
+
+
+
+
+Note that the many ParameterValueRequest and MenuStringRequest commands which this
+scenario will prompt are likely to be packed into a single message. Likewise the application may
+respond with the many corresponding ParameterValue and MenuString commands packed
+together into a single message.
+
+
+
+
+                                                                                       22
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+7.3.4. A note on Menu Commands
+The strategy for menu commands gives a simple interface that will hopefully fit the majority of
+circumstances without causing too much work. Alternative strategies have been considered which
+may be more flexible but which may also cause significant additional coding effort. It is uncertain
+how many menu controls each application is likely to have and consequently it is difficult to
+ascertain how much effort should be devoted to the Menu interface on both sides.
+
+The pros and cons of each strategy are outlined here:
+
+Relative control
+This is the method described above in Section 7.3 Command overview.
+
+Pros:
+   • There’s no need to define all menu items within the Controls XML file.
+   • The introduction of new menu items will not require the Controls XML file to be updated.
+
+Cons:
+   • The application must have access to the text representing the menu items to transmit to the
+      TUBE Hub on demand.
+   • There is no ability to display menu item text of a length appropriate to the physical panel
+      connected.
+   • It will not be possible to display anything but the currently chosen menu item text at any
+      time.
+
+Absolute control
+This is an alternative option
+
+The pros and cons are the inverse of the relative control method:
+Pros:
+   • The application need not have access to the text representing the menu items at run time.
+   • There is the option of displaying menu item text of a length appropriate to the physical
+       panel connected.
+   • On appropriate panels (e.g. the vWave iPad app) drop-down menus can show all the menu
+       items, as on a conventional GUI.
+
+Cons:
+   • All menu items must be defined within the Controls XML file.
+   • If text lengths appropriate to each panel type are to be available then these will need to be
+      defined in the Controls XML file..
+   • The introduction of new menu items will require the Controls XML file to be updated.
+
+If there is sufficient demand for Absolute Control to be included then this will be added as
+extension commands at a later date.
+
+
+
+
+                                                                                          23
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+8. Modes
+Now is a good time to talk about modes as we’ve mentioned them in the commands and they are
+referred to in the Sections 11 Controls XML and 12 Map XML.
+
+A mode is a way of grouping software-controls that are associated with a particular process. A
+good example would be creating a secondary isolation, where several parameters are involved in
+doing this, for example hue centre, hue spread and hue softness etc. Telling the Hub that
+secondary isolation has been selected as the current mode on the GUI would allow the Hub to
+update the panel to show those software-controls associated with secondary isolation.
+
+Modes are defined in Controls XML which just lists the different modes, a unique identifier for each
+and a text label for it. The controls that are actually in each mode are defined in the Map XML files.
+
+It may be that the application does not have any notion of modes – all software-controls may be
+“live” at the same time and the user does not need to switch mode on the GUI in order to do a
+secondary isolation. In this case the application would never send the ModeChange command or
+respond to receiving a ModeChange command.
+
+However, even if the application does not have the notion of modes, it would still be useful for
+modes to exist for the panel as it will help the user to group controls into logical blocks in the Map
+XML file. This is for two reasons:
+  • The controls are presented to the user in the Mapper in modes.
+  • The user may select the mode from the panel so that only the controls that are relevant to
+       the current process they are doing are controlled and displayed by the panel.
+
+Even if you decide not to implement multiple modes there must be at least one mode as all
+controls must be defined within a mode.
+
+
+
+
+                                                                                             24
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+9. Banks
+Another subject to talk about before we look at the Controls XML and Map XML Sections is
+banks.
+
+We’ve covered the idea of modes and seen how they allow us to group software-controls together
+which are part of a particular process or mode of working. It is possible that within any mode there
+may be more software-controls associated with it than there are physical-controls on a panel.
+
+This is where banks come in. A bank is just a collection of knobs or buttons that you want to
+display together at the same time. If more knobs and buttons are required than a panel has
+physical-controls for in one go you can simply add another bank. You step through the banks using
+buttons on the panel.
+
+So, within each mode there may be several banks of software-controls.
+
+It obviously makes sense where there are several banks within a mode that the software-controls
+within each bank are also grouped logically – just as you would logically group the software-
+controls within each mode.
+
+Each mode obviously has to have at least one bank.
+
+It should be noted that trackerballs, knobs and buttons each have their own banks which operate
+independently of each other. So, for example, if you add a new bank of knobs then that new bank
+is only added for knobs. If a mode previously had four knob banks, four buttons banks and one
+trackerball banks, then after adding an extra knob bank you would have five knob banks, four
+button banks and two trackerball banks.
+
+Under ‘normal’ circumstances stepping through a particular type of bank (e.g. button banks) will
+cause all controls of that type to change, regardless of what panel they appear on. This allows a
+single button to change banks on multiple panels. However, sometimes this is not the best way to
+operate and this can be overridden so that a bank change action will only apply to the panel from
+which the action was fired i.e. the next bank button pressed. See Section 11.1.2 for details of how
+to set this behaviour.
+
+Finally, there are a subset of hardware-controls that do not appear in any bank. These are controls
+that have no associated display and should therefore not change function when changing bank.
+Normally these would be buttons with printed legends and trackerballs that have no display.
+
+While it is important for you to understand the concept behind the grouping of controls into banks
+the application will have no knowledge of banks; whether they exist or which bank is selected.
+Banks are purely a TUBE and panel concept.
+
+
+
+
+                                                                                           25
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+10. The ALT key
+Another way for users to map extra functionality to physical-controls is to define an alternative
+function which is applied when the ALT key is held down on a panel. This could be a different
+sensitivity for the same software-control (parameters only) or a completely different function
+altogether.
+
+As with banks above the application has no knowledge of whether the ALT key is held or not, it is
+purely a TUBE and panel concept.
+
+
+11. Controls XML
+Controls XML is a file in which all the standard parameters, menus, actions and modes for your
+application are defined. This file also defines how control options are presented to the user when
+they are building their custom mappings.
+
+In this file all ID values are 31 bit unsigned integers i.e. 32 bit but with the most significant bit
+reserved. See Section 11.3 A note on reserved controls below for further details.
+
+All XML tag and attribute names are case sensitive.
+
+You should have received a sample Controls XML file. If you do not have this then please contact
+Tangent.
+
+NameX Elements
+All software-controls defined below have optional NameX text elements where X is replaced by the
+maximum number of characters within a label (Name9, Name14 etc.). This is to allow labels to
+make the most of the available space for different widths of displays on the various panel ranges.
+These are in addition to the Name element which is mandatory and always used within the Mapper
+to label the controls on-screen.
+
+Although the NameX elements are all optional it is still recommended that at least the shortest
+NameX element is supplied for use on panels where space is tight if the Name string is longer than
+9 characters.
+
+The options are:
+
+       Actions
+          • Name9             (Element)
+          • Name14            (CP200 split over 2 lines)
+          • Name20            (Wave split over 2 lines)
+
+       Parameters
+          • Name9             (Element)
+          • Name10            (Wave)
+          • Name12            (CP200)
+
+       Menus
+         • Name9              (Element)
+         • Name10             (Wave)
+         • Name12             (CP200 Knobs)
+
+
+                                                                                            26
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+           •   Name14         (CP200 Buttons split over 2 lines)
+
+If the label length which matches a particular panel is not defined then the Hub will choose the next
+most appropriate string from the Name and NameX elements which are defined.
+
+
+11.1. File Structure
+The file conforms to a conventional XML format using Elements, Nodes, Tags and Attributes to
+describe the capabilities and functionality provided by the application.
+
+
+11.1.1. Capabilities (node)
+Capabilities is a top level Node which defines some specific capabilities of the application which
+the Hub needs to know. These are represented by the following child elements:
+
+Elements within the Node:
+   • Jog (node)
+          o enabled (attribute): Set to true if the application can make use of a Jog Dial. If the
+              Node is not listed then the default value assumed is false.
+
+   •   Shuttle (node)
+          o enabled (attribute): Set to true if the application can make use of a Shuttle Dial. If
+              the Node is not listed then the default value assumed is false.
+
+   •   StatusDisplay (node)
+          o lineCount (attribute): Set to the maximum number of status display lines that the
+             applicaton will use.
+             Minimum value of 0 (if no status text will be sent).
+             Maximum value of 4.
+
+   •   CustomControls (node)
+          o enabled (attribute): Set to true if the application or a plug-in wishes to support
+            custom control mappings where parameters, menus and actions may be defined by
+            control string ids as well as the standard numerical ids. Enabling this setting allows
+            the use of the reserved CustomMenu, CustomParameter and CustomAction
+            mapping types. If the Node is not listed then the default value assumed is false.
+
+   •   Training (node)
+          o enabled (attribute): Set to true if the application supports training of panel controls
+              to apply a new control mapping using interaction with the application's UI. If the
+              Node is not listed then the default value assumed is false. If set to true it requires
+              the CustomControls capability to also be enabled.
+
+
+11.1.2. DefaultGlobalSettings (node)
+DefaultGlobalSettings is an optional top level Node which defines some global configurations.
+These are set by the following child elements:
+
+
+
+
+                                                                                            27
+                                                              TUBE Version 3.12 - TIPC Rev 9
+
+Elements within the Node:
+   • IndependentPanelBanks (node)
+      • enabled (attribute): Set to true if bank navigation actions should only apply to the
+          panel from which the action was instigated. If the Node is not listed then the default
+          value assumed is false.
+   • KnobSensitivity (node)
+      • std (attribute): Set to the default sensitivity level for all standard knob encoder
+          mappings. This is used by standard mappings if they don’t define their own sensitivity.
+          Minimum value of 1 (default).
+          Maximum value of 5.
+      • alt (attribute): Set to the default sensitivity level for all alternate knob encoder
+          mappings. This is used by alternate mappings if they don’t define their own sensitivity.
+          Minimum value of 1.
+          Maximum value of 5 (default).
+   • JogDialSensitivity (node)
+      • std (attribute): Set to the default sensitivity level for all standard jog dial encoder
+          mappings. This is used by standard mappings if they don’t define their own sensitivity.
+          Minimum value of 1 (default).
+          Maximum value of 5.
+      • alt (attribute): Set to the default sensitivity level for all alternate jog dial encoder
+          mappings. This is used by alternate mappings if they don’t define their own sensitivity.
+          Minimum value of 1.
+          Maximum value of 5 (default).
+   • TrackerballSensitivity (node)
+      • std (attribute): Set to the default sensitivity level for all standard trackerball encoder
+          mappings. This is used by standard mappings if they don’t define their own sensitivity.
+          Minimum value of 1 (default).
+          Maximum value of 5.
+      • alt (attribute): Set to the default sensitivity level for all alternate trackerball encoder
+          mappings. This is used by alternate mappings if they don’t define their own sensitivity.
+          Minimum value of 1.
+          Maximum value of 5 (default).
+   • TrackerballDialSensitivity (node)
+      • std (attribute): Set to the default sensitivity level for all standard trackerball dial (or ring)
+          encoder mappings. This is used by standard mappings if they don’t define their own
+          sensitivity.
+          Minimum value of 1 (default).
+          Maximum value of 5.
+      • alt (attribute): Set to the default sensitivity level for all alternate trackerball dial (or ring)
+          encoder mappings. This is used by alternate mappings if they don’t define their own
+          sensitivity.
+          Minimum value of 1.
+          Maximum value of 5 (default).
+
+
+
+11.1.3. Modes (node)
+Modes is a top level Node defining the various modes that the application supports. Each mode is
+defined as a child Node of Modes
+
+
+
+                                                                                                28
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+Elements within the Node:
+   • Mode (node)
+      • id (attribute): A unique 32 bit unsigned integer used to identify the mode.
+      • Name (node): A text string. This is used by the Mapper as the name which appears on
+          the mode tab.
+
+
+11.1.4. Controls (node)
+Controls is a top level Node defining all the software-controls that the application supports.
+
+When users run the Mapper utility to build custom mappings and click on a physical-control they
+are presented with a menu tree showing all the software-controls available for that type of physical-
+control. Software-controls can be collected into logical groups using nested sub-menus to enable
+users to find and select the one that they want with ease. Controls defined directly in this top level
+node will be listed in the first level of the mapping drop-down menu.
+
+The structure of these menu trees is defined by the layout of software-controls in the Controls
+Node with sub-menu heading names defined by the text label for the Group of software-controls.
+
+Please note that the id values used within this node must be unique. The same id cannot be used
+in more than one Action, Parameter or Menu.
+
+Elements within the Node:
+   • Group (node): Groups listed at the top level
+   • Action (node): Actions listed at the top level
+   • Parameter (node): Parameters listed at the top level
+   • Menu (node): Menus listed at the top level
+
+
+11.1.5. Group (node)
+The group designation has no effect on the controls themselves.
+Groups may be nested.
+
+Elements within the Node:
+   • name (attribute): The string used as the menu item in the TUBE Mapper.
+   • Group (node): Sub group nodes listed within the group
+   • Action (node): Actions listed within the group
+   • Parameter (node): Parameters listed within the group
+   • Menu (node): Menus listed within the group
+   • Binding (node): Multi Parameter bindings listed within the group
+
+
+11.1.6. Action (node)
+Elements within the Node:
+   • id (attribute): A unique 31 bit unsigned integer used to identify the action.
+   • Name (node): A text string. This is used by the Mapper as the name which appears in the
+      list of possible actions you can assign to a button.
+   • NameX (node): Multiple text strings where X is a number. These are used as the labels for
+      the actions on the panel displays. See Section 11 for more info.
+
+
+                                                                                                 29
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+11.1.7. Parameter (node)
+Elements within the Node:
+   • id (attribute): A unique 31 bit unsigned integer used to identify the parameter.
+   • Name (node): A text string. This is used by the Mapper as the name which appears in the
+      list of possible parameters you can assign to a knob.
+   • NameX (node): Multiple text strings where X is a number. These are used as the labels for
+      the parameters on the panel displays. See Section 11 for more info.
+   • MinValue (node): A floating point minimum value of the parameter. Note this is needed for
+      displaying the current value as a bar graph or percentage on the panel display.
+   • MaxValue (node): A floating point maximum value of the parameter. Note this is needed
+      for displaying the current value as a bar graph or percentage on the panel display.
+   • StepSize (node): A floating point minimum increment size. If a knob on a panel is moved
+      by one step, then this is the increment size for that step when set to the finest resolution.
+   • DefaultDisplay (node): An optional text string to determine how the value of the parameter
+      will be shown on the panel display. This value is only used when adding a new parameter
+      to a control in the Mapper, when it will automatically populate the parameter’s Display
+      Type. This can be overridden by the user choosing a different DisplayType in the Mapper.
+      Valid text strings are:
+           o Number
+           o Bar
+           o Percentage
+           o Blank
+      If this node is omitted then the DisplayType will default to Blank when the parameter is
+      added to a control in the Mapper.
+
+
+11.1.8. Menu (node)
+Elements within the Node:
+   • id (attribute): A unique 31 bit unsigned integer used to identify the menu.
+   • Name (node): A text string. This is used by the Mapper as the name which appears in the
+      list of possible menus you can assign to a button or a knob.
+   • NameX (node): Multiple text strings where X is a number. These are used as the labels for
+      the menu on the panel displays. See Section 11 for more info.
+
+
+11.1.9. Binding (node)
+These are used to group a number of parameters together into a meta-control. Bindings are used
+by the Mapper to quickly assign multiple parameters to a multi-dimensional control such as a
+trackerball. Once assigned in the Map file only the individual parameters are recorded.
+
+Elements within the Node:
+   • name (attribute): A text string. This is used by the Mapper as the name which appears in
+      the list of possible multi-dimensional software-controls that can be assigned to a multi-
+      dimensional hardware-control such as a trackerball.
+   • Member (node): The order of the members dictates the physical-control to which the
+      Parameter is assigned.
+          o id (attribute): The id of the parameter.
+
+
+
+
+                                                                                          30
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+11.2. Name and location of the Controls XML file
+This file should ideally be provided by you, our partner, as part of your software installation and
+located somewhere within the application’s directory structure.
+Failing this we, Tangent, can supply this file as part of the TUBE installation to be distributed with
+TUBE updates. This is far less desirable as features added to new versions of your application will
+not be accessible until a new release of TUBE is made available.
+
+The file must be named controls.xml
+
+
+11.3. A note on reserved controls
+The reason that the most significant bit of control IDs may not be used is because there are some
+controls defined by Tangent that are available for all applications. These controls will always have
+the most significant bit of their ID set and will therefore never conflict with application defined
+controls.
+
+Activation of these controls will never be directly notified to the application but will be used
+internally to the Hub.
+
+Section 19 Reserved Controls lists all the Tangent defined controls that may be used when
+generating Map XML files.
+
+12. Map XML
+The Map XML files describe which software-controls appear within each mode and which physical-
+control on the panel they are mapped to in that mode. They also describes how the software-
+controls are further broken down into banks where required.
+
+There are two types of Map XML files; Default and User.
+
+Map XML files are normally generated using the Mapper utility however, as they are XML files they
+can also be generated by hand. The Mapper has shortcuts to copy functionality between modes
+and banks however, when hand coding the files, this will unfortunately need to be done manually.
+
+
+12.1. Default Map XML
+These files define the recommended layout for an individual panel. The user is likely to use the
+layout created by this file as the starting point for their own custom layout, adding new banks or
+adding software-controls to existing banks to suit their own preferred way of working.
+
+As Tangent offer several different panel ranges and models it is strongly recommended that a
+Default Map XML file is supplied for each panel model available. If the file exists then, when a user
+connects that panel model for the first time, some control mappings will appear. If the file does not
+exist then the panel will initially appear blank and the user will be forced to generate their own
+mapping before they can use the panel at all.
+
+Note that the user will not be able to delete or alter any Default Map XML files. They will only be
+able to save and alter a copy of the file. This means for support issues you can always ask the
+user to revert to a known and approved configuration.
+
+
+
+
+                                                                                             31
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+You can generate your default map files using a Developer only menu option in the Tangent
+Mapper application. You can toggle the availability of the menu using the keyboard shortcut
+Shift+Ctrl+D (Windows and Linux) or Shift+Cmd+D (Mac). Please refer to the TUBE Development
+Support document for more details and also section 13 of this document.
+
+The filenames for the Default Map XML file for each panel type are listed in Section 17 Panel
+Types.
+
+
+12.1.1. Location of the Default Map XML files
+These files are ideally provided by you, our partner, as part of your software installation and
+located somewhere within the application’s directory structure. The location of the files are then
+communicated to the TUBE Hub in <sysDirStr> field of the ApplicationDefinition command. It is
+strongly recommended that you do this.
+
+Failing this we, Tangent, can supply these as part of the TUBE installation to be distributed with
+TUBE updates. This is far less desirable as features added to new versions of your application will
+not be mapped by default until a new release of TUBE is made available.
+
+
+12.2. Custom Map XML
+These are user generated Map XML files that are created by the TUBE Mapper utility. The user
+may create several different maps to suit the different workflow methods they have. It also allows
+for different users to have their own custom mappings.
+
+Custom Map XML files can be exported and imported between users and systems using the
+Mapper utility.
+
+12.2.1. Location of the Custom Map XML files
+Users’ Custom Map XML files are usually located within the user’s home directory structure,
+However, if a <usrDirStr> field is specified in the ApplicationDefinition command then this will be
+used instead.
+
+
+12.3. Multiple panels of the same type
+The Hub can handle multiple panels of the same type to be attached at the same time. This allows
+the configuration to be infinitely expanded to have any number of controls. Under these
+circumstances the Map files may optionally supply multiple mappings and identify which panel
+number they are to be applied to. By number we mean a value which uniquely identifies a panel
+so that panels of the same type can have the correct mapping applied to each.
+
+For example: You may wish to configure the Hub to expect two Element-Bt panels to be
+connected. In the Mapper, each of these two panels would be identified by a number tag which is
+associated with the panel’s Serial Number. The number tags for these panels would be 1 and 2.
+When the map files (either system defined default or user generated custom) are loaded, the Hub
+first searches for a panel mapping with a number attribute which corresponds to the panel in
+question. If no such mapping exists then the generic mapping, with no number tag, is loaded from
+the map file.
+
+
+
+
+                                                                                          32
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+12.4. File Structure
+The file conforms to a conventional XML format using Elements, Nodes, Tags and Attributes to
+describe the layout of controls on a particular panel type.
+
+
+12.4.1. Panels (node)
+Panels is a top level Node which contains one child element for each panel included in the map. In
+Users’ custom map files there will usually be several panels defined. In the default map files for a
+specific panel type there should be at least one ‘generic’ panel map which does not have a
+number attribute. There may also be any quantity of extra panel maps which are identified by
+unique number attributes
+
+Elements in the node:
+   • Panel (node): The panel
+
+
+12.4.2. Panel (node)
+Elements in the node:
+   • type (attribute): The panel type Name as defined in the table in Section 17.
+   • number (attribute): The value to associate with the panel number. See section 12.3.
+   • Mode (node): One node for each Mode defined in the Controls XML file.
+
+
+12.4.3. Mode (node)
+Defines the layout for all software-controls active on the panel in this mode.
+
+Elements in the node:
+   • id (attribute): The id of the Mode as defined in the Controls XML file.
+   • ControlBank (node): Groups together controls per their bank selection.
+
+
+12.4.4. ControlBank (node)
+Groups hardware-controls together by their bank selection.
+The control bank id is a text string that identifies which physical area of the panel is being defined.
+The string will be one of the following options:
+   • Standard
+   • Encoder
+   • Button
+   • Trackerball
+
+Any hardware-control that doesn’t have an associated display to label should not appear in banks.
+These controls should be defined in the bank id of Standard. Normally the only unbanked controls
+will be printed buttons and trackerballs which have no associated display.
+
+Any individual encoder that has an associated display will be banked and appear in a node with an
+id attribute equal to Encoder. The same is true for buttons and trackerballs, they appear in nodes
+with id attributes equal to Button and Trackerball respectively.
+
+
+
+
+                                                                                             33
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+Elements in the node:
+   • id (attribute): The control bank id as discussed above.
+   • Bank (node): One node for each bank of                        controls   within   the     mode.
+      See Section 9 Banks.
+
+
+12.4.5. Bank (node)
+Button and Encoder ControlBank nodes must have at least one Bank node
+Standard ControlBank nodes must have exactly one Bank node
+
+Elements in the node:
+   • Control (node): One for each hardware-control with an active mapping
+
+
+12.4.6. Control (node)
+Defines the physical-control to be mapped. See Section 20. Panel Control Layouts for the
+numerical identification for each panel
+
+Elements in the node:
+   • type (attribute): Either “Button” or “Encoder”.
+   • number (attribute): The numerical value representing the control.
+   • Mapping (node): At least one and a maximum of two per Control node.
+
+
+12.4.7. Mapping (node)
+Each Control node has at least one Mapping.
+
+There are two types of Mapping possible, defined by the mode attribute.
+If two Mappings are present within a Control then each must have a different mode attribute.
+
+Elements in the node:
+   • mode (attribute): Either Std or Alt. Std defines the control when the Alt mode is not set. An
+      Alt mapping defines the control when Alt mode is set.
+   • Key (node): One per Mapping node. The id of the Action, Parameter or Menu control.
+   • CustomControl (node): Key dependant. One per mapping node if the Key is one of the
+      reserved CustomAction, CustomParameter or CustomMenu values. A string identifier for
+      the custom control. See below for details.
+   • Argument (node): Key dependant. A maximum of one per Mapping node. See below for
+      more details.
+   • Display (node): The type of display. See below for more details.
+   • CustomName (node): A panel display string for this particular mapping which overrides the
+      value provided from the Controls XML file.
+   • Sensitivity (node): Defines the sensitivity value to be applied to the control changes for the
+      mapping, overriding the global default setting. See below for more details.
+
+Argument
+Some Controls have argument values that need to be set to fully identify the function that is
+performed when the control is activated. This is only the case for Control nodes of type Button.
+
+
+
+                                                                                             34
+                                                                TUBE Version 3.12 - TIPC Rev 9
+
+If the Key is a Menu control.
+        An argument of “1” means step backward through the menu (sends a MenuChange
+        command with a in increment value of -1).
+        An argument of “0” means step forward through the menu (sends a MenuChange
+        command with a in increment value of +1).
+
+If the Key is the Go To Mode Reserved Action control
+        The argument defines the id of the Mode which should be selected.
+
+If the Key is the Toggle Mouse Reserved Action control
+        The argument defines which control cluster (trackerball) will be activated as the mouse. “1”
+        for left, “2” for centre and “3” for right.
+
+Display
+This node is only recognised if the Key node is set to a Parameter software-control. It defines the
+format of the feedback value that is displayed to the user on the panel’s readout.
+
+The node can take any of the following values:
+      Blank: Nothing is displayed
+      Number: The raw value of the parameter
+      Bar: The value of the parameter is shown as a Bar Graph
+      Percentage: The value of the parameter is shown as a percentage
+
+Sensitivity
+This node is only recognised if the Key node is set to a Parameter or Menu software-control when
+mapped to an encoder based hardware-control. It defines the scale of how many value changes
+are triggered per turn of the knob or ring, or movement of a trackerball axis.
+
+If the value is not included or is set to “0” the appropriate default global sensitivity will be applied.
+
+CustomControl
+If the Key refers to one of the reserved CustomMenu, CustomParameter or CustomMenu
+reserved controls this string is passed as the identifier for the command. Usually the identifier
+would be the Key value for a control as defined in the controls XML file. With a custom control the
+Key will be one of the reserved custom values and this mapping string is used as the identifier
+instead.
+
+13. Mapper utility
+
+This utility is part of the TUBE distribution on all platforms and allows the user to do the following:
+    • Select which panels they have.
+    • Set panel specific configuration information (such as IP addresses etc.)
+    • Build custom control maps that define which software-controls in the application are
+        mapped to the physical-controls on the panel.
+    • Select which control map to use.
+    • Set a custom sensitivity for a particular software-control (parameters that can be assigned
+        to knobs and trackerballs).
+    • Set a custom label for a software-control that will appear on the panel display that is
+        associated to the physical-control it is assigned to.
+    • Add additional banks of controls to a mode.
+    • Export and Import Custom Map XML files.
+
+                                                                                                  35
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+Please see the Tangent Mapper User Manual for details.
+
+By default the Hub is configured to search for one of each model of our Element range, a Ripple
+and a Wave panel. This behaviour can be changed in the Mapper, allowing for more than one of
+some panel models and to add CP200 and other panel ranges. This information is stored in the
+panel-list.xml file. See the TUBE Development Support document for more information.
+
+When assigning physical-controls the user is presented with a graphical representation of the
+panels. They then click on the representation of the physical-control they wish to assign which
+shows a menu derived from the Controls XML file. The menu will list all the software-controls that
+are appropriate for that physical-control.
+
+Tabs across the top of the graphical representation show the available modes. By clicking on the
+appropriate mode tab the user can see what controls are assigned for that mode. They can then
+add banks or assign controls as they require.
+
+The changes are saved into a Custom Map XML file in the user’s home directory. Users can have
+several different maps to suit the way they work. There may also be multiple users of the
+application, in which case each user will have their own maps.
+
+Users can import and export custom mappings so that these can be transferred onto any other
+machine running TUBE.
+
+Standard map files – Default Map XML - must be provided with the application for each of the
+panels that are expected to be used with the application. These cannot be deleted or changed by
+the user. The user can use these default layouts as the starting point for their own custom layouts.
+
+If no Default Map XML is supplied for a particular panel it is still possible for the user to create a
+map from scratch. Partners can use the Mapper utility in this way to generate the Default Map XML
+for their application. In order for them to do this they will however first need to generate the
+Controls XML file. To generate default map files using the Mapper, partners will need to enable the
+Developer menu in the Mapper. On Windows and Linux the menu is shown using the keyboard
+shortcut Shift+Ctrl+D, and on Macs it is available via Shift+Cmd+D.
+By supporting TUBE the software vendor doesn’t have to worry about providing tools to allow the
+user to customise the way the panels are mapped as this support is automatically provided with the
+TUBE Mapper. The Mapper also provides a quick and easy way to assign the software-controls in
+the application to any Tangent panel. Partners don’t have to wait for Tangent to do anything, all
+they need to do is to generate the Controls XML and Default Map XML files.
+
+
+
+
+                                                                                            36
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+14. Inter Process Communication Sockets
+
+Communication between the application and the Hub is via streaming TCP/IP sockets. The hub
+should always be running as a background process and listening for a connection on port 64246.
+
+To open a communication socket to the Hub the application could use code similar to the following.
+Other than the first two lines the code is almost the same for all platforms.
+
+
+typedef SOCKET Socket        <- Use for Windows
+typedef int Socket           <- Use for OSX and Linux
+
+Socket               socketHandle;
+struct sockaddr_in   address;
+
+
+// create the socket
+socketHandle = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+if (socketHandle == -1)
+{
+    // create socket failed
+    exit(0);
+}
+
+// prepare the address
+memset(&address, 0, sizeof(address));
+address.sin_len = sizeof(address);      <- Only needed for OSX
+address.sin_family = AF_INET;
+address.sin_port = htons(64246);
+address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+// connect to the hub
+if (connect(socketHandle, (struct sockaddr *) &address, sizeof(address)) == -1)
+{
+    // connect failed
+    exit(0);
+}
+
+Once the application has established a socket connection, message passing is handled by reading
+and writing data from and to the socket. You will be provided with some platform independent
+sample code to assist with this.
+
+The Hub then initiates communication by sending an InitiateComms (0x01) command to the
+application.
+
+
+
+
+                                                                                         37
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+15. TIPC protocol format
+As explained above messages encapsulate a number of commands. Each message starts with a
+32 bit integer value which indicates the number of bytes that will follow to complete the message.
+Commands then follow one by one until the message is complete.
+
+Format:           <numBytes>, <command1>, <command2>, …
+
+Commands passed between the Application and the Hub all start with a 32 bit command ID with
+the content and length defined by the command itself.
+
+
+15.1. Data Types
+The byte order for each data type is defined by the host platform’s hardware. As TIPC comms
+always remain within one host platform there will never be any conflict between the sender and
+receiver packing and unpacking the data in different ways. This allows the programmer to copy
+bytes that make up a value from memory to the data stream (and vice versa) without worrying
+about the endianness of the underlying hardware.
+
+The same is true for floating point values. Bytes should be copied directly from storage memory
+into the data stream and back in the same order. This avoids the need to manipulate the data
+depending on the endianness of the underlying hardware.
+
+Unsigned Int
+A 32 bit unsigned integer value.
+
+Signed Int
+A 32 bit signed integer value.
+
+Float
+A 32 bit signed floating point value.
+
+Bool
+A particular type of Unsigned Int which is restricted to a value of 1 or 0, indicating True or False
+respectively.
+
+Character String
+A sequence of characters represented by single byte values based on ASCII.
+Strings are not null terminated.
+Their maximum length is defined in the command.
+See Section 16 Character Table for valid characters.
+
+Path String
+A special instance of a Character String which indicates the absolute path of a directory folder.
+
+
+
+
+                                                                                            38
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+15.2. Commands from the Hub to the application
+For a higher level description of each command see Section 7.3.1
+
+
+15.2.1. InitiateComms (0x01)
+•   Initiates communication between the Hub and the application.
+•   Communicates the quantity, type and IDs of the panels which are configured to be connected
+    in the panel-list.xml file. Note that this is not the same as the panels which are actually
+    connected – just those which are expected to be connected.
+•   The length is dictated by the number of panels connected as the details of each panel occupies
+    8 bytes.
+•   On receipt the application should respond with the ApplicationDefinition (0x81) command:
+
+Format:          0x01, <protocolRev>, <numPanels>, (<panelType>, <panelID>)…
+
+protocolRev      The revision number of the protocol.
+                 See front cover of this document for the current value.
+Data type:       Unsigned Int
+
+numPanels        The number of panels connected.
+Data type:       Unsigned Int
+
+panelType        The code for the type of panel connected.
+                 (See Section 17 Panel Type)
+Data type:       Unsigned Int
+
+panelID          The ID of the panel.
+Data type:       Unsigned Int
+
+
+15.2.2. ParameterChange (0x02)
+•   Requests that the application increment a parameter. The application needs to constrain the
+    value to remain within its maximum and minimum values.
+•   On receipt the application should respond to the Hub with the new absolute parameter value
+    using the ParameterValue (0x82) command, if the value has changed.
+
+Format:          0x02, <paramID>, <increment>
+
+paramID          The ID value of the parameter
+Data type:       Unsigned Int
+
+increment        The incremental value which should be applied to the parameter
+Data type:       Float
+
+
+15.2.3. ParameterReset (0x03)
+•   Requests that the application changes a parameter to its reset value.
+•   On receipt the application should respond to the Hub with the new absolute parameter value
+    using the ParameterValue (0x82) command, if the value has changed.
+
+
+                                                                                         39
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+Format:           0x03, <paramID>
+
+paramID           The ID value of the parameter
+Data type:        Unsigned Int
+
+
+15.2.4. ParameterValueRequest (0x04)
+•   Requests that the application sends a ParameterValue (0x82) command to the Hub.
+
+Format:           0x04, <paramID>
+
+paramID           The ID value of the parameter
+Data type:        Unsigned Int
+
+
+15.2.5. MenuChange (0x05)
+•   Requests the application change a menu index by +1 or -1.
+•   We recommend that menus that only have two values (e.g. on/off) should toggle their state on
+    receipt of either a +1 or -1 increment value. This will allow a single button to toggle the state of
+    such an item without the need for separate ‘up’ and ‘down’ buttons.
+•   On receipt, the application should respond to the Hub with the new menu value using the
+    MenuString (0x83) command, if the menu has changed.
+
+Format:           0x05, <menuID>, < increment >
+
+menuID            The ID value of the menu
+Data type:        Unsigned Int
+
+increment         The incremental amount by which the menu index should be changed which will
+                  always be an integer value of +1 or -1.
+Data type:        Signed Int
+
+
+15.2.6. MenuReset (0x06)
+•   Requests that the application changes a menu to its reset value.
+•   On receipt, the application should respond to the Hub with the new menu value using the
+    MenuString (0x83) command, if the menu has changed.
+
+Format:           0x06, <menuID>
+
+menuID            The ID value of the menu
+Data type:        Unsigned Int
+
+
+15.2.7. MenuStringRequest (0x07)
+•   Requests that the application sends a MenuString (0x83) command to the Hub.
+
+Format:           0x07, <menuID>
+
+menuID            The ID value of the menu
+
+                                                                                              40
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+Data type:        Unsigned Int
+
+
+15.2.8. ActionOn (0x08)
+•   Requests that the application performs the specified action.
+
+Format:           0x08, <actionID>
+
+actionID         The ID value of the action
+Data type:       Unsigned Int
+
+
+15.2.9. ModeChange (0x09)
+•   Requests that the application changes to the specified mode.
+
+Format:           0x09, <modeID>
+
+modeID            The ID value of the mode
+Data type:        Unsigned Int
+
+
+15.2.10. Transport (0x0A)
+•   Requests the application to move the currently active transport.
+•   jogValue or shuttleValue will never both be set simultaneously
+•   One revolution of the control represents 32 counts by default. The user will be able to adjust
+    the sensitivity of Jog & Shuttle independently in the TUBE Mapper tool to send more or less
+    than 32 counts per revolution.
+
+Format:           0x0A, <jogValue>, <shuttleValue>
+
+jogValue          The number of jog steps to move the transport.
+Data type:        Signed Int
+
+shuttleValue      An incremental value to add to the shuttle speed.
+Data type:        Signed Int
+
+
+15.2.11. ActionOff (0x0B)
+•   Requests that the application cancels the specified action.
+•   This is typically sent when a button is released.
+
+Format:           0x0B, <actionID>
+
+actionID          The ID value of the action
+Data type:        Unsigned Int
+
+
+15.2.12. UnmanagedPanelCapabilities (0x30)
+•   Only used when working in Unmanaged panel mode
+
+
+                                                                                         41
+                                                         TUBE Version 3.12 - TIPC Rev 9
+
+•   Sent in response to a UnmanagedPanelCapabilitiesRequest (0xA0) command.
+•   The values returned are those given in the table in Section 18
+•   Note that Arc panels do not report the Display information.
+
+Format:         0x30,  <panelID>,     <numButtons>,         <numEncoders>,      <numDisplays>,
+                <numDisplayLines>, <numDisplayChars>
+
+panelID         The ID of the panel as reported in the InitiateComms command.
+Data type:      Unsigned Int
+
+numButtons      The number of buttons on the panel
+Data type:      Unsigned Int
+
+numEncoders     The number of encoders on the panel
+                This includes both knobs & all 3 trackerball axes
+Data type:      Unsigned Int
+
+numDisplays     The number of displays on the panel
+Data type:      Unsigned Int
+
+numDisplayLines     The number of lines for each display on the panel
+Data type:          Unsigned Int
+
+numDisplayChars     The number of characters on each line of each display on the panel
+Data type:          Unsigned Int
+
+
+15.2.13. UnmanagedButtonDown (0x31)
+•   Only used when working in Unmanaged panel mode
+•   Issued when a button has been pressed
+
+Format:         0x31, <panelID>, <buttonID>
+
+panelID         The ID of the panel as reported in the InitiateComms command.
+Data type:      Unsigned Int
+
+buttonID        The hardware ID of the button. See Section 20
+Data type:      Unsigned Int
+
+
+15.2.14. UnmanagedButtonUp (0x32)
+•   Only used when working in Unmanaged panel mode
+•   Issued when a button has been released
+
+Format:         0x32, <panelID>, <buttonID>
+
+panelID         The ID of the panel as reported in the InitiateComms command.
+Data type:      Unsigned Int
+
+buttonID        The hardware ID of the button. See Section 20
+
+
+                                                                                         42
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+Data type:       Unsigned Int
+
+
+15.2.15. UnmanagedEncoderChange (0x33)
+• Only used when working in Unmanaged panel mode
+• Issued when an encoder has been moved
+Format:       0x33, <panelID>, <encoderID>, <increment>
+
+panelID          The ID of the panel as reported in the InitiateComms command.
+Data type:       Unsigned Int
+
+paramID          The hardware ID of the encoder. See Section 20
+Data type:       Unsigned Int
+
+increment        The incremental value
+Data type:       Float
+
+
+15.2.16. UnmanagedDisplayRefresh (0x34)
+•   Only used when working in Unmanaged panel mode
+•   Issued when a panel has been connected or the focus of the panel has been returned to your
+    application.
+•   On receipt your application should send all the current information to each display on the panel
+    in question.
+
+Format:          0x34, <panelID>
+
+panelID          The ID of the panel as reported in the InitiateComms command.
+Data type:       Unsigned Int
+
+
+15.2.17. PanelConnectionState (0x35)
+•   Sent in response to a PanelConnectionStatesRequest (0xA5) command to report the current
+    connected/disconnected status of a configured panel.
+
+Format:          0x35, <panelID>, <state>
+
+panelID          The ID of the panel as reported in the InitiateComms command.
+Data type:       Unsigned Int
+
+state            The connected state of the panel: 1 if connected, 0 if disconnected.
+Data type:       Bool
+
+
+15.2.18. CustomParameterChange (0x36)
+•   Requests that the application increment a parameter as defined by a custom control string. The
+    application needs to constrain the value to remain within its maximum and minimum values.
+•   On receipt the application should respond to the Hub with the new absolute parameter value
+    using the CustomParameterValue (0xA6) command, if the value has changed.
+
+
+                                                                                           43
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+
+Format:           0x36, <controlStrLen>, <controlStr>, <increment>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+increment         The incremental value which should be applied to the parameter
+Data type:        Float
+
+
+15.2.19. CustomParameterReset (0x37)
+•   Requests that the application changes a parameter as defined by a custom control string to its
+    reset value.
+•   On receipt the application should respond to the Hub with the new absolute parameter value
+    using the CustomParameterValue (0xA6) command, if the value has changed.
+
+Format:           0x37, <controlStrLen>, <controlStr>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+
+15.2.20. CustomParameterValueRequest (0x38)
+•   Requests that the application sends a CustomParameterValue (0xA6) command to the Hub.
+
+Format:           0x38, <controlStrLen>, <controlStr>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+
+15.2.21. CustomMenuChange (0x39)
+•   Requests the application change a custom menu index by +1 or -1.
+•   We recommend that menus that only have two values (e.g. on/off) should toggle their state on
+    receipt of either a +1 or -1 increment value. This will allow a single button to toggle the state of
+    such an item without the need for separate ‘up’ and ‘down’ buttons.
+•   On receipt, the application should respond to the Hub with the new menu value using the
+    CustomMenuString (0xA7) command, if the menu has changed.
+
+                                                                                              44
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+
+Format:          0x39, <controlStrLen>, <controlStr>, <increment >
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+increment        The incremental amount by which the menu index should be changed which will
+                 always be an integer value of +1 or -1.
+Data type:       Signed Int
+
+
+15.2.22. CustomMenuReset (0x3A)
+•   Requests that the application changes a custom menu to its reset value.
+•   On receipt, the application should respond to the Hub with the new menu value using the
+    CustomMenuString (0xA7) command, if the menu has changed.
+
+Format:          0x3A, <controlStrLen>, <controlStr>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+
+15.2.23. CustomMenuStringRequest (0x3B)
+•   Requests that the application sends a CustomMenuString (0xA7) command to the Hub.
+
+Format:          0x3B, <controlStrLen>, <controlStr>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+
+15.2.24. CustomAction On (0x3C)
+•   Requests that the application performs the specified custom action.
+
+Format:          0x3C, <controlStrLen>, <controlStr>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+
+
+                                                                                      45
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+
+15.2.25. CustomActionOff (0x3D)
+•   Requests that the application cancels the specified custom action.
+•   This is typically sent when a button is released.
+
+Format:          0x3D, <controlStrLen>, <controlStr>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+
+15.2.26. TrainControl (0x3E)
+•   Requests that the application begins to listen for a UI value change to associate a menu,
+    parameter or action in the application with a specified panel control.
+•   The application should respond with a TrainResponse (0xB0) command.
+
+Format:          0x3E, <controlID>
+
+controlID        The predefined control ID of a panel control that is to be considered for training
+                 and associating with the next value that is changed in the application. The type of
+                 the control should be taken into consideration when deciding if the changed entity
+                 is valid for mapping to the specified panels control. Number-based parameters
+                 may be mapped to knobs and dials on the panels, actions may be mapped to
+                 buttons and menus may be mapped to all control types. The controlID value is
+                 bit-packed with bit 16 indicating the panel control type - encoders of knobs and
+                 dials (0) and buttons (1).
+
+Data type:       Unsigned Int
+
+
+
+
+                                                                                           46
+                                                              TUBE Version 3.12 - TIPC Rev 9
+
+15.3. Commands from the application to the Hub
+For a higher level description of each command see Section 7.3.2
+
+15.3.1. ApplicationDefinition (0x81)
+•   This is sent in response to the InitiateComms (0x01) command and establishes
+    communication between the application and the hub.
+•   Sends the application type and some file directory details to the hub.
+•   If your application manages multiple user settings internally then this command should also be
+    sent each time the user changes. This will notify the Hub to reload the preference files for the
+    new user.
+•   As of TIPC Rev 7 this can also be resent at any time if the processStr changes
+
+Format:          0x81, <appStrLen>, <appStr>, <sysDirStrLen>, <sysDirStr>, <userDirStrLen>,
+                 <userDirStr>, <processStrLen>, <processStr>
+
+appStrLen        The length of appStr
+                 The maximum length allowed is 256 bytes.
+Data type:       Unsigned Int
+
+appStr           A string containing the name of the application. Note that this string is used to
+                 identify the application to the hub so it is crucial that the string remains
+                 constant throughout the lifetime of the application. The string must not include
+                 version numbers or similar additional information as this would mean that it
+                 changes from one release to the next.
+Data type:       Character String
+
+
+sysDirStrLen     The length of sysDirStr
+                 The maximum length allowed is 1024 bytes.
+Data type:       Unsigned Int
+
+sysDirStr        A string containing the absolute path of the directory that contains the Controls
+                 and Default Map XML files.
+                 This directory will typically within the directory in which the application is installed.
+                 By default this should always be set as we strongly recommend that applications
+                 ship with these XML files included in the distribution.
+                 To enable Unmanaged Mode (See Section 5) sysDirStrLen should be set to 0
+                 and no sysDirStr sent.
+Data type:       Path String.
+
+usrDirStrLen     The length of usrDirStr
+                 The maximum length allowed is 1024 bytes.
+Data type:       Unsigned Int
+
+usrDirStr        A string containing the absolute path of the directory that contains the User’s
+                 Default Map XML files.
+                 The directory will typically be within user space and the directory that contains
+                 application user data.
+
+
+
+
+                                                                                                47
+                                                            TUBE Version 3.12 - TIPC Rev 9
+
+                 This option is included for applications that manage several user preferences
+                 internally. It will not normally be required so usrDirStrLen will usually be set to 0.
+                 In this scenario the default user directory for the Wave Mapper utility will be used.
+Data type:       Path String.
+
+processStrLen The length of processStr
+              The maximum length allowed is 1024 bytes.
+Data type:    Unsigned Int
+Protocol Rev: Only available from revision 7 onwards.
+              The protocolRev value           which     is  received        in                     the
+              InitiateComms command must be checked before sending this parameter.
+
+processStr       A string containing the name of the process associated with the application. This
+                 is used to assist with automatic switching of panels when your application gains
+                 mouse focus on the GUI.
+                 This parameter should only be required if the string passed in appStr does not
+                 match the process name that the OS identifies as your application. Typically, this
+                 is only usually required for Plugins which run within a parent Host application.
+                 Under these circumstances it is the name of the Host Application’s process which
+                 must be passed.
+                 Any numerical characters included in processStr will be stripped before matching.
+                 If processStr is not required then processStrLen should be set to 0.
+Data type:       Character String.
+Protocol Rev:    Only available from revision 7 onwards.
+                 The protocolRev value            which       is      received        in        the
+                 InitiateComms command must be checked before sending this parameter.
+
+
+
+15.3.2. ParameterValue (0x82)
+•   Updates the Hub with a parameter value.
+•   The Hub then updates the displays of any panels which are currently showing the parameter
+    value.
+
+Format:          0x82, <paramID>, <value>, <atDefault>
+
+paramID          The ID value of the parameter
+Data type:       Unsigned Int
+
+value            The current value of the parameter
+Data type:       Float
+
+atDefault        True if the value represents the default. Otherwise false.
+Data type:       Bool
+
+
+15.3.3. MenuString (0x83)
+•   Updates the Hub with a menu value.
+•   The Hub then updates the displays of any panels which are currently showing the menu.
+
+
+
+                                                                                             48
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+•   If a valueStrLen of 0 is sent then no valueStr data will follow and the Hub will not attempt to
+    display a value for the menu. However the atDefault flag will still be recognised.
+
+Format:           0x83, <menuID>, <valueStrLen>, <valueStr>, <atDefault>
+
+menuID            The ID value of the menu
+Data type:        Unsigned Int
+
+valueStrLen       The length of valueStr
+                  The maximum value allowed is 256 bytes.
+Data type:        Unsigned Int
+
+valueStr          The current ‘value’ of the parameter represented as a string
+Data type:        Character String
+
+atDefault         True if the value represents the default. Otherwise false.
+Data type:        Bool
+
+
+15.3.4. AllChange (0x84)
+•   Tells the Hub that a large number of software-controls have changed.
+•   The Hub responds by requesting all the current values of software-controls it is currently
+    controlling.
+
+Format:           0x84
+
+
+15.3.5. ModeValue (0x85)
+•   Updates the Hub with a mode value.
+•   The Hub then changes mode and requests all the current values of software-controls it is
+    controlling.
+
+Format:           0x85, <modeID>
+
+modeID            The ID value of the mode
+Data type:        Unsigned Int
+
+
+15.3.6. DisplayText (0x86)
+•   Updates the Hub with a number of character strings that will be displayed on the right-hand
+    display of the element-Mf panel.
+•   Strings may either be 32 character, single height or 16 character double-height. They will be
+    displayed in the order received; the first string shown at the top of the display.
+•   If a string is not defined as double-height then it will occupy the next line.
+•   If a string is defined as double-height then it will occupy the next 2 lines.
+•   The maximum number of lines which will be used by the application must be indicated in the
+    Controls XML file.
+•   If a textStrLen value of 0 is passed then the line will not be overwritten with any information. In
+    this circumstance no data should be passed for textStrand doubleHeight. The next byte will be
+    the textStrLen for the next string.
+
+                                                                                             49
+                                                             TUBE Version 3.12 - TIPC Rev 9
+
+
+Format:           0x86, <numStrings>, (<textStrLen>, <textStr>, <doubleHeight>)…
+
+numStrings        The number of strings to follow.
+                  Maximum of 3.
+Data type:        Unsigned Int
+
+textStrLen        The length of textStr
+                  The maximum value allowed is 32 bytes or 16 bytes if doubleHeight is set to
+                  true.
+Data type:        Unsigned Int
+
+textStr           A line of status text
+Data type:        Character String
+
+doubleHeight      True if the string is to be printed double height. Otherwise false.
+Data type:        Bool
+
+
+15.3.7. ArcDisplayText (0x87)
+•   Updates the Hub with a number of character strings that will be shown on the rear displays of
+    the Arc panels
+•   Strings must be a maximum of 19 characters long. They will be shown in the order received;
+    the first string displayed at the top of the display.
+•   If a textStrLen value of 0 is passed then the line will not be overwritten with any information. In
+    this circumstance no data should be passed for textStr. The next byte will be the textStrLen for
+    the next string.
+
+Format:           0x87, < panelID >, <numStrings>, (<textStrLen>, <textStr>, <reserved>)…
+
+panelID           The ID of the panel as reported in the InitiateComms command.
+Data type:        Unsigned Int
+
+numStrings        The number of strings to follow.
+                  Maximum of 2.
+Data type:        Unsigned Int
+
+textStrLen        The length of textStr
+                  The maximum value allowed is 19 bytes.
+Data type:        Unsigned Int
+
+textStr           A line of status text
+Data type:        Character String
+
+reserved          Reserved for future use.
+Data type:        Unsigned Int
+
+
+15.3.8. UnmanagedPanelCapabilitiesRequest (0xA0)
+•   Only used when working in Unmanaged panel mode
+
+
+                                                                                             50
+                                                              TUBE Version 3.12 - TIPC Rev 9
+
+•   Requests the Hub to respond with an UnmanagedPanelCapabilities (0x30) command.
+
+Format:           0xA0, <panelID>
+
+panelID           The ID of the panel as reported in the InitiateComms command.
+Data type:        Unsigned Int
+
+
+15.3.9. UnmanagedDisplayWrite(0xA1)
+•   Only used when working in Unmanaged panel mode
+•   Updates the Hub with text that will be displayed on a specific panel at the given line and
+    starting position where supported by the panel capabilities.
+•   The Arc panels do not support the pos field however text will be centre justified on Arc panels
+    instead.
+•   If the most significant bit of any individual text character in textStr is set it will be displayed as
+    inversed with dark text on a light background. (Not supported by Arc)
+
+Format:           0xA1, <panelID>, <displayID>, <lineNum>, <pos>, <textStrLen>, <textStr>
+
+panelID           The ID of the panel as reported in the InitiateComms command.
+Data type:        Unsigned Int
+
+displayID         The ID of the display to be written to
+                  The maximum value allowed is defined by the value of numDisplays returned in
+                  the UnmanagedPanelCapabilities (0x30) command.
+Data type:        Unsigned Int
+
+lineNum           The line number of the display to be written to with 0 as the top line.
+                  The maximum value allowed is defined by the value of numDisplayLines returned
+                  in the UnmanagedPanelCapabilities (0x30) command.
+Data type:        Unsigned Int
+
+pos               The position on the line to start writing from with 0 as the first column.
+                  This is not applicable for the Arc panels. Writes to displays on these panels will
+                  always start at position 0.
+Data type:        Unsigned Int
+
+textStrLen        The length of textStr
+                  The maximum value allowed is defined by the value of numDisplayChars
+                  returned in the UnmanagedPanelCapabilities (0x30) command.
+Data type:        Unsigned Int
+
+textStr           A line of text
+Data type:        Character String
+
+
+15.3.10. RenameControl (0xA2)
+•   Renames a control dynamically.
+•   The string supplied will replace the normal text which has been derived from the Controls XML
+    file.
+
+
+                                                                                                51
+                                                              TUBE Version 3.12 - TIPC Rev 9
+
+•   To remove any existing replacement name set nameStrLen to zero, this will remove any
+    renaming and return the system to the normal display text
+•   When applied to Modes, the string displayed on buttons which mapped to the reserved Go To
+    Mode action for this particular mode will also change.
+
+Format:          0xA2, <targetID>, <nameStrLen>, <nameStr>
+
+targetID         The id of any application defined Parameter, Menu, Action or Mode.
+Data type:       Unsigned Int
+
+nameStrLen       The length of nameStr
+Data type:       Unsigned Int
+
+nameStr          The new name string
+Data type:       Character String
+
+
+15.3.11. HighlightControl (0xA3)
+•   Highlights the control on any panel where this feature is available.
+•   When applied to Modes, buttons which are mapped to the reserved Go To Mode action for this
+    particular mode will highlight.
+
+Format:          0xA3, <targetID>, <state>
+
+targetID         The id of any application defined Parameter, Menu, Action or Mode.
+Data type:       Unsigned Int
+
+state            The state to set. 1 for highlighted, 0 for clear.
+Data type:       Unsigned Int
+
+
+15.3.12. IndicateControl (0xA4)
+•   Sets the Indicator of the control on any panel where this feature is available.
+•   This indicator is driven by the atDefault argument for Parameters and Menus. This command
+    therefore only applies to controls mapped to Actions and Modes.
+•   When applied to Modes, buttons which are mapped to the reserved Go To Mode action for this
+    particular mode will have their indicator set.
+
+Format:          0xA4, <targetID>, <state>
+
+targetID         The id of any application defined Action or Mode.
+Data type:       Unsigned Int
+
+state            The state to set. 1 for indicated, 0 for clear.
+Data type:       Unsigned Int
+
+
+15.3.13. PanelConnectionStatesRequest (0xA5)
+•   Requests the Hub to respond with a sequence of PanelConnectionState (0x35) commands to
+    report the connected/disconnected status of each configured panel.
+
+                                                                                         52
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+•   A single request may result in multiple state responses.
+
+Format:        0xA5
+
+
+15.3.14. CustomParameterValue (0xA6)
+•   Updates the Hub with a custom parameter value.
+•   The Hub then updates the displays of any panels which are currently showing the parameter
+    value.
+
+Format:          0xA6, <controlStrLen>, <controlStr>, <value>, <atDefault>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+value            The current value of the parameter
+Data type:       Float
+
+atDefault        True if the value represents the default. Otherwise false.
+Data type:       Bool
+
+
+15.3.15. CustomMenuString (0xA7)
+•   Updates the Hub with a custom menu value.
+•   The Hub then updates the displays of any panels which are currently showing the menu.
+•   If a valueStrLen of 0 is sent then no valueStr data will follow and the Hub will not attempt to
+    display a value for the menu. However the atDefault flag will still be recognised.
+
+Format:          0xA7, <controlStrLen>, <controlStr>, <valueStrLen>, <valueStr>, <atDefault>
+
+controlStrLen    The length of controlStr
+                 The maximum length allowed is 128 bytes.
+Data type:       Unsigned Int
+
+controlStr       A string containing the identifier for the custom control mapping.
+Data type:       Character String
+
+valueStrLen      The length of valueStr
+                 The maximum value allowed is 256 bytes.
+Data type:       Unsigned Int
+
+valueStr         The current ‘value’ of the parameter represented as a string
+Data type:       Character String
+
+atDefault        True if the value represents the default. Otherwise false.
+Data type:     Bool
+
+
+                                                                                          53
+                                                               TUBE Version 3.12 - TIPC Rev 9
+
+
+
+15.3.16. RenameCustomControl (0xA8)
+•   Renames a custom control dynamically.
+•   The string supplied will replace the normal.
+•   To remove any existing replacement name set nameStrLen to zero, this will remove any
+    renaming and return the system to the normal display text
+
+Format:           0xA8, <controlStrLen>, <controlStr>, <nameStrLen>, <nameStr>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+nameStrLen        The length of nameStr
+Data type:        Unsigned Int
+
+nameStr           The new name string
+Data type:        Character String
+
+
+15.3.17. HighlightCustomControl (0xA9)
+•   Highlights the control on any panel where this feature is available.
+
+Format:           0xA9, <controlStrLen>, <controlStr>, <state>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+state             The state to set. 1 for highlighted, 0 for clear.
+Data type:        Unsigned Int
+
+
+15.3.18. IndicateCustomControl (0xAA)
+•   Sets the Indicator of the control on any panel where this feature is available.
+•   This indicator is driven by the atDefault argument for Parameters and Menus. This command
+    therefore only applies to controls mapped to Actions.
+
+Format:           0xAA, <controlStrLen>, <controlStr>, <state>
+
+controlStrLen     The length of controlStr
+                  The maximum length allowed is 128 bytes.
+Data type:        Unsigned Int
+
+                                                                                          54
+                                                               TUBE Version 3.12 - TIPC Rev 9
+
+
+controlStr        A string containing the identifier for the custom control mapping.
+Data type:        Character String
+
+state             The state to set. 1 for indicated, 0 for clear.
+Data type:        Unsigned Int
+
+
+15.3.19. PluginRequestFocus (0xAB)
+•   Plugins can request panel focus by issuing this command. This means that the Host application
+    will temporarily lose panel focus.
+•   This request will only succeed if the processStr defined in the ApplicationDefinition (0x81)
+    command matches the process name of the host application.
+•   Once focus is no longer relevant the plugin must issue a PluginReleaseFocus (0xAC)
+    command to revert focus back to the host application
+
+Format:           0xAB
+
+
+15.3.20. PluginReleaseFocus (0xAC)
+•   This command must be issued when a plugin no longer requires panel focus, so that focus can
+    be passed back to the host application.
+•   This command will only succeed if the plugin has previously issued a PluginRequestFocus
+    (0xAB) command.
+
+Format:           0xAC
+
+
+15.3.21. TrainResponse (0xB0)
+•   Sent in response to a TrainControl (0x3E) command that supplies a control ID to specify a
+    panel control for interactive training to associate the control with a menu, action or parameter in
+    the current mapping of the application.
+•   The response will trigger the Hub to create a new CustomControl mapping using the supplied
+    data.
+
+Format:           0xB0, <mappingType>, <nameStrLen>, <nameStr>, <controlStrLen>,
+                  <controlStr>, <min>, <max>, <step>
+
+mappingType       The type of the CustomControl mapping to be created. It may be for an action (4),
+                  parameter (5) or menu (6). The controlID passed in by the TrainControl (0x3E)
+                  command can be used to determine what responses are valid for that particular
+                  control. Attempts to apply a mapping type to a control that cannot support it will
+                  be ignored. Number-based parameters may be mapped to knobs and dials on the
+                  panels, actions may be mapped to buttons and menus may be mapped to all
+                  control types.
+Data type:        Signed Int
+
+nameStrLen        The length of nameStr
+Data type:        Unsigned Int
+
+
+                                                                                             55
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+nameStr         A string containing the text for the custom control mapping's display label, to be
+                shown on the panel control if it has as associated display.
+Data type:      Character String
+
+controlStrLen   The length of controlStr
+                The maximum length allowed is 128 bytes.
+Data type:      Unsigned Int
+
+controlStr      A string containing the identifier for the custom control mapping.
+Data type:      Character String
+
+min             The minimum value of a parameter. Only used for the parameter mapping type.
+                Set to zero otherwise. Note it is not enforced as a true minimum for the value, but
+                it is required for sensitivity and display purposes.
+Data type:      Float
+
+max             The maximum value of a parameter. Only used for the parameter mapping type.
+                Set to zero otherwise. Note it is not enforced as a true maximum for the value,
+                but it is required for sensitivity and display purposes.
+Data type:      Float
+
+step            The step increment value of a parameter. Only used for the parameter mapping
+                type. Set to zero otherwise. It is required for sensitivity and display purposes.
+Data type:      Float
+
+
+
+
+                                                                                          56
+                                                           TUBE Version 3.12 - TIPC Rev 9
+
+16. Character Table
+
+
+                           0-     1-     2-    3-     4-     5-     6-    7-
+                    -0                  SP     0      @      P      `     p
+                    -1                  !      1      A      Q      a     q
+                    -2                  "      2      B      R      b     r
+                    -3                  #      3      C      S      c     s
+                    -4                  $      4      D      T      d     t
+                    -5                  %      5      E      U      e     u
+                    -6                  &      6      F      V      f     v
+                    -7                   ‘     7      G      W      g     w
+                    -8                  (      8      H      X      h     x
+                    -9                  )      9      I      Y       i    y
+                    -A                  *      :      J      Z      j     z
+                    -B                  +      ;      K      [      k     {
+                    -C                  ,      <      L      \       l    |
+                    -D                  -      =      M      ]      m     }
+                    -E                  .      >      N      ^      n     ~
+                    -F                  /      ?      O      _      o
+
+
+Character 0x7F will print a blank space – the same as character 0x20.
+
+Character values from 0x00 to 0x1F are reserved and should not be used.
+Note: The font used in the table above is not the same as the font used on any panels!
+
+
+
+
+                                                                                         57
+                                                   TUBE Version 3.12 - TIPC Rev 9
+
+17. Panel Types
+
+Panel Type                       Code   Name             Map Filename
+CP200-BK Trackerball & Knob      0x03   CP200-BK         cp200bk-map.xml
+CP200-K Knob                     0x04   CP200-K          cp200k-map.xml
+CP200-TS Transport & Selection   0x05   CP200-TS         cp200ts-map.xml
+CP200-S Selection                0x09   CP200-S          cp200s-map.xml
+Wave / Wave2                     0x0A   Wave             wave-map.xml
+Element Trackerball              0x0C   Element-Tk       element-tk-map.xml
+Element Multifunction            0x0D   Element-Mf       element-mf-map.xml
+Element Knob                     0x0E   Element-Kb       element-kb-map.xml
+Element Button                   0x0F   Element-Bt       element-bt-map.xml
+Ripple                           0x11   Ripple           ripple-map.xml
+Arc Function                     0x12   Arc-FCN          tsunami-fcn-map.xml
+Arc Grading                      0x13   Arc-GRD          tsunami-grd-map.xml
+Arc Navigation                   0x14   Arc-NAV          tsunami-nav-map.xml
+
+
+
+
+                                                                               58
+                                                          TUBE Version 3.12 - TIPC Rev 9
+
+18. Panel Data for Unmanaged Mode
+This is the data which is returned by the UnmanagedPanelCapabilities (0x30) command.
+
+                                             Displays
+Panel Type                           Quantity Lines       Chars    Buttons    Encoders
+CP200-BK Trackerball & Knob             1         2         40       18          12
+CP200-K Knob                            4         2         40       12          12
+CP200-TS Transport & Selection          1         2         40       41          1
+CP200-S Selection                       4         2         40       24          0
+Wave / Wave2                            3         5         32       41          19
+Element Trackerball                     1         5         32        8          9
+Element Multifunction                   2         5         32       21          3
+Element Knob                            1         5         32       14          12
+Element Button                          1         5         32       14          0
+Ripple                                 1*        5*        32*        8          9
+Arc Grading                           21**       1**       10**      21          21
+Arc Navigation                        55**       1**       10**      55          3
+Arc Function                          40**       1**       10**      40          18
+
+Display Quantity – The number of displays per panel
+Display Lines – The number of lines per display
+Display Chars – The number of characters per line
+Buttons – The number of buttons per panel
+Encoders – The number of encoders (knobs & trackerball axes) per panel
+
+* Virtual Head-Up-Display only
+** Arc panels support unmanaged writes to the main display using the next available display id with
+3 lines of 19 characters. (For example, the Arc Grading control displays are ids 0 to 20 and the
+main panel display is id 21 when using the UnmanagedDisplayWrite (0xA1) command).
+
+
+
+
+                                                                                          59
+                                                    TUBE Version 3.12 - TIPC Rev 9
+
+19. Reserved Controls
+
+19.1. Actions
+     ID                      Details
+0x80000001         ALT functionality
+0x80000002         Next Knob Bank
+0x80000003         Previous Knob Bank
+0x80000004         Next Button Bank
+0x80000005         Previous Button Bank
+0x80000006         Next Trackerball Bank
+0x80000007         Previous Trackerball Bank
+0x80000008         <reserved>
+0x80000009         Next Mode
+0x8000000A         Previous Mode
+0x8000000B         Go To Mode
+0x8000000C         Toggle Jog/Shuttle
+0x8000000D         Toggle Mouse Emulation
+0x8000000E         Keyboard Shortcut
+0x8000000F         Show HUD
+0x80000010         Goto Knob Bank
+0x80000011         Goto Button Bank
+0x80000012         Goto Trackerball Bank
+0x80000013         Custom Action
+
+
+19.2. Parameters
+     ID                      Details
+0x81000001         Transport Ring (Jog / Shuttle)
+0x81000002         Keyboard Shortcut
+0x81000003         Custom Parameter
+
+
+19.3. Menus
+
+     ID                    Details
+0x82000001         Custom Menu
+
+
+
+
+                                                                               60
+                            TUBE Version 3.12 - TIPC Rev 9
+
+20. Panel Control Layouts
+
+Encoder IDs are in red
+Button IDs are in black
+Display IDs are in blue
+
+
+20.1. Wave / Wave2
+
+
+
+
+                                                       61
+                                   TUBE Version 3.12 - TIPC Rev 9
+
+20.2. Element-Tk (Trackerball)
+
+
+
+
+20.3. Element-Mf (Multifunction)
+
+
+
+
+                                                              62
+                            TUBE Version 3.12 - TIPC Rev 9
+
+20.4. Element-Kb (Knob)
+
+
+
+
+20.5. Element-Bt (Button)
+
+
+
+
+                                                       63
+                                                TUBE Version 3.12 - TIPC Rev 9
+
+20.6. Ripple
+
+Supports virtual Head-Up-Display as display 0
+
+
+
+
+                                                                           64
+                    TUBE Version 3.12 - TIPC Rev 9
+
+20.7. Arc Grading
+
+
+
+
+                                               65
+                       TUBE Version 3.12 - TIPC Rev 9
+
+20.8. Arc Navigation
+
+
+
+
+                                                  66
+                     TUBE Version 3.12 - TIPC Rev 9
+
+20.9. Arc Function
+
+
+
+
+                                                67
+                  TUBE Version 3.12 - TIPC Rev 9
+
+20.10. CP200-BK
+
+
+
+
+                                             68
+                  TUBE Version 3.12 - TIPC Rev 9
+
+20.11. CP200-TS
+
+
+
+
+                                             69
+                 TUBE Version 3.12 - TIPC Rev 9
+
+20.12. CP200-K
+
+
+
+
+                                            70
+                 TUBE Version 3.12 - TIPC Rev 9
+
+20.13. CP200-S
+
+
+
+
+                                            71
+

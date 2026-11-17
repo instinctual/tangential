@@ -1,0 +1,37 @@
+{
+  "host": "ws104",
+  "checked_at_utc": "2026-11-16T22:36:14.498051+00:00",
+  "device": "Binepad KnobX1",
+  "usb_id": "5831:4249",
+  "via_protocol_version": 9,
+  "vial_protocol_version": 6,
+  "configuration_getters_successful": 31,
+  "programmable_layers": 5,
+  "current_base_layer": {
+    "clockwise": "Volume up",
+    "counterclockwise": "Volume down",
+    "knob_press": "Mute",
+    "small_button": "Layer Jump (custom keycode 0x7e02)"
+  },
+  "observed_input_reports": {
+    "04e900": 4,
+    "040000": 8,
+    "04ea00": 3,
+    "04e200": 1
+  },
+  "rotation_both_directions_verified": true,
+  "knob_press_and_release_verified": true,
+  "observed_button_hold_seconds": [
+    0.236
+  ],
+  "monitor_completed": true,
+  "firmware_flashed": false,
+  "device_mapping_changed_by_inspection": false,
+  "bootloader_tested": false,
+  "tangent_emulation_tested": false,
+  "baseline_is_firmware_image_backup": false,
+  "evidence_files": [
+    "ws104-knobx1-baseline-20261116.json",
+    "ws104-knobx1-inputs-20261116.jsonl"
+  ]
+}

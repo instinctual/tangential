@@ -1,0 +1,13 @@
+[
+  {
+    "utc": "2026-11-16T23:02:36.509560+00:00",
+    "sysfs": "/sys/bus/usb/devices/5-5.4.4",
+    "manufacturer": "LeafLabs",
+    "product": "Maple 003",
+    "serial": "LLM 003",
+    "bcdDevice": "0201",
+    "busnum": "5",
+    "devnum": "8",
+    "descriptors_hex": "1201000100000040af1e030001020102030109022d0001010080320904000000fe0102040904000100fe0102050904000200fe010206092103ff0000041001"
+  }
+]

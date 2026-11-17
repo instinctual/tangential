@@ -1,0 +1,746 @@
+{
+  "source": "/opt/Autodesk/presets/2027.2/tangentPanel/element-mf-map.xml",
+  "source_sha256": "72492e2c4517392c99583ae16f962eb5badcd9bcfc8fb3646e8a7db6baa69cec",
+  "modes": [
+    {
+      "id": "0x00040000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00050000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00060000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00070000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00100000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00080000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00081000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00082000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00090000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00025000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00026000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00027000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00028000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00032000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00033000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00034000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00035000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00030000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00031000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00036000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00037000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00130000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00110000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00120000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00140000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00150000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00160000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00180000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00210000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00220000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00230000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00240000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00250000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00260000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00280000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00038000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    },
+    {
+      "id": "0x00039000",
+      "controls": {
+        "Button:14": {
+          "key": "0x20000000",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Button:15": {
+          "key": "0x20000089",
+          "argument": null,
+          "sensitivity": null
+        },
+        "Encoder:2": {
+          "key": "0x81000001",
+          "argument": null,
+          "sensitivity": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Preserve archived firmware, captures, and vendor research byte for byte.
+artifacts/** -text

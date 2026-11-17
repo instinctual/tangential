@@ -1,0 +1,31 @@
+{
+  "saved_at_utc": "2026-11-16T22:40:35.864213+00:00",
+  "source_page": "https://www.tangentwave.co.uk/developer_support/",
+  "description": "Previously downloaded vendor SDK reference material; sample.c is vendor sample code, not a project bridge implementation.",
+  "files": [
+    {
+      "file": "tangent-developer-support.zip",
+      "bytes": 2974037,
+      "sha256": "437d347033571e8f32821f1855d47d1bec25599209c5569f44d56668b197abf1",
+      "copied_from": "/tmp/iwit-tangent-developer-support.zip"
+    },
+    {
+      "file": "tube-api.txt",
+      "bytes": 145182,
+      "sha256": "7afdf3fa259dbc570b0887a776efac2763330c3e5ebb8875ad824d4cce595396",
+      "copied_from": "/tmp/iwit-tangent-research/tube-api.txt"
+    },
+    {
+      "file": "development-support.txt",
+      "bytes": 15936,
+      "sha256": "1eeb978d0e537a069d7a5b1bd9c6b80564d6cacdce98f906b7c5b54638ba2eec",
+      "copied_from": "/tmp/iwit-tangent-research/development-support.txt"
+    },
+    {
+      "file": "sample.c",
+      "bytes": 73967,
+      "sha256": "4ceea89a97e810f83978fa23e98c74417e30b98cf09780a7d028dd2875fe71c8",
+      "copied_from": "/tmp/iwit-tangent-research/sample.c"
+    }
+  ]
+}

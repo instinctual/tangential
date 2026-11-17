@@ -1,0 +1,17 @@
+{
+  "utc": "2026-11-16T23:05:16.812820+00:00",
+  "bytes": 122880,
+  "sha256": "a03fd94c015aa069ed80102acd57c9a7c2f316d58d8a2eafb2925ca942abca90",
+  "identical_independent_reads": true,
+  "start_address": "0x08002000",
+  "end_address_exclusive": "0x08020000",
+  "initial_stack_pointer": "0x20000400",
+  "reset_vector": "0x8002239",
+  "bootloader_region_included": false,
+  "original_firmware_and_flash_settings_included": true,
+  "readback_tool": "dfu-util 0.11",
+  "readback_exit_code": 74,
+  "readback_note": "Both reads delivered exactly 122880 identical bytes, then the bootloader stalled the extra end-of-region request. -Z controls progress size in dfu-util 0.11; it does not prevent the final request. Restore has not been tested.",
+  "restore_tested": false,
+  "firmware_written_to_device": false
+}

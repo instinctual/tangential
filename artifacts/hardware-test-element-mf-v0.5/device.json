@@ -1,0 +1,21 @@
+{
+  "idVendor": "04d8",
+  "idProduct": "fa1a",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Mf transport",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "21",
+  "diagnostics": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 36642,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 5
+  },
+  "recovery_entry": "Guarded vendor USB boot request on v0.4; verified Maple DFU before flashing v0.5",
+  "flash_result": "7764 bytes downloaded, status 0; exit 74 following reset; runtime revision 5 verified"
+}

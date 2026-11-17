@@ -1,0 +1,24 @@
+[
+  {
+    "ports": [
+      58486,
+      64246
+    ],
+    "application_definition": [
+      "Autodesk Flare",
+      "",
+      ""
+    ]
+  },
+  {
+    "ports": [
+      58486,
+      64246
+    ],
+    "application_definition": [
+      "Autodesk Flare",
+      "/opt/Autodesk/presets/2027.2/tangentPanel",
+      ""
+    ]
+  }
+]

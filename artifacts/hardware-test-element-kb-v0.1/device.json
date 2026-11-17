@@ -1,0 +1,11 @@
+{
+  "sysfs": "/sys/bus/usb/devices/5-5.4.4",
+  "idProduct": "fa1e",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Kb emulator",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "13",
+  "bcdDevice": "0120",
+  "descriptors_hex": "1201000200000008d8041efa2001010203020902290001010080fa090400000203000000092111010001221b00070581030f001407050103400010090229000102008032090400000203000000092111010001221b00070581030f001407050103400010"
+}

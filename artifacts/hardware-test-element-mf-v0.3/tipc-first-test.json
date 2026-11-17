@@ -1,0 +1,53 @@
+{
+  "capture": "artifacts/hardware-test-element-mf-v0.3/tipc-controls.pcap",
+  "flows": [
+    {
+      "ports": [
+        58486,
+        64246
+      ],
+      "command_counts": {
+        "0x85": 24,
+        "0xa3": 4987,
+        "0xa2": 28
+      },
+      "events": [],
+      "trailing_bytes": 0,
+      "warning": null
+    },
+    {
+      "ports": [
+        64246,
+        58486
+      ],
+      "command_counts": {
+        "0x08": 2,
+        "0x0b": 2
+      },
+      "events": [
+        {
+          "timestamp_us": 1794874287337686,
+          "command": "ActionOn",
+          "control_id": "0x20000089"
+        },
+        {
+          "timestamp_us": 1794874287561645,
+          "command": "ActionOff",
+          "control_id": "0x20000089"
+        },
+        {
+          "timestamp_us": 1794874290665730,
+          "command": "ActionOn",
+          "control_id": "0x20000089"
+        },
+        {
+          "timestamp_us": 1794874290889686,
+          "command": "ActionOff",
+          "control_id": "0x20000089"
+        }
+      ],
+      "trailing_bytes": 0,
+      "warning": null
+    }
+  ]
+}

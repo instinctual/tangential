@@ -1,0 +1,70 @@
+{
+  "utc": "2026-11-16T22:51:54.267162+00:00",
+  "usb_id": "04d8:fa1e",
+  "bus": 1,
+  "address": 2,
+  "device_revision": 288,
+  "manufacturer": "Tangent Wave Ltd.",
+  "product": "element-Kb",
+  "serial": "55034850",
+  "configurations": [
+    {
+      "value": 1,
+      "max_power_units_2ma": 250,
+      "interfaces": [
+        {
+          "number": 0,
+          "alternate": 0,
+          "class": 3,
+          "subclass": 0,
+          "protocol": 0,
+          "extra_descriptors_hex": "092111010001221b00",
+          "endpoints": [
+            {
+              "address": 129,
+              "attributes": 3,
+              "max_packet_size": 15,
+              "interval": 20
+            },
+            {
+              "address": 1,
+              "attributes": 3,
+              "max_packet_size": 64,
+              "interval": 16
+            }
+          ],
+          "hid_descriptor_read_error": "[Errno 16] Resource busy"
+        }
+      ]
+    },
+    {
+      "value": 2,
+      "max_power_units_2ma": 50,
+      "interfaces": [
+        {
+          "number": 0,
+          "alternate": 0,
+          "class": 3,
+          "subclass": 0,
+          "protocol": 0,
+          "extra_descriptors_hex": "092111010001221b00",
+          "endpoints": [
+            {
+              "address": 129,
+              "attributes": 3,
+              "max_packet_size": 15,
+              "interval": 20
+            },
+            {
+              "address": 1,
+              "attributes": 3,
+              "max_packet_size": 64,
+              "interval": 16
+            }
+          ],
+          "hid_descriptor_read_error": "[Errno 16] Resource busy"
+        }
+      ]
+    }
+  ]
+}

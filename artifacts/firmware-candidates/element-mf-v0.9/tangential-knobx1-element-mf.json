@@ -1,0 +1,32 @@
+{
+  "status": "Experimental; not yet flashed or verified with Tangent Hub/Flame",
+  "usb_identity": "04d8:fa1a",
+  "usb_serial": "99000101",
+  "emulated_panel": "Element Mf",
+  "input": "encoder 2 (Jog), button 15 (Play), button 14 (Stop)",
+  "required_mapping": "Flame's shipped default profile; no custom map",
+  "play_stop_behavior": "Tap large knob for native Play on release; hold 300 ms for native Stop",
+  "playback_state_tracking": "None required; gestures send explicit native actions",
+  "jog_counts_per_detent": 74,
+  "underglow": {
+    "led_count": 2,
+    "driver": "WS2812",
+    "pin": "PC13",
+    "rgb": [
+      3,
+      3,
+      3
+    ],
+    "behavior": "Steady dim white; set once at startup"
+  },
+  "bootloader": "Existing STM32duino; application origin 0x08002000",
+  "recovery": "Vendor USB boot request verified on v0.3; cold-start with small button also worked. Runtime small-button hold remains unverified.",
+  "development_protocol_revision": 9,
+  "image_payload_bytes": 7944,
+  "image_file_bytes": 7960,
+  "sha256": "2213a9040ee88d1baf28135bf9d1268b3772a2f31ac87ae2eb0dccfd78a7969c",
+  "initial_stack_pointer": "0x20005000",
+  "reset_vector": "0x80036e1",
+  "compiler": "arm-none-eabi-gcc (xPack GNU Arm Embedded GCC x86_64) 14.2.1 20241119",
+  "libopencm3_commit": "a3977e14519e4cff8d1feb96445655465797908b"
+}

@@ -1,0 +1,27 @@
+{
+  "firmware_revision": 5,
+  "operator_report": "Play, hold-to-Stop, and Jog all work",
+  "stop_hold_ms": 600,
+  "native_transport_events": 109,
+  "jog_histogram": {
+    "-1": 54,
+    "1": 50,
+    "2": 2,
+    "-2": 3
+  },
+  "shuttle_values": [
+    0
+  ],
+  "native_action_events": {
+    "ActionOn:0x20000089": 5,
+    "ActionOff:0x20000089": 5,
+    "ActionOn:0x20000000": 2,
+    "ActionOff:0x20000000": 2
+  },
+  "usb_input_reports": 130,
+  "usb_report_lengths": [
+    15
+  ],
+  "unused_bytes_nonzero": 0,
+  "capture_warnings": []
+}

@@ -1,0 +1,128 @@
+{
+  "capture": "artifacts/element-kb-20261116/reconnect.pcap",
+  "packets": 72,
+  "record_counts": [
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "S",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 3
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "C",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 3
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "C",
+      "transfer_type": 1,
+      "endpoint": 129,
+      "count": 1
+    },
+    {
+      "bus": 1,
+      "device": 0,
+      "event": "S",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 1
+    },
+    {
+      "bus": 1,
+      "device": 0,
+      "event": "C",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 1
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "S",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 16
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "C",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 16
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "S",
+      "transfer_type": 2,
+      "endpoint": 0,
+      "count": 2
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "C",
+      "transfer_type": 2,
+      "endpoint": 0,
+      "count": 2
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "S",
+      "transfer_type": 1,
+      "endpoint": 129,
+      "count": 2
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "C",
+      "transfer_type": 1,
+      "endpoint": 129,
+      "count": 1
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "S",
+      "transfer_type": 1,
+      "endpoint": 1,
+      "count": 12
+    },
+    {
+      "bus": 1,
+      "device": 3,
+      "event": "C",
+      "transfer_type": 1,
+      "endpoint": 1,
+      "count": 12
+    }
+  ],
+  "hid_report_descriptors": [
+    "05010908a10105f009017508950f810205f00902750895409102c0"
+  ],
+  "input_events": [],
+  "output_reports": [
+    "0a000009202020202020202020",
+    "0a010009202020202020202020",
+    "0a020009202020202020202020",
+    "0a030009202020202020202020",
+    "0a040009202020202020202020",
+    "0a050009202020202020202020",
+    "0a060009202020202020202020",
+    "0a070009202020202020202020",
+    "0a080009202020202020202020",
+    "0a090009202020202020202020",
+    "0a0a0009202020202020202020",
+    "0a0b0009202020202020202020"
+  ]
+}

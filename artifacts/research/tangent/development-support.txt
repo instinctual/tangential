@@ -1,0 +1,367 @@
+tangent
+                                 TUBE
+                         Tangent Unified
+                          Bridge Engine
+
+                           Development
+                             Support
+                                Version 3.12
+                                 27th July 2023
+
+
+
+
+       Tangent Wave Ltd.
+   Crowbush Farm, Luton Road,
+    Toddington, LU5 6HU, UK.
+
+ www.tangentwave.co.uk/support
+                                                          TUBE Development Support 3.12
+
+Revision History
+   Version
+             Changes
+   Number
+   1.2       First Release – OSX & Linux Versions.
+   1.2.1     Additional ReadMe notes added to Linux Version re missing USB library
+             Windows Version added.
+   1.3       New Hub version which supports the Element panels.
+   1.4       API change to add new TIPC command.
+             New Hub version incorporating new command plus bug fixes for default map
+             XML file reading glitch.
+   1.5       Significant TIPC changes.
+             New Hub v0.1.3 which incorporates the TIPC changes.
+   1.6       Addition of some new TIPC commands.
+             Element panel firmware update required.
+   1.7       New development Hub v1.0.x
+             Element panel firmware update required.
+   1.8       No change.
+   1.9       The OSX Tangent Mapper can be used to generate Map files for applications
+             which do not run on OSX by using our MockApplication.
+   2.0       New development Hub v1.0.4 incorporating additional functionality for the
+             Tangent Mapper and Synapse.
+             Synapse utility included for Win and Linux distributions.
+   2.1       OSX Mapper Utility has shortcut to produce Default Map XML files.
+   2.2       New development Hub v1.0.7 with trackerball bug fix.
+             Synapse and Mapper included for all platforms.
+             Hub User Manual replaced by the Hub Installation Manual along with extended
+             Mapper User Manual.
+   2.3       Updated for new release.
+   2.4       Updated for new release and improved developer pack format.
+   2.5       Added support for the new Ripple panel.
+   2.6       Added details of the Ripple to element-Tk emulation option.
+   2.7       Updated for new release.
+   2.8       Added support for virtual Head-Up-Display (not available on all platforms).
+   2.9       Updated for new release with improved HUD and panel display labelling.
+   3.0       Updated for new release.
+   3.1       Updated for new release.
+   3.2       API change to add new TIPC commands.
+   3.7       Added support for new Arc panels.
+             API changes for custom control support.
+   3.8       Updated for new release of Tangent Hub 1.5.2.
+   3.10      Updated for new release of Tangent Hub 1.6.4 and TIPC revision 8.
+   3.11      New release for Tangent Hub 1.7.9 with control training.
+   3.12      Updated to TIPC Rev9
+
+
+
+Introduction
+This document should be used in association with the TUBE API document. The purpose of
+this is to explain some changes that have been made between releases but do not
+necessarily appear in the TUBE document. These notes should indicate what you need to do
+when upgrading to the latest version of the TUBE Hub and Mapper.
+
+It is important that any essential changes detailed below are made before using the
+latest Hub with your application. Such essential changes are indicated in red.
+
+                                                                                           2
+                                                          TUBE Development Support 3.12
+
+
+When installing the latest files please also be sure to read the ReadMe files in the directory
+which corresponds to your host OS.
+
+Version 3.12
+Updated to latest release software versions and documentation for TangentHub v1.8.3.
+
+Version 3.11
+Updated to latest release software versions and documentation for TangentHub v1.7.9.
+
+Version 3.10
+Updated to latest release software versions and documentation for TangentHub v1.6.4.
+
+Updated TIPC revision 8 with new commands for plugin focus handling and optionally
+extended application definition data.
+
+Version 3.8
+Updated to latest release software versions and documentation for TangentHub v1.5.2.
+
+Version 3.7
+Added support for new Arc panels.
+
+Updated for TIPC revision 6 with new commands to allow custom controls that are identified
+by string arguments.
+
+Updated to latest release software versions and documentation for TangentHub v1.4.8.
+
+Version 3.2
+Updated for TIPC revision 4 with new commands that allow applications to request panel
+connection states. Implemented in TangentHub v1.3.3.
+
+Version 3.1
+Updated to latest release software versions and documentation for TangentHub v1.3.2.
+
+Version 3.0
+Updated to latest release software versions and documentation.
+
+Version 2.9
+Updated for new release. Reordered the Ripple HUD trackerball labels to better match the
+hardware configuration. Same change applied to the element-Tk panel display for
+consistency.
+
+                                                                                            3
+                                                         TUBE Development Support 3.12
+
+
+Version 2.8
+Updated for public release with support for the virtual Head-Up-Display.
+
+Version 2.7
+Updated for public release with support for Ripple panels including element-Tk emulation.
+
+The panel emulation UI has been moved from the Tangent Mapper control map settings
+window to the panel configuration window, as it is a more logical location.
+
+Version 2.6
+Added details of the option for Ripples to emulate element-Tk panels so they can be used
+with applications that currently only support element panels.
+
+The option is selected via the control map settings menu in the Tangent Mapper application
+and is set per application. If emulation is active, the Ripple panel will appear to the
+application as if it was a standard element-Tk and use any control mappings set on the
+element-Tk. If emulation is not active, the panel appears as a standard Ripple panel with its
+own set of control mappings.
+
+The developer pack no longer contains documentation that is available online. You can
+download the latest versions of the documents from our website along with the latest
+software.
+
+Version 2.5
+Added support for the new Ripple panel.
+
+Version 2.4
+Updated for new release and improved developer pack format.
+
+We now recommend that developers install and work with the current release version of the
+Tangent Hub software that can be downloaded from our website along with this developer
+pack.
+
+The developer pack contains sample application-side code that shows how to connect to
+and communicate with the Tangent Hub service.
+
+The developer pack also contains a debug version of the Tangent Hub that writes logging
+information to standard-out at runtime that may be used to diagnose any problems that you
+encounter.
+
+In order to use the debug version of the Hub you MUST stop the installed version from
+running otherwise when you try to run the debug version you will get an error as shown:
+
+
+
+
+                                                                                            4
+                                                            TUBE Development Support 3.12
+
+
+
+
+This specific error means there is another Hub already running in the background which
+must be quit before you can continue with the debug version.
+
+There are platform specific instructions on how to temporarily stop the installed version from
+running in the developer pack read-me files. Alternatively you can simply uninstall the Hub to
+then manually run the debug version in its place.
+
+The ‘Save As Defaults’ option in the Developer menu has been improved to automatically
+update the application’s controls XML file with the required mode definition section. In earlier
+versions this had to be done manually to complete the conversion of user map data to
+default map data.
+With the new default mode processing, once the first set of panel default files are generated,
+it is important all future changes must be made based on the these new defaults, and not re-
+using the original user control map.
+
+If you reload your user control map to modify the layout you will end up with duplicate
+modes, with the user defined modes sitting alongside the ones now defined for the
+application in the controls file.
+
+Version 2.3
+Updated to latest release software versions and documentation.
+
+Version 2.2
+This is a maintenance update to bring in the latest Hub for developers. It also includes the
+Tangent Synapse and Tangent Mapper applications for all platforms.
+
+The Developer menu in the Mapper is now hidden by default and can be shown by using the
+keyboard shortcut Shift+Ctrl+D on Windows and Linux or Shift+Cmd+D on Macs.
+
+Version 2.1
+Tangent Hub v1.0.5 or later is required for this functionality
+
+When creating a User Map file, all the mappings for each panel are saved into a single file.
+This is in contrast to the Default Map files; there being separate files for each panel type.
+The Tangent Mapper now has an additional menu to allow exportation of individual Default
+Map XML files for each panel type. As this functionality is not intended for users it will not be
+documented in the Mapper Manual.
+
+                                                                                               5
+                                                           TUBE Development Support 3.12
+
+
+The Mapper now has a new top-level Menu: Developer. If this is not visible then hit ctrl-
+shift-d. The only option under this menu is Save Defaults. Choosing this will rename the
+current Default Map XML files as xxx-map.xml.old and save out new files.
+
+Version 2.0
+The Hub has been updated to incorporate some additional features for the Mapper and
+Synapse applications. One being that the version number of the Hub is reported to these
+utilities.
+
+See the Tangent Mapper User Manual which is included with this distribution for details of
+how to operate this utility.
+
+The Synapse utility is included in the Windows and Linux distributions as it includes some
+basic functionality which is present in the Tangent Mapper for OSX e.g. confirmation of
+which panels are connected and the ability to create and edit the panel_list.xml file.
+
+See the Tangent Hub User Manual which is included with this distribution for details of how
+to operate the utility.
+
+
+
+Version 1.9
+This pack includes the OSX version of the Panel Mapper. To use this to generate Map files
+for use on Windows or Linux it is necessary to use our MockApplication utility to make the
+Mapper think that it is talking to your application.
+
+Inside the MockApplication directory there is a sub-directory sys. Place a copy of your
+controls.xml and default map files in here.
+
+Run the Hub, MockApplication and Panel Mapper.
+
+In the Mapper, you may first need to change the System Panel Configuration to reflect the
+panel types which you wish to generate Maps for.
+
+You will see that the Mapper shows the Mappings defined in your default Maps. Now you
+can make changes and save out an altered Map file. As the Mapper cannot overwrite the
+Default Map files User Maps are generated instead. Each User Map contains the mappings
+for all panels which are defined as active. This is a single file so you will need to copy the
+appropriate lines of XML from the User Map file into your default Map files for each panel
+type.
+
+The MockApplication supplied with this version of the Dev Pack will save the User Map files
+into: ~/Library/Application Support/Tangent/Hub/MockAppName/<mapname>.xml
+
+Version 1.7
+Element panel firmware v1.16 or later is required for this version.
+
+There are now two types of Hub application in circulation: The Distribution Hub and the
+Development Hub. The difference being that the Distribution Hub runs silently as a
+
+                                                                                            6
+                                                            TUBE Development Support 3.12
+
+background service while the Development Hub must be manually started and runs in a
+terminal window showing debug information. The Distribution Hub will be running on
+machines when users download and run the Hub Installer from the Support pages of our
+website. The Development Hub is only available as part of this Developer Support Pack.
+
+Only once instance of the Hub should be run at any time so it’s recommended that the
+Distribution Hub is not installed on any machines which will be used for development work.
+
+This version incorporates the Development Hub build v1.0.0.
+
+The latest Distribution Hub can always be downloaded from our website:
+
+www.tangentwave.co.uk/support
+
+Version 1.6
+Element panel firmware v1.15 or later is required for this version.
+
+
+
+
+Version 1.5
+Configuration file: panel-list.xml
+
+This file will normally be created by the Mapper Utility when it is first run. However, until this
+is available for your platform a hand-built version must be created in the specified directory.
+Without this file Hub versions 0.1.3 onwards will report that no panels are configured for
+connection and will not attempt to connect to any panels.
+
+    Windows XP:
+      C:\Documents and Settings\All Users\Application Data\Tangent\Hub\panel-list.xml
+
+
+    Windows 7:
+      C:\ProgramData\Tangent\Hub\panel-list.xml
+
+    Linux:
+       /var/opt/Tangent/Hub/panel-list.xml
+
+    OS X:
+      /Library/Application Support/Tangent/Hub/panel-list.xml
+
+A sample panel-list.xml file has been supplied with this package so please copy it into the
+relevant directory and edit as required.
+
+This file is used to tell the hub what panels to expect to be connected, their Serial Numbers
+and the Number tag to associate with each panel – if applicable.
+
+The Panel Nodes may have an additional two attributes:
+   • number (attribute)
+
+
+                                                                                                7
+                                                        TUBE Development Support 3.12
+
+   •   serial (attribute)
+
+For the situation when there is only one panel of each type is configured for use it is not
+necessary to complete either the serial or number attributes as these will be automatically
+configured by the Hub when panels are detected as connected.
+For the situation when multiple panels of the same type are required then both the serial
+and number attributes are mandatory.
+
+The number attribute defines the mapping which is to be applied to this panel. Either from
+the system default map for the file type or from the user map file which has been customised
+by the operator. The value should start be a unique positive integer. See the Map XML
+section in the TUBE document for more details of how this value is used.
+
+The serial attribute associates a particular panel’s serial number to the number attribute.
+This means that each panel will always have the same mapping applied. Without this it
+would be undetermined which panel would receive which mapping.
+
+Example syntax:
+    <Panel type="Element-Bt" number="1" serial="00000042"/>
+    <Panel type="Element-Bt" number="2" serial="00000043"/>
+
+
+InitiateComms
+
+An extra field has been added to the InitiateComms command: protocolRev.
+This is now the first field in the command so it is important that the decode routine within
+your application is altered to handle this.
+
+Inter Process Comms streamlining
+
+We have improved the handling of IPC data by combining multiple commands into single
+messages wherever possible. This is particularly relevant when trackerballs are moved
+causing two encoders to change at the same time. In previous versions this resulted in two
+separate messages to be generated, one for each encoder. Now both encoder change
+commands are sent in the same message.
+
+
+
+
+                                                                                          8
+

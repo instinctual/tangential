@@ -1,0 +1,6 @@
+{
+  "request": "GET_DESCRIPTOR HID report, interface 0",
+  "claimed_interface": false,
+  "result": -1,
+  "report_descriptor_hex": null
+}

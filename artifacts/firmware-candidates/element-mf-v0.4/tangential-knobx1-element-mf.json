@@ -1,0 +1,20 @@
+{
+  "status": "Experimental; not yet flashed or verified with Tangent Hub/Flame",
+  "usb_identity": "04d8:fa1a",
+  "usb_serial": "99000101",
+  "emulated_panel": "Element Mf",
+  "input": "encoder 2 (Jog) and button 15 (Play)",
+  "required_mapping": "Flame's shipped default profile; no custom map",
+  "play_stop_toggle": "Not implemented: native Play is not a toggle; native feedback unresolved",
+  "jog_counts_per_detent": 74,
+  "bootloader": "Existing STM32duino; application origin 0x08002000",
+  "recovery": "Guarded vendor USB boot request; small-button hold and cold-start DFU window also available",
+  "development_protocol_revision": 4,
+  "image_payload_bytes": 7576,
+  "image_file_bytes": 7592,
+  "sha256": "fe1e112b91a655f8582a6c4a6b8e6b95460414d2e1eacf141217222ef368162b",
+  "initial_stack_pointer": "0x20005000",
+  "reset_vector": "0x8003571",
+  "compiler": "arm-none-eabi-gcc (xPack GNU Arm Embedded GCC x86_64) 14.2.1 20241119",
+  "libopencm3_commit": "a3977e14519e4cff8d1feb96445655465797908b"
+}

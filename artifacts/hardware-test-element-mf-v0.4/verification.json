@@ -1,0 +1,25 @@
+{
+  "firmware_revision": 4,
+  "operator_report": "Jog works both ways; large press starts playback, second press does not stop",
+  "native_transport_events": 467,
+  "jog_histogram": {
+    "1": 261,
+    "-1": 204,
+    "-2": 2
+  },
+  "shuttle_values": [
+    0
+  ],
+  "native_action_events": {
+    "ActionOn:0x20000089": 8,
+    "ActionOff:0x20000089": 8
+  },
+  "usb_input_reports": 493,
+  "usb_report_lengths": [
+    15
+  ],
+  "unused_bytes_nonzero": 0,
+  "heartbeat_output_reports": 7,
+  "playback_feedback_targets": {},
+  "capture_warnings": []
+}

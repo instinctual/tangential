@@ -1,0 +1,22 @@
+dfu-util 0.11
+
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2021 Tormod Volden and Stefan Schmidt
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+Please report bugs to http://sourceforge.net/p/dfu-util/tickets/
+
+Opening DFU capable USB device...
+Device ID 1eaf:0003
+Device DFU version 0110
+Claiming USB DFU Interface...
+Setting Alternate Interface #2 ...
+Determining device status...
+DFU state(2) = dfuIDLE, status(0) = No error condition is present
+DFU mode device DFU version 0110
+Device returned transfer size 1024
+Copying data from PC to DFU device
+Download	[                         ]   0%            0 bytesDownload	[==                       ]  11%         1024 bytesDownload	[=====                    ]  23%         2048 bytesDownload	[========                 ]  35%         3072 bytesDownload	[===========              ]  47%         4096 bytesDownload	[==============           ]  59%         5120 bytesDownload	[=================        ]  71%         6144 bytesDownload	[====================     ]  83%         7168 bytesDownload	[=======================  ]  94%         7576 bytesDownload	[=========================] 100%         7576 bytes
+Download done.
+DFU state(8) = dfuMANIFEST-WAIT-RESET, status(0) = No error condition is present
+Resetting USB to switch back to runtime mode
+Done!

@@ -1,0 +1,31 @@
+{
+  "platform": "Linux x86_64",
+  "build_python": "3.12 or newer",
+  "sources": [
+    {
+      "id": "arm",
+      "archive": "xpack-arm-none-eabi-gcc-14.2.1-1.1-linux-x64.tar.gz",
+      "url": "https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v14.2.1-1.1/xpack-arm-none-eabi-gcc-14.2.1-1.1-linux-x64.tar.gz",
+      "sha256": "ed8c7d207a85d00da22b90cf80ab3b0b2c7600509afadf6b7149644e9d4790a6",
+      "extract_parent": "toolchains",
+      "directory": "xpack-arm-none-eabi-gcc-14.2.1-1.1"
+    },
+    {
+      "id": "dfu",
+      "archive": "dfu-util-0.11.tar.gz",
+      "url": "https://dfu-util.sourceforge.net/releases/dfu-util-0.11.tar.gz",
+      "sha256": "b4b53ba21a82ef7e3d4c47df2952adf5fa494f499b6b0b57c58c5d04ae8ff19e",
+      "extract_parent": "vendor",
+      "directory": "dfu-util-0.11"
+    },
+    {
+      "id": "usb",
+      "archive": "libopencm3-a3977e14519e4cff8d1feb96445655465797908b.tar.gz",
+      "url": "https://codeload.github.com/libopencm3/libopencm3/tar.gz/a3977e14519e4cff8d1feb96445655465797908b",
+      "sha256": "7d9c78b85f0896cbf72b03dab49c027e7a0d6770813dae9cb86fcd9dca9560ec",
+      "extract_parent": "vendor",
+      "directory": "libopencm3-a3977e14519e4cff8d1feb96445655465797908b"
+    }
+  ],
+  "qmk_baseline_commit": "8252b6309752f0be6882c387e15989ba51323d8f"
+}
