@@ -23,6 +23,8 @@ An earlier Element Kb prototype established USB/Hub recognition and working rota
 
 The current v0.11 [firmware snapshot](artifacts/firmware-candidates/element-mf-v0.11/) and [installation record](artifacts/hardware-test-element-mf-v0.11/device.json) are preserved. The previous [v0.10 image](artifacts/firmware-candidates/element-mf-v0.10/) remains available. The [v0.5 transport verification](artifacts/hardware-test-element-mf-v0.5/verification.json) records the earlier operator-confirmed controls and native Tangent traffic. Build manifests retain their original pre-flash status; installation records document subsequent hardware results.
 
+The four-page implementation and its hardware evidence were published in [commit `60e5d67`](https://github.com/instinctual/tangential/commit/60e5d67dad6c6e8bc4147c1b1ac30897f9a55f7e). The [reconnection check](artifacts/hardware-test-element-mf-v0.11/reconnected.json) confirms the final installed revision and page 1 after reconnecting.
+
 ## Build and test
 
 Setup requires Linux x86_64, Python 3.12+, a native C compiler, Make, pkg-config, and libusb development headers. The hardware inspection CLI itself uses only Python's standard library.
