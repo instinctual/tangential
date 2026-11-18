@@ -1,6 +1,6 @@
 /* Tangential: experimental KnobX1 Element-Mf USB firmware.
  * GPIO assignments: published QMK binepad/knobx1 definition.
- * Shared Element USB layout: captured from the owner's Element Kb.
+ * Shared Element USB layout: captured from the owner's Element Kb and Mf.
  * Mf identity/report length: installed Tangent Hub; transport assignments:
  * Flame's shipped element-mf-map.xml. No custom map is required.
  * No flash-writing code is linked; the existing bootloader stays in place.
@@ -18,6 +18,7 @@
 #include <libopencm3/usb/hid.h>
 #include "element_report.h"
 #include "transport_gesture.h"
+#include "transport_pages.h"
 #include "underglow.h"
 
 static volatile uint32_t milliseconds;
@@ -30,6 +31,7 @@ static uint8_t button_queue[16];
 static unsigned queue_read, queue_write;
 static uint8_t sent_buttons;
 static transport_gesture gesture;
+static uint8_t selected_page;
 static int32_t pending_counts;
 static bool boot_requested;
 static uint8_t diagnostic_report[12];
@@ -85,7 +87,7 @@ static const struct usb_config_descriptor configurations[] = {
      .interface = interfaces},
 };
 
-/* Keep a separate numeric serial so the real panel can remain connected. */
+/* A distinct numeric serial lets development tools reject real panels. */
 static const char *const strings[] = {
     "Tangential", "KnobX1 Element-Mf transport", "99000101"
 };
@@ -141,8 +143,8 @@ static enum usbd_request_return_codes development_control(
         for (unsigned i = 0; i < 4; i++) diagnostic_report[4 + i] = now >> (8 * i);
         diagnostic_report[8] = configured;
         diagnostic_report[9] = pressed;
-        diagnostic_report[10] = 10; /* Development protocol/build revision. */
-        diagnostic_report[11] = 0;
+        diagnostic_report[10] = 11; /* Development protocol/build revision. */
+        diagnostic_report[11] = selected_page + 1;
         *buffer = diagnostic_report;
         if (*length > sizeof(diagnostic_report)) *length = sizeof(diagnostic_report);
         return USBD_REQ_HANDLED;
@@ -188,9 +190,21 @@ static void output_received(usbd_device *device, uint8_t endpoint) {
     usbd_ep_read_packet(device, endpoint, buffer, sizeof(buffer));
 }
 
+static void update_page_indicators(void) {
+    gpio_clear(GPIOA, GPIO3 | GPIO4 | GPIO5 | GPIO6);
+    if (configured) gpio_set(GPIOA, GPIO6 >> selected_page);
+}
+
+static void select_next_page(void) {
+    selected_page = (selected_page + 1) % TRANSPORT_PAGE_COUNT;
+    /* Do not reinterpret buffered motion using the new control/direction. */
+    pending_counts = 0;
+    update_page_indicators();
+}
+
 static void reset_received(void) {
     configured = false;
-    gpio_clear(GPIOA, GPIO6);
+    update_page_indicators();
 }
 
 static void queue_button_events(const uint8_t *events, unsigned count) {
@@ -229,10 +243,8 @@ static void configuration_set(usbd_device *device, uint16_t value) {
          * IN byte with the OUT buffer. Advertise and transmit 15, reserve 16. */
         usbd_ep_setup(device, 0x81, USB_ENDPOINT_ATTR_INTERRUPT, 16, NULL);
         usbd_ep_setup(device, 0x01, USB_ENDPOINT_ATTR_INTERRUPT, 64, output_received);
-        gpio_set(GPIOA, GPIO6);
-    } else {
-        gpio_clear(GPIOA, GPIO6);
     }
+    update_page_indicators();
 }
 
 int main(void) {
@@ -279,14 +291,16 @@ int main(void) {
     };
     bool candidate_press = false;
     uint32_t candidate_since = milliseconds;
-    bool boot_button_down = false;
-    uint32_t boot_since = 0;
+    bool candidate_small = false;
+    bool small_pressed = false;
+    uint32_t small_since = milliseconds;
+    page_button_state page_button = {0};
     while (1) {
         usbd_poll(device);
         if (boot_requested) enter_bootloader();
         uint8_t next = (gpio_get(GPIOB, GPIO12) ? 1 : 0) | (gpio_get(GPIOB, GPIO13) ? 2 : 0);
         int8_t encoder_step = encoder_read_step(&encoder, next);
-        int32_t counts = encoder_step * ELEMENT_MF_JOG_COUNTS_PER_STEP;
+        int32_t counts = transport_page_counts(selected_page, encoder_step);
         if (configured && counts && pending_counts + counts <= 32767 &&
             pending_counts + counts >= -32767) {
             pending_counts += counts;
@@ -306,17 +320,24 @@ int main(void) {
             queue_button_events(events, count);
         }
 
-        bool small_down = !gpio_get(GPIOA, GPIO7);
-        if (small_down && !boot_button_down) boot_since = milliseconds;
-        if (small_down && (uint32_t)(milliseconds - boot_since) >= 2000) enter_bootloader();
-        boot_button_down = small_down;
+        bool raw_small = !gpio_get(GPIOA, GPIO7);
+        if (raw_small != candidate_small) {
+            candidate_small = raw_small;
+            small_since = milliseconds;
+        }
+        if (small_pressed != candidate_small && (uint32_t)(milliseconds - small_since) >= 5) {
+            small_pressed = candidate_small;
+        }
+        page_button_action page_action = page_button_update(&page_button, small_pressed, milliseconds);
+        if (page_action == PAGE_BUTTON_BOOTLOADER) enter_bootloader();
+        if (page_action == PAGE_BUTTON_ADVANCE) select_next_page();
 
         if (configured && (pending_counts || queue_read != queue_write)) {
             bool queued = queue_read != queue_write;
             uint8_t report_buttons = queued ? button_queue[queue_read] : sent_buttons;
             int8_t step = pending_counts > 127 ? 127 : pending_counts < -128 ? -128 : pending_counts;
             uint8_t report[15];
-            element_mf_transport_report(report, report_buttons, step);
+            element_mf_transport_report(report, report_buttons, step, transport_page_encoder(selected_page));
             if (usbd_ep_write_packet(device, 0x81, report, sizeof(report)) == sizeof(report)) {
                 pending_counts -= step;
                 if (queued) queue_read = (queue_read + 1) % 16;

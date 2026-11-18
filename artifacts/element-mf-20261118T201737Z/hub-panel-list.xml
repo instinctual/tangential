@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TangentWave fileType="PanelList" fileVersion="3.0">
+    <Panel type="Ripple" number="1" serial="0"/>
+    <Panel type="Element-Tk" number="1" serial="0"/>
+    <Panel type="Element-Mf" number="1" serial="99000101"/>
+    <Panel type="Element-Kb" number="1" serial="99000101"/>
+    <Panel type="Element-Bt" number="1" serial="0"/>
+    <Panel type="Wave"/>
+    <Panel type="Arc-Function" number="1" serial="0"/>
+    <Panel type="Arc-Grading" number="1" serial="0"/>
+    <Panel type="Arc-Navigation" number="1" serial="0"/>
+    <Options>
+        <DHCP enabled="true"/>
+    </Options>
+</TangentWave>

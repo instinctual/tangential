@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-18T20:35:14.282947+00:00",
+  "commands": [
+    "make test",
+    "make firmware"
+  ],
+  "python_tests_passed": 23,
+  "native_test_programs_passed": 2,
+  "candidate_sha256": "9b422e19e642746201313b41129174da16c791d44403078b063c3f28e6514a61",
+  "flashed": false,
+  "pending": "Real Mf trackball capture, then KnobX1 reconnection and live page testing"
+}

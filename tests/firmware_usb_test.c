@@ -9,6 +9,7 @@
 static usbd_control_callback installed_control;
 static usbd_control_callback installed_development_control;
 static unsigned endpoints_configured;
+static uint16_t output_a;
 
 int usbd_register_control_callback(usbd_device *dev, uint8_t type, uint8_t mask,
                                   usbd_control_callback callback) {
@@ -29,8 +30,8 @@ void usbd_ep_setup(usbd_device *dev, uint8_t address, uint8_t type, uint16_t siz
     endpoints_configured++;
 }
 
-void gpio_set(uint32_t port, uint16_t pins) { (void)port; (void)pins; }
-void gpio_clear(uint32_t port, uint16_t pins) { (void)port; (void)pins; }
+void gpio_set(uint32_t port, uint16_t pins) { if (port == GPIOA) output_a |= pins; }
+void gpio_clear(uint32_t port, uint16_t pins) { if (port == GPIOA) output_a &= ~pins; }
 uint16_t gpio_get(uint32_t port, uint16_t pins) {
     return (port == GPIOA ? 0xff7f : 0xfeff) & pins;
 }
@@ -75,7 +76,7 @@ int main(void) {
                                          .wValue=1, .wIndex=0x5831, .wLength=12};
         length = 12;
         assert(installed_development_control(NULL, &request, &buffer, &length, NULL) == USBD_REQ_HANDLED);
-        assert(length == 12 && buffer[0] == 0x7f && buffer[1] == 0xff && buffer[10] == 10);
+        assert(length == 12 && buffer[0] == 0x7f && buffer[1] == 0xff && buffer[10] == 11 && buffer[11] == 1);
         usbd_control_complete_callback complete = NULL;
         boot_requested = false;
         request = (struct usb_setup_data){.bmRequestType=0x40, .bRequest=0x54,
@@ -87,6 +88,23 @@ int main(void) {
         request.wIndex = 0;
         assert(installed_development_control(NULL, &request, &buffer, &length, &complete) == USBD_REQ_NEXT_CALLBACK);
     }
+    assert(selected_page == 0);
+    const uint16_t indicators = GPIO3 | GPIO4 | GPIO5 | GPIO6;
+    for (uint8_t page = 0; page < TRANSPORT_PAGE_COUNT; page++) {
+        assert(selected_page == page);
+        assert((output_a & indicators) == (GPIO6 >> page));
+        pending_counts = 100;
+        select_next_page();
+        assert(pending_counts == 0);
+    }
+    assert(selected_page == 0);
+    select_next_page();
+    configuration_set(NULL, 2); /* USB reconfiguration preserves orientation. */
+    assert(selected_page == 1 && (output_a & indicators) == GPIO5);
+    reset_received();
+    assert(selected_page == 1 && !(output_a & indicators));
+    configuration_set(NULL, 1);
+    assert(selected_page == 1 && (output_a & indicators) == GPIO5);
     configuration_set(NULL, 0);
     assert(!configured);
     queue_read = queue_write = 0;

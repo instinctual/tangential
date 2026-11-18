@@ -1,0 +1,35 @@
+{
+  "idVendor": "04d8",
+  "idProduct": "fa1a",
+  "manufacturer": "Tangential",
+  "product": "KnobX1 Element-Mf transport",
+  "serial": "99000101",
+  "busnum": "5",
+  "devnum": "9",
+  "diagnostics": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 11789,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 11,
+    "page": 1
+  },
+  "flash_exit": 74,
+  "sha256": "9b422e19e642746201313b41129174da16c791d44403078b063c3f28e6514a61",
+  "stop_hold_ms": 300,
+  "underglow": [
+    2,
+    2,
+    2
+  ],
+  "pages": [
+    "Jog",
+    "Jog reversed",
+    "Mf Shuttle",
+    "Mf Shuttle reversed"
+  ],
+  "boot_entry_note": "First identity read was interrupted by the Hub USB reset after stale-client cleanup. No flash write occurred; identity was rechecked before successful boot entry."
+}

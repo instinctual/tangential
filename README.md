@@ -2,15 +2,26 @@
 
 Public repository: [instinctual/tangential](https://github.com/instinctual/tangential), default branch `main`.
 
-Experimental onboard Tangent panel emulation for a Binepad KnobX1 on Linux. Rotate for native jog, tap and release the large knob for Play, and hold it for 300 ms for Stop. Shuttle is excluded.
+Experimental onboard Tangent panel emulation for a Binepad KnobX1 on Linux. Firmware v0.11 is installed and its four pages have passed operator testing in Flare. Briefly press/release the small button to cycle pages; one indicator identifies the selected page.
 
-The device uses Flame's shipped Tangent profile, with no custom map, keyboard shortcut layer, or workstation bridge. It presents an Element Mf and sends its jog-ring, Play-button, and Stop-button reports. All 37 Mf modes in the installed 2027.2 default map use these controls consistently. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in Flare 2027.2 and Flame 2027.2; captures independently show native Tangent Transport and Play/Stop actions. Revision 10 is installed with the requested 300 ms hold and steady dim-white underglow. The timing passes offline boundary tests, and USB startup was verified after installation. Compatibility on other workstation/application versions remains untested.
+| Page | Behavior | Native Mf control |
+| --- | --- | --- |
+| 1 | Jog | Outer ring |
+| 2 | Jog, reversed orientation | Outer ring |
+| 3 | Faster scrubbing | Trackball X, labelled Shuttle |
+| 4 | Faster scrubbing, reversed orientation | Trackball X, labelled Shuttle |
 
-Play is sent only after a short release. A hold sends Stop without first sending Play. These explicit gestures require no playback-state tracking. Both bottom RGB LEDs are set to `(2, 2, 2)` out of 255 per channel, under 1% PWM level. Levels 12 and 3 were too bright; revision 10 restores the previous dimmer level 2. Their color is written once at startup and remains steady.
+On every page, tap/release the large knob for Play and hold it for 300 ms for Stop. Power-on starts at page 1; USB reconfiguration preserves the selected page. Page changes discard buffered motion from the previous page.
+
+Pages 3/4 reproduce the real Mf's Shuttle-labelled control. With the shipped profile, it sends larger Jog deltas and movement stops when the trackball stops. It does **not** provide continuous playback-speed control. After comparing the real panel, the user chose to keep this behavior and defer further Shuttle changes. See the [operator acceptance](artifacts/hardware-test-element-mf-v0.11/operator-acceptance.json) and [real Mf observations](artifacts/element-mf-20261118T201737Z/live-behavior/conclusion.json).
+
+The device uses Flame's shipped Tangent profile, with no custom map, keyboard shortcut layer, or workstation bridge. All 37 Mf modes in the inspected 2027.2 default map use these controls consistently. Captures independently show native Tangent Transport and Play/Stop actions. Four-page testing used Flare `2027.2.case26507689`; earlier transport tests used Flame and Flare 2027.2. Compatibility on other workstations/application versions remains untested.
+
+Play is sent only after a short release. A hold sends Stop without first sending Play. These explicit gestures require no playback-state tracking. Both bottom RGB LEDs are set to `(2, 2, 2)` out of 255 per channel, under 1% PWM level. Levels 12 and 3 were too bright. Their color is written once at startup and remains steady.
 
 An earlier Element Kb prototype established USB/Hub recognition and working rotation and large-button input. It is superseded because the default Kb profile maps those controls to grading parameters. The original KnobX1 application has been read back twice and preserved. See [HANDOFF.md](HANDOFF.md) for the installed firmware and test state.
 
-The installed v0.10 [firmware snapshot](artifacts/firmware-candidates/element-mf-v0.10/) and [installation record](artifacts/hardware-test-element-mf-v0.10/device.json) are committed with the project. The [v0.5 transport verification](artifacts/hardware-test-element-mf-v0.5/verification.json) records the operator-confirmed controls and native Tangent traffic. Build manifests retain their original pre-flash status; installation records document subsequent hardware results.
+The current v0.11 [firmware snapshot](artifacts/firmware-candidates/element-mf-v0.11/) and [installation record](artifacts/hardware-test-element-mf-v0.11/device.json) are preserved. The previous [v0.10 image](artifacts/firmware-candidates/element-mf-v0.10/) remains available. The [v0.5 transport verification](artifacts/hardware-test-element-mf-v0.5/verification.json) records the earlier operator-confirmed controls and native Tangent traffic. Build manifests retain their original pre-flash status; installation records document subsequent hardware results.
 
 ## Build and test
 
@@ -24,7 +35,7 @@ make firmware
 
 `make setup` downloads checksum-pinned ARM compiler, USB-library, and DFU-tool sources into `.cache/` and builds the local dependencies. It installs no system packages. Sources and checksums are in [build-lock.json](build-lock.json).
 
-`make test` runs Python protocol/command tests and native C tests for report encoding, jog scaling, quadrature direction, tap/hold boundaries, button-release handling, descriptors, and USB reconfiguration callbacks. Recorded USB traffic is used as an offline fixture.
+`make test` runs Python protocol/command tests and native C tests for report encoding, jog scaling, quadrature direction, tap/hold boundaries, page selection and reversal, indicators, button-release handling, descriptors, and USB reconfiguration. Recorded Kb and real Mf traffic is used as offline fixtures.
 
 `make firmware` produces `build/tangential-knobx1-element-mf.{bin,elf,json}`. It checks the application vectors, size, and DFU suffix. The linker reserves the existing bootloader at `0x08000000–0x08001fff`; the application starts at `0x08002000`. Build commands do not flash hardware.
 
@@ -44,7 +55,7 @@ Use fresh output filenames. The KnobX1 inspector applies to the original VIA/Via
 
 The bootloader identifies as `1eaf:0003`; alternate setting 2 addresses `0x08002000`. The original application/settings bytes are preserved under `artifacts/research/firmware/`. Both independent 120 KiB reads match, but restoring them has not yet been tested. The bootloader itself is outside the backup.
 
-The firmware has guarded vendor USB diagnostics and a bootloader request, accessed through `python3 scripts/emulator_control.py status` or `bootloader`. The helper checks the emulator manufacturer and serial before issuing a request and never flashes. Bootloader entry through this helper has worked repeatedly. Disconnecting USB at the knob for five seconds and reconnecting while holding the small button also worked; runtime small-button hold remains unverified. The first indicator LED shows USB configuration; panel display commands are accepted and discarded.
+The firmware has guarded vendor USB diagnostics and a bootloader request, accessed through `python3 scripts/emulator_control.py status` or `bootloader`. Diagnostics include the current page on revision 11. The helper checks the emulator manufacturer and serial before issuing a request and never flashes. Bootloader entry through this helper has worked repeatedly. Disconnecting USB at the knob for five seconds and reconnecting while holding the small button also worked; runtime small-button hold remains unverified. A short small-button release changes page; a two-second hold requests the bootloader. Page indicators illuminate when USB is configured; panel display commands are accepted and discarded.
 
 Tangent Hub can claim the emulator without a service restart. In this session, restarting Hub left Flare's old TCP connection in CLOSE-WAIT; the operator had to restart Flare. Plan any further Hub restart accordingly.
 

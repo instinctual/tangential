@@ -1,0 +1,586 @@
+{
+  "capture": "artifacts/element-mf-20261118T201737Z/shuttle-inputs-03.pcap",
+  "packets": 61,
+  "record_counts": [
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "S",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 3
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "C",
+      "transfer_type": 2,
+      "endpoint": 128,
+      "count": 3
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "C",
+      "transfer_type": 1,
+      "endpoint": 129,
+      "count": 26
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "S",
+      "transfer_type": 1,
+      "endpoint": 129,
+      "count": 25
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "S",
+      "transfer_type": 1,
+      "endpoint": 1,
+      "count": 2
+    },
+    {
+      "bus": 1,
+      "device": 2,
+      "event": "C",
+      "transfer_type": 1,
+      "endpoint": 1,
+      "count": 2
+    }
+  ],
+  "hid_report_descriptors": [],
+  "input_events": [
+    {
+      "timestamp_ns": 1795034620442048000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000000300000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620474040000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000000100000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620522047000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000000ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620554048000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000000ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620762057000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000fbff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        -5,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620794058000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000e2ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        -30,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620842059000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000dbfe00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        -37,
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620874061000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000e7ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        -25,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034620922063000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000fe0000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621210075000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000030100000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621242076000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000100300000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        16,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621290077000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000001f0300000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        31,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621322079000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000001c0000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        28,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621370081000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000000c0000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621562088000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000030000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621610090000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000000d0000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621642092000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000018fe00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        24,
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034621690093000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000000dfe00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        13,
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034622170113000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "004000000000000000000000000000",
+      "buttons": 16384,
+      "encoder_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034622250116000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000000000000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034629050392000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "000000000003000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034629082384000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "0000000000ff000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034629450405000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000001ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        1,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034629498405000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000000ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp_ns": 1795034630538449000,
+      "bus": 1,
+      "device": 2,
+      "report_hex": "00000000ff00000000000000000000",
+      "buttons": 0,
+      "encoder_deltas": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "output_reports": [
+    "0d",
+    "0d"
+  ]
+}

@@ -1,0 +1,535 @@
+{
+  "map_source": "/opt/Autodesk/presets/2027.2/tangentPanel/element-mf-map.xml",
+  "map_sha256": "72492e2c4517392c99583ae16f962eb5badcd9bcfc8fb3646e8a7db6baa69cec",
+  "capabilities": {
+    "Jog": {
+      "enabled": "true"
+    },
+    "Shuttle": {
+      "enabled": "false"
+    },
+    "StatusDisplay": {
+      "lineCount": "3"
+    }
+  },
+  "modes": [
+    {
+      "id": "0x00040000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00050000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00060000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00070000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00100000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00080000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00081000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00082000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00090000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00025000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00026000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00027000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00028000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00032000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00033000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00034000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00035000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00030000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00031000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00036000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00037000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00130000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00110000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00120000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00140000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00150000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00160000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00180000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00210000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00220000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00230000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00240000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00250000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00260000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00280000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00038000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    },
+    {
+      "id": "0x00039000",
+      "encoders": {
+        "0": {
+          "Key": "0x81000001",
+          "CustomName": "Shuttle",
+          "Sensitivity": "5"
+        },
+        "2": {
+          "Key": "0x81000001",
+          "CustomName": "Jog"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "operator_initial_result": "All four pages work: indicators, reversals, Play and Stop",
+  "operator_clarification": "Shuttle was intended to vary playback speed, not produce larger Jog increments. Pages 3/4 do not yet meet that requirement.",
+  "page_sequence": [
+    1,
+    2,
+    3,
+    4,
+    1
+  ],
+  "input_reports": 243,
+  "encoder_histograms": {
+    "0": {
+      "74": 73,
+      "-74": 68
+    },
+    "2": {
+      "74": 51,
+      "-74": 34,
+      "127": 6,
+      "126": 1
+    }
+  },
+  "native_actions": {
+    "ActionOn:0x20000089": 3,
+    "ActionOff:0x20000089": 3,
+    "ActionOn:0x20000000": 2,
+    "ActionOff:0x20000000": 2
+  },
+  "native_shuttle_values": [
+    0
+  ],
+  "firmware_revision": 11,
+  "status": "Jog pages and common controls validated; true variable-speed Shuttle pending"
+}

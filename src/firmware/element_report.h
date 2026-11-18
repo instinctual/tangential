@@ -18,13 +18,14 @@ static inline void element_first_knob_report(uint8_t report[15], bool pressed, i
     report[3] = (uint8_t)delta;
 }
 
-/* Flame's shipped Element-Mf map assigns encoder 2 to Jog, button 14
- * to Stop and button 15 to Play. The shared Element transport carries
+/* Flame's shipped Mf map labels encoder 2 Jog and encoder 0 Shuttle;
+ * buttons 14/15 are Stop/Play. The shared Element transport carries
  * three button bytes followed by signed encoder bytes. */
-static inline void element_mf_transport_report(uint8_t report[15], uint8_t buttons, int8_t delta) {
+static inline void element_mf_transport_report(uint8_t report[15], uint8_t buttons,
+    int8_t delta, uint8_t encoder) {
     memset(report, 0, 15);
     report[1] = buttons & 0xc0;
-    report[5] = (uint8_t)delta;
+    if (encoder == 0 || encoder == 2) report[3 + encoder] = (uint8_t)delta;
 }
 
 /* A and B are the same pin ordering used in the published KnobX1 definition. */

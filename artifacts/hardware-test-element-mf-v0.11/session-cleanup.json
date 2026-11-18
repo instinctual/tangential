@@ -1,0 +1,5 @@
+{
+  "before": "Recv-Q Send-Q Local Address:Port  Peer Address:Port Process                                                                                                                   \n952    0          127.0.0.1:58828    127.0.0.1:64246 users:((\"AdskAccessServi\",pid=470924,fd=239),(\"AdskAccessServi\",pid=134017,fd=239),(\"AdskAccessServi\",pid=133414,fd=239))\n",
+  "closed": true,
+  "close_output": "Recv-Q Send-Q Local Address:Port  Peer Address:Port \n952    0          127.0.0.1:58828    127.0.0.1:64246\n"
+}

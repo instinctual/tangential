@@ -1,5 +1,34 @@
 # KnobX1 Tangent Emulation Handoff
 
+## Verified four-page firmware — 2026-11-18
+
+The final decision is to keep v0.11: normal/reversed Jog on pages 1/2 and normal/reversed Mf-style faster scrubbing on pages 3/4. The user confirmed all page indicators, reversals, and Play/Stop behavior, then clarified that true Shuttle should vary ongoing playback speed. A live real-Mf comparison showed movement stops with the trackball. Repeated native Play might increase playback rate, but the user could not confirm it confidently and explicitly chose to leave the current behavior in place. **Do not resume continuous-speed Shuttle work unless requested.** All captures and monitoring processes are stopped. The user has reconnected KnobX1; revision 11 and page 1 were verified again.
+
+The user connected a real Element Mf, serial `55024780`, at USB path `1-1`, bus 1 device 2. Its 100-byte device/configuration descriptors exactly match the emulator snapshot; its 27-byte HID descriptor also matches. The first physical capture confirms ring encoder 2 at byte 5, Play button 15, and Stop button 14. Evidence is in `artifacts/element-mf-20261118T201737Z/`. Approximate clockwise/counterclockwise turns produced 1833 positive and 1513 negative raw counts; do not treat these as a calibrated revolution measurement. Hub emitted native Jog and Play/Stop messages.
+
+The user disconnected KnobX1 for the capture. Hub then opened the real Mf automatically. The current `panel-list.xml` pins Mf and Kb slots to serial `99000101` (different from the older historical snapshot); no host configuration was edited during this inspection. No live Flame/Flare process was running. Hub's TCP client port `58828` was retained by Autodesk background processes, so this validates Hub translation, not current application response.
+
+The user added a four-page requirement, superseding the earlier Jog-only request:
+
+| Page | Native Mf control | Orientation |
+| --- | --- | --- |
+| 1 | Jog ring, encoder 2 | Normal |
+| 2 | Jog ring, encoder 2 | Reversed |
+| 3 | Trackball X labelled Shuttle, encoder 0 | Normal |
+| 4 | Trackball X labelled Shuttle, encoder 0 | Reversed |
+
+The small button cycles pages on short release. One indicator identifies the selected page. Large-knob tap/release remains Play; hold 300 ms remains Stop. Bottom LEDs remain RGB `(2,2,2)`. Power-on starts on page 1; USB reconfiguration retains the selected page. A two-second small-button hold remains the separate bootloader gesture. Page changes discard unsent motion to prevent sending it through the wrong control/orientation.
+
+Source revision 11 implements these pages. `make test` passes 24 Python tests and two native C programs; the ARM image builds. **v0.11 is installed and all four pages have operator confirmation.** The candidate is preserved in `artifacts/firmware-candidates/element-mf-v0.11/`; installation and test evidence is in `artifacts/hardware-test-element-mf-v0.11/`. Image SHA256 is `9b422e19e642746201313b41129174da16c791d44403078b063c3f28e6514a61`, payload 8080 bytes. The knob is back at `5-5.4.4`, last observed bus 5 device 12. Only the emulator was present at the final identity check; the real Mf is disconnected.
+
+Important Shuttle distinction: the shipped `controls.xml` has `Shuttle enabled="false"`, but all 37 Mf modes map trackball X to reserved transport control `0x81000001`, with `CustomName=Shuttle` and sensitivity 5. The ring uses the same reserved control with `CustomName=Jog` and standard sensitivity. The completed real-Mf trackball capture confirms 12 native Transport messages with the Jog field populated and Shuttle field zero, plus a native Stop down/up pair. The new pages reproduce that labelled Mf control, not a separate continuous-speed Shuttle API. The user was told this before installation. Evidence: `shuttle-inputs-03.pcap`, `shuttle-tipc-03.pcap`, decoded files, and `shuttle-verification.json`. There was minor incidental vertical-ball and ring motion. All real-panel captures are stopped.
+
+Before installation, the confirmed obsolete client connection on port `58828` was closed; no application owned it. Hub reset the knob's USB connection during that cleanup, interrupting the first bootloader identity read before any write. Identity and revision 10 were rechecked, then the guarded boot request and DFU installation succeeded. Revision 11, USB configuration, and page 1 were verified afterward. No Hub restart or profile edit was used.
+
+Live testing used Flare `2027.2.case26507689`. The user reported "All four pages work." The read-only monitor recorded pages `1 → 2 → 3 → 4 → 1`; USB capture contains ring and horizontal-trackball deltas in both directions, and TIPC shows native Play/Stop actions. See `verification.json` for the initial result and subsequent Shuttle clarification, and `operator-acceptance.json` for the final decision to retain this behavior. A later real-Mf comparison is preserved under `artifacts/element-mf-20261118T201737Z/live-behavior/`. That comparison does not verify repeated Play acceleration. No further firmware or control changes followed the user's decision.
+
+## Previous verified installation
+
 Updated 2026-11-16 after troubleshooting the Flame session. Element Mf v0.10 is installed on the KnobX1. The operator confirmed Jog, tap-to-Play, and hold-to-Stop in both Flare 2027.2 (v0.5) and Flame 2027.2 (v0.10). The current Stop hold is 300 ms. Bottom lighting is steady white at RGB `(2,2,2)`; levels 12 and 3 were too bright. A stale Flare TCP connection caused the latest apparent failure; closing that connection restored all controls in Flame without changing firmware or profiles. All application control uses emulated Tangent USB reports through the standard Hub and Flame's shipped profile.
 
 ## Resolved Flame connection failure
@@ -20,7 +49,7 @@ If this recurs, inspect `sudo ss -tnp '( sport = :64246 or dport = :64246 )'` an
 - Source, contributor instructions, build lock, tests, firmware snapshots, hardware captures, and both original application readbacks are committed. `.cache/`, `.venv/`, and `build/` remain ignored. `.gitattributes` preserves artifact bytes; all 141 archived evidence files and both original firmware checksums were checked before the initial commit.
 - Use `git log -1` for the newest documentation commit; the initial commit above is a fixed historical checkpoint. These notes follow that publication and make no additional firmware changes.
 
-## Current development state
+## Earlier development state
 
 - Workspace: `/vol/engineering/dev/tangential` on `ws104`.
 - User approved installing experimental onboard firmware. Original application/settings flash was read twice into `artifacts/research/firmware/knobx1-original-app-read{1,2}.bin`; both 122,880-byte reads match SHA256 `a03fd94c015aa069ed80102acd57c9a7c2f316d58d8a2eafb2925ca942abca90`. Both tools stalled on the extra end-of-region read; the complete returned bytes match. The first 8 KiB bootloader is excluded; restore has not been tested.
@@ -42,7 +71,7 @@ If this recurs, inspect `sudo ss -tnp '( sport = :64246 or dport = :64246 )'` an
 
 Use the KnobX1 with Flame's native Tangent integration:
 
-- Rotate to jog forward/backward. Shuttle is explicitly unwanted.
+- Use the four requested Jog/Shuttle pages and reversed orientations described in the active development section; this supersedes the earlier Jog-only restriction.
 - Tap and release the large knob for Play; hold for 300 ms for Stop. This explicitly supersedes the earlier request for alternating large-knob presses.
 - Holding the knob while rotating for faster jogging is optional. The user accepted losing this gesture.
 - The implementation runs on the knob itself, with no external USB adapter or workstation bridge.
@@ -123,8 +152,8 @@ The earlier workstation-bridge discussion is historical. No workstation bridge i
 
 ## Follow-up verification
 
-1. If the user wants further adjustment, use the installed 300 ms hold and RGB `(2,2,2)` as the baseline. All controls now have operator confirmation in Flame on v0.10. No input request or capture monitor is pending/running; the restored brightness has not received a separate new confirmation.
-2. Portability beyond this workstation's Flame/Flare 2027.2 setup, coexistence with a real Mf, and restoring the original firmware remain untested. Compare with the real Mf when available; do not claim universal compatibility.
+1. Preserve the accepted v0.11 four-page controls, 300 ms Stop hold, and RGB `(2,2,2)` underglow. Page operation has operator confirmation in Flare; no input request or capture monitor is pending/running. Continuous-speed Shuttle is explicitly deferred.
+2. Portability beyond this workstation's tested Flame/Flare builds, simultaneous operation with a real Mf, and restoring the original firmware remain untested. The real Mf descriptor and control-report comparisons are now complete; do not claim universal compatibility.
 3. Keep underglow steady dim white; do not add animations or playback-state indication unless requested.
 
 The original baseline above is historical evidence. The active firmware/build/test state is recorded at the top of this handoff and in the artifact directories. USB/Hub recognition, native Jog, tap-to-Play and hold-to-Stop are verified with the shipped default Mf profile in this workstation's Flame and Flare setup.

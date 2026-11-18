@@ -1,0 +1,29 @@
+{
+  "operator_sequence": "Approximately one clockwise ring turn, pause, one counterclockwise turn, pause, Play Forward, Stop; operator replied done.",
+  "input_report_count": 117,
+  "active_encoder_indices": [
+    2
+  ],
+  "button_states": [
+    0,
+    16384,
+    32768
+  ],
+  "positive_ring_counts": 1833,
+  "negative_ring_counts": -1513,
+  "calibration_limit": "Operator motion was approximate; these totals are not an exact counts-per-revolution measurement.",
+  "wire_confirmed": {
+    "jog_encoder": 2,
+    "jog_byte": 5,
+    "play_button": 15,
+    "stop_button": 14
+  },
+  "hub_events": {
+    "Transport": 43,
+    "ActionOn:0x20000089": 1,
+    "ActionOff:0x20000089": 1,
+    "ActionOn:0x20000000": 1,
+    "ActionOff:0x20000000": 1
+  },
+  "application_limit": "No live Flame/Flare process was running; Hub translated into an inherited existing client connection. This capture validates USB reports and Hub translation, not application response."
+}

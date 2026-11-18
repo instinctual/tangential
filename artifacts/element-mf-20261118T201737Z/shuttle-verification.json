@@ -1,0 +1,36 @@
+{
+  "operator_sequence": "Mf trackball left/right, then Stop; operator completed and swapped real Mf for KnobX1.",
+  "input_reports": 25,
+  "encoder_counts": {
+    "0": {
+      "reports": 15,
+      "positive": 144,
+      "negative": -99
+    },
+    "1": {
+      "reports": 16,
+      "positive": 11,
+      "negative": -14
+    },
+    "2": {
+      "reports": 2,
+      "positive": 3,
+      "negative": -1
+    }
+  },
+  "button_states": [
+    0,
+    16384
+  ],
+  "native_transport_events": 12,
+  "native_jog_total": 11,
+  "native_shuttle_values": [
+    0
+  ],
+  "native_action_counts": {
+    "ActionOn:0x20000000": 1,
+    "ActionOff:0x20000000": 1
+  },
+  "finding": "Trackball X is encoder 0 at byte 3. The stock profile labels it Shuttle but Hub emits Jog-channel deltas; the independent Shuttle channel remains zero.",
+  "qualification": "There was minor vertical-ball and ring motion in the capture. No live Flame/Flare process was running, so application response was not tested."
+}

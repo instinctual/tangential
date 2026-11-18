@@ -1,0 +1,23 @@
+{
+  "utc": "2026-11-18T21:08:11.403777+00:00",
+  "operator_action": "Reconnected KnobX1 after choosing to retain v0.11",
+  "status": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 142788,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 11,
+    "page": 1
+  },
+  "sysfs": "/sys/bus/usb/devices/5-5.4.4",
+  "bus": 5,
+  "device": 12,
+  "serial": "99000101",
+  "real_mf_connected": false,
+  "active_application": "Flare 2027.2.case26507689",
+  "active_tangent_client_port": 55862,
+  "captures_running": false
+}

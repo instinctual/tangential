@@ -1,0 +1,58 @@
+{
+  "utc": "2026-11-18T20:17:37.607317+00:00",
+  "host": "ws104",
+  "scope": "Read-only sysfs descriptor snapshot; real Mf and any connected emulator distinguished by strings and serial",
+  "devices": [
+    {
+      "sysfs": "/sys/bus/usb/devices/1-1",
+      "manufacturer": "Tangent Wave Ltd.",
+      "product": "element-Mf",
+      "serial": "55024780",
+      "idVendor": "04d8",
+      "idProduct": "fa1a",
+      "bcdDevice": "0120",
+      "bcdUSB": null,
+      "speed": "12",
+      "busnum": "1",
+      "devnum": "2",
+      "bNumConfigurations": "2",
+      "bConfigurationValue": "1",
+      "bNumInterfaces": "1",
+      "bMaxPower": "500mA",
+      "usb_descriptors_hex": "1201000200000008d8041afa2001010203020902290001010080fa090400000203000000092111010001221b00070581030f001407050103400010090229000102008032090400000203000000092111010001221b00070581030f001407050103400010",
+      "interfaces": [
+        {
+          "sysfs": "/sys/bus/usb/devices/1-1:1.0",
+          "driver": "/sys/bus/usb/drivers/usbhid",
+          "report_descriptors": [
+            "05010908a10105f009017508950f810205f00902750895409102c0"
+          ]
+        }
+      ]
+    },
+    {
+      "sysfs": "/sys/bus/usb/devices/5-5.4.4",
+      "manufacturer": "Tangential",
+      "product": "KnobX1 Element-Mf transport",
+      "serial": "99000101",
+      "idVendor": "04d8",
+      "idProduct": "fa1a",
+      "bcdDevice": "0120",
+      "bcdUSB": null,
+      "speed": "12",
+      "busnum": "5",
+      "devnum": "4",
+      "bNumConfigurations": "2",
+      "bConfigurationValue": "1",
+      "bNumInterfaces": "1",
+      "bMaxPower": "500mA",
+      "usb_descriptors_hex": "1201000200000008d8041afa2001010203020902290001010080fa090400000203000000092111010001221b00070581030f001407050103400010090229000102008032090400000203000000092111010001221b00070581030f001407050103400010",
+      "interfaces": [
+        {
+          "sysfs": "/sys/bus/usb/devices/5-5.4.4:1.0",
+          "driver": "/sys/bus/usb/drivers/usbfs"
+        }
+      ]
+    }
+  ]
+}

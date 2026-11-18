@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-18T21:04:01.355958+00:00",
+  "real_mf_serial": "55024780",
+  "live_application": "Flare 2027.2.case26507689",
+  "trackball_observation": "Movement stops with the trackball",
+  "repeated_play_observation": "User thinks repeated Play increases frame rate but could not tell confidently. Acceleration is not verified.",
+  "native_actions": {
+    "ActionOn:0x20000089": 3,
+    "ActionOff:0x20000089": 3,
+    "ActionOn:0x20000000": 3,
+    "ActionOff:0x20000000": 3,
+    "ActionOn:0x20001239": 2,
+    "ActionOff:0x20001239": 2,
+    "ActionOn:0x00070011": 1,
+    "ActionOff:0x00070011": 1
+  },
+  "native_shuttle_values": [
+    0
+  ],
+  "decision": "User requested leaving the current four-page v0.11 behavior in place; stop further variable-speed Shuttle work.",
+  "changes_after_decision": "None to firmware, profiles, or controls."
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "USB descriptor comparison; input mapping requires the separate physical-control capture",
+  "real_identity": {
+    "manufacturer": "Tangent Wave Ltd.",
+    "product": "element-Mf",
+    "serial": "55024780",
+    "sysfs": "/sys/bus/usb/devices/1-1",
+    "busnum": "1",
+    "devnum": "2"
+  },
+  "emulator_identity": {
+    "manufacturer": "Tangential",
+    "product": "KnobX1 Element-Mf transport",
+    "serial": "99000101"
+  },
+  "device_and_configuration_descriptors_equal": true,
+  "descriptor_bytes": 100,
+  "hid_report_descriptor_equal": true,
+  "hid_report_descriptor_hex": "05010908a10105f009017508950f810205f00902750895409102c0",
+  "usb_bcd": "0x200",
+  "string_values_intentionally_differ": true,
+  "report_format": {
+    "input_bytes": 15,
+    "output_bytes": 64
+  },
+  "hub_observation": "With both attached, Hub held the KnobX1 interface and Linux HID held the real Mf. After KnobX1 unplug, Hub opened the real Mf without manual configuration changes."
+}

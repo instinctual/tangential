@@ -1,0 +1,103 @@
+{
+  "capture": "artifacts/element-mf-20261118T201737Z/shuttle-tipc-03.pcap",
+  "flows": [
+    {
+      "ports": [
+        64246,
+        58828
+      ],
+      "command_counts": {
+        "0x0a": 12,
+        "0x08": 1,
+        "0x0b": 1
+      },
+      "events": [
+        {
+          "timestamp_us": 1795034620770574,
+          "command": "Transport",
+          "jog": -1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034620802565,
+          "command": "Transport",
+          "jog": -7,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034620850567,
+          "command": "Transport",
+          "jog": -10,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034620882568,
+          "command": "Transport",
+          "jog": -6,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621250599,
+          "command": "Transport",
+          "jog": 4,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621298568,
+          "command": "Transport",
+          "jog": 7,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621330547,
+          "command": "Transport",
+          "jog": 7,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621378565,
+          "command": "Transport",
+          "jog": 3,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621570566,
+          "command": "Transport",
+          "jog": 1,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621618575,
+          "command": "Transport",
+          "jog": 3,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621650546,
+          "command": "Transport",
+          "jog": 6,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034621698546,
+          "command": "Transport",
+          "jog": 4,
+          "shuttle": 0
+        },
+        {
+          "timestamp_us": 1795034622178580,
+          "command": "ActionOn",
+          "control_id": "0x20000000"
+        },
+        {
+          "timestamp_us": 1795034622258602,
+          "command": "ActionOff",
+          "control_id": "0x20000000"
+        }
+      ],
+      "control_feedback": {},
+      "trailing_bytes": 0,
+      "warning": null
+    }
+  ]
+}

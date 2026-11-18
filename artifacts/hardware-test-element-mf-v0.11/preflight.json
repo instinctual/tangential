@@ -1,0 +1,17 @@
+{
+  "python_tests_passed": 24,
+  "native_test_programs_passed": 2,
+  "candidate_sha256": "9b422e19e642746201313b41129174da16c791d44403078b063c3f28e6514a61",
+  "real_mf_capture": "artifacts/element-mf-20261118T201737Z/shuttle-verification.json",
+  "firmware_before": {
+    "gpio_a": "0xb6c7",
+    "gpio_b": "0xceff",
+    "uptime_ms": 179674,
+    "small_button_down": false,
+    "large_button_down": false,
+    "usb_configured": true,
+    "debounced_large_button": false,
+    "revision": 10,
+    "page": null
+  }
+}

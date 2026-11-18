@@ -45,11 +45,11 @@ def main():
             result = lib.libusb_control_transfer(handle, 0xc0, 0x54, 1, 0x5831, buffer, 12, 2000)
             if result != 12:
                 raise RuntimeError("Diagnostic request failed: " + str(result))
-            a, b, milliseconds, configured, pressed, revision, _ = struct.unpack("<HHIBBBB", buffer.raw)
+            a, b, milliseconds, configured, pressed, revision, page = struct.unpack("<HHIBBBB", buffer.raw)
             print(json.dumps({"gpio_a":hex(a),"gpio_b":hex(b),"uptime_ms":milliseconds,
                               "small_button_down":not bool(a & 0x80),"large_button_down":not bool(a & 0x8000),
                               "usb_configured":bool(configured),"debounced_large_button":bool(pressed),
-                              "revision":revision},indent=2))
+                              "revision":revision,"page":page if revision >= 11 else None},indent=2))
         else:
             result = lib.libusb_control_transfer(handle, 0x40, 0x54, 0x424c, 0x5831, None, 0, 2000)
             if result not in (0, -4):

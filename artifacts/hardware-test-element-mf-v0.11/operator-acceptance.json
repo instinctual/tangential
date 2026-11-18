@@ -1,0 +1,25 @@
+{
+  "utc": "2026-11-18T21:04:01.355958+00:00",
+  "firmware_revision": 11,
+  "operator_page_test": "All four pages work",
+  "clarification": "Pages 3/4 implement the Mf-labelled Shuttle control as faster motion-following scrubbing, not continuous playback-speed control.",
+  "operator_final_decision": "I think repeated play does increase the frame rate but it is hard to tell. I think we just leave things the way we have them currently.",
+  "accepted_current_behavior": true,
+  "further_shuttle_development_requested": false,
+  "controls": {
+    "pages": [
+      "Jog",
+      "Jog reversed",
+      "Mf faster scrubbing",
+      "Mf faster scrubbing reversed"
+    ],
+    "small_button": "Short release cycles pages; one indicator per page",
+    "large_button": "Tap/release Play; hold 300 ms Stop",
+    "underglow_rgb": [
+      2,
+      2,
+      2
+    ]
+  },
+  "physical_state": "KnobX1 remains programmed with v0.11 but is disconnected; real Mf connected for the completed reference test."
+}
